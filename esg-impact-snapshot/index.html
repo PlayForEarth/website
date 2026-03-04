@@ -1,419 +1,164 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Free ESG Impact Snapshot — Play for Earth</title>
-  <meta name="description" content="Get a free ESG Impact Snapshot from Play for Earth. One use case, one context, clear feasibility — delivered in one week. No commitment.">
-  <meta name="robots" content="index, follow">
-  <link rel="canonical" href="https://www.playforearth.org/esg-impact-snapshot">
-  <meta property="og:title" content="Free ESG Impact Snapshot — Play for Earth">
-  <meta property="og:description" content="Find out exactly what circular economy actions you can verify in your territory. Free, no commitment, delivered in one week.">
-  <meta property="og:url" content="https://www.playforearth.org/esg-impact-snapshot">
-  <meta property="og:type" content="website">
-  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=DM+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
-  <style>
-    :root {
-      --dark: #0a1a0e;
-      --green-deep: #0d2b14;
-      --green-mid: #1a4a24;
-      --lime: #8aff4a;
-      --lime-soft: #b8ff8a;
-      --white: #f5f5f0;
-      --grey: #8a9a8e;
-      --grey-light: #b0bfb4;
-    }
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
-    body { background: var(--dark); color: var(--white); font-family: 'DM Sans', sans-serif; line-height: 1.6; overflow-x: hidden; }
-
-    /* NAV */
-    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 1.2rem 2.5rem; background: rgba(10,26,14,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(138,255,74,0.12); }
-    .nav-logo { font-family: 'Syne', sans-serif; font-size: 1.15rem; font-weight: 800; color: var(--lime); text-decoration: none; }
-    .nav-logo span { color: var(--white); }
-    .nav-links { display: flex; gap: 2rem; list-style: none; }
-    .nav-links a { color: var(--grey); text-decoration: none; font-size: 0.875rem; font-weight: 500; transition: color 0.2s; }
-    .nav-links a:hover { color: var(--lime); }
-    .nav-cta { background: var(--lime) !important; color: var(--dark) !important; padding: 0.5rem 1.2rem !important; border-radius: 2px; font-weight: 700 !important; }
-    @media (max-width: 768px) { .nav-links { display: none; } }
-
-    /* HERO */
-    .hero {
-      padding: 9rem 2.5rem 5rem;
-      max-width: 1000px;
-      margin: 0 auto;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 4rem;
-      align-items: center;
-    }
-    @media (max-width: 800px) { .hero { grid-template-columns: 1fr; padding: 7rem 1.5rem 3rem; gap: 2.5rem; } }
-
-    .hero-left {}
-    .tag { display: inline-flex; align-items: center; gap: 0.5rem; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: var(--lime); border: 1px solid rgba(138,255,74,0.3); padding: 0.3rem 0.8rem; border-radius: 2px; margin-bottom: 1.8rem; }
-    .tag .dot { width: 6px; height: 6px; background: var(--lime); border-radius: 50%; animation: pulse 2s infinite; }
-    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
-
-    .hero h1 { font-family: 'Syne', sans-serif; font-size: clamp(2.4rem, 4.5vw, 3.8rem); font-weight: 800; line-height: 1.04; letter-spacing: -0.03em; margin-bottom: 1.4rem; }
-    .hero h1 em { color: var(--lime); font-style: normal; }
-    .hero-desc { color: var(--grey-light); font-size: 1.05rem; margin-bottom: 2rem; max-width: 480px; }
-
-    .delivers { display: flex; flex-direction: column; gap: 0.75rem; margin-bottom: 2.5rem; }
-    .deliver-item { display: flex; align-items: flex-start; gap: 0.75rem; }
-    .deliver-icon { color: var(--lime); font-size: 1rem; margin-top: 0.1rem; flex-shrink: 0; }
-    .deliver-text { font-size: 0.95rem; color: var(--white); }
-    .deliver-text strong { color: var(--lime); }
-
-    .hero-cta { display: inline-block; background: var(--lime); color: var(--dark); padding: 1rem 2.2rem; font-family: 'Syne', sans-serif; font-weight: 800; font-size: 0.95rem; letter-spacing: 0.01em; text-decoration: none; border-radius: 2px; transition: background 0.2s, transform 0.15s; }
-    .hero-cta:hover { background: var(--lime-soft); transform: translateY(-2px); }
-    .hero-fine { color: var(--grey); font-size: 0.8rem; margin-top: 0.8rem; }
-
-    /* BADGE CARD */
-    .hero-right {}
-    .proof-card {
-      background: var(--green-deep);
-      border: 1px solid rgba(138,255,74,0.15);
-      border-radius: 6px;
-      padding: 2rem;
-      position: relative;
-      overflow: hidden;
-    }
-    .proof-card::before { content: ''; position: absolute; top: -40px; right: -40px; width: 120px; height: 120px; background: radial-gradient(circle, rgba(138,255,74,0.12) 0%, transparent 70%); border-radius: 50%; }
-    .proof-card-title { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: var(--grey); margin-bottom: 1.5rem; }
-    .stat-row { display: flex; gap: 1.5rem; margin-bottom: 1.5rem; }
-    .stat { flex: 1; }
-    .stat-num { font-family: 'Syne', sans-serif; font-size: 2rem; font-weight: 800; color: var(--lime); line-height: 1; margin-bottom: 0.3rem; }
-    .stat-label { font-size: 0.8rem; color: var(--grey); }
-    .recognition-row { display: flex; flex-direction: column; gap: 0.7rem; padding-top: 1.5rem; border-top: 1px solid rgba(255,255,255,0.06); }
-    .rec-item { display: flex; align-items: center; gap: 0.7rem; }
-    .rec-badge { width: 28px; height: 28px; border-radius: 50%; background: rgba(138,255,74,0.1); border: 1px solid rgba(138,255,74,0.2); display: flex; align-items: center; justify-content: center; font-size: 0.75rem; flex-shrink: 0; }
-    .rec-text { font-size: 0.82rem; color: var(--grey-light); }
-    .rec-text strong { color: var(--white); }
-
-    /* HOW IT WORKS */
-    .section { max-width: 1000px; margin: 0 auto; padding: 5rem 2.5rem; }
-    .section-label { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: var(--lime); margin-bottom: 1rem; }
-    .section h2 { font-family: 'Syne', sans-serif; font-size: clamp(1.8rem, 3vw, 2.6rem); font-weight: 800; line-height: 1.1; letter-spacing: -0.03em; margin-bottom: 0.6rem; }
-    .section-sub { color: var(--grey); font-size: 1rem; margin-bottom: 3rem; max-width: 560px; }
-
-    .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
-    @media (max-width: 700px) { .steps { grid-template-columns: 1fr; } }
-    .step { background: var(--green-deep); border: 1px solid rgba(138,255,74,0.1); border-radius: 4px; padding: 2rem; position: relative; transition: border-color 0.2s; }
-    .step:hover { border-color: rgba(138,255,74,0.28); }
-    .step-num { font-family: 'Syne', sans-serif; font-size: 3rem; font-weight: 800; color: rgba(138,255,74,0.12); line-height: 1; margin-bottom: 1rem; }
-    .step h3 { font-family: 'Syne', sans-serif; font-size: 1rem; font-weight: 700; margin-bottom: 0.6rem; }
-    .step p { color: var(--grey); font-size: 0.875rem; line-height: 1.6; }
-
-    /* FOR WHO */
-    .for-section { background: var(--green-deep); border-top: 1px solid rgba(138,255,74,0.08); border-bottom: 1px solid rgba(138,255,74,0.08); }
-    .for-inner { max-width: 1000px; margin: 0 auto; padding: 5rem 2.5rem; display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start; }
-    @media (max-width: 700px) { .for-inner { grid-template-columns: 1fr; gap: 2.5rem; } }
-    .for-list { display: flex; flex-direction: column; gap: 1rem; }
-    .for-item { display: flex; align-items: flex-start; gap: 1rem; padding: 1.2rem; border: 1px solid rgba(138,255,74,0.1); border-radius: 4px; background: rgba(138,255,74,0.03); transition: border-color 0.2s; }
-    .for-item:hover { border-color: rgba(138,255,74,0.25); }
-    .for-item-icon { font-size: 1.3rem; flex-shrink: 0; }
-    .for-item-text h4 { font-family: 'Syne', sans-serif; font-size: 0.95rem; font-weight: 700; margin-bottom: 0.2rem; }
-    .for-item-text p { color: var(--grey); font-size: 0.85rem; }
-    .not-for { padding: 1.5rem; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06); border-radius: 4px; }
-    .not-for h4 { font-family: 'Syne', sans-serif; font-size: 0.85rem; font-weight: 700; color: var(--grey); margin-bottom: 1rem; letter-spacing: 0.05em; }
-    .not-for-item { display: flex; align-items: center; gap: 0.6rem; color: var(--grey); font-size: 0.875rem; margin-bottom: 0.5rem; }
-    .not-for-item::before { content: '✕'; color: rgba(255,100,100,0.5); font-size: 0.75rem; flex-shrink: 0; }
-
-    /* FORM SECTION */
-    .form-section { max-width: 780px; margin: 0 auto; padding: 5rem 2.5rem 8rem; }
-    .form-header { text-align: center; margin-bottom: 3rem; }
-    .form-header h2 { font-family: 'Syne', sans-serif; font-size: clamp(1.8rem, 3vw, 2.8rem); font-weight: 800; letter-spacing: -0.03em; margin-bottom: 0.8rem; }
-    .form-header h2 em { color: var(--lime); font-style: normal; }
-    .form-header p { color: var(--grey); font-size: 1rem; }
-
-    .form-wrapper {
-      background: var(--green-deep);
-      border: 1px solid rgba(138,255,74,0.15);
-      border-radius: 6px;
-      overflow: hidden;
-    }
-    .form-placeholder {
-      padding: 3rem 2rem;
-      text-align: center;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 1rem;
-    }
-    .form-placeholder .placeholder-icon { font-size: 2.5rem; }
-    .form-placeholder h3 { font-family: 'Syne', sans-serif; font-size: 1.1rem; font-weight: 700; }
-    .form-placeholder p { color: var(--grey); font-size: 0.9rem; max-width: 400px; }
-    .form-placeholder code { background: rgba(138,255,74,0.08); color: var(--lime); padding: 0.2rem 0.5rem; border-radius: 3px; font-size: 0.8rem; font-family: monospace; }
-
-    /* TO REPLACE: swap the .form-placeholder div with this iframe tag
-       after you have your Google Form embed URL:
-
-    <iframe
-      src="YOUR_GOOGLE_FORM_EMBED_URL"
-      width="100%"
-      height="680"
-      frameborder="0"
-      marginheight="0"
-      marginwidth="0"
-      style="background: transparent;"
-    >Loading…</iframe>
-    */
-
-    .form-guarantee { display: flex; justify-content: center; gap: 2.5rem; margin-top: 1.5rem; flex-wrap: wrap; }
-    .guarantee-item { display: flex; align-items: center; gap: 0.5rem; color: var(--grey); font-size: 0.82rem; }
-    .guarantee-item span { color: var(--lime); }
-
-    /* FOOTER */
-    footer { padding: 3rem 2.5rem; border-top: 1px solid rgba(138,255,74,0.1); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1.5rem; }
-    .footer-logo { font-family: 'Syne', sans-serif; color: var(--lime); font-weight: 800; font-size: 1rem; text-decoration: none; }
-    .footer-links-row { display: flex; gap: 1.5rem; flex-wrap: wrap; }
-    .footer-links-row a { color: var(--grey); text-decoration: none; font-size: 0.85rem; transition: color 0.2s; }
-    .footer-links-row a:hover { color: var(--lime); }
-    .footer-copy { color: var(--grey); font-size: 0.8rem; }
-  </style>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Free ESG Impact Snapshot — Play for Earth</title>
+<meta name="description" content="Get a free ESG impact snapshot from Play for Earth — understand exactly what circular proof you can generate from your existing field rep network.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://www.playforearth.org/esg-impact-snapshot">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Familjen+Grotesk:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,700;0,900;1,700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f0faf2;--ink:#12271a;--ink-light:#3a5444;--green:#1a8c3f;--green-dark:#127030;--green-bright:#22c55e;--green-pale:#dcfce7;--earth:#d97706;--earth-pale:#fef3c7;--border:rgba(26,140,63,0.15);--border-dark:rgba(18,39,26,0.1);--serif:'Playfair Display',Georgia,serif;--sans:'Familjen Grotesk',sans-serif;}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:var(--sans);background:var(--bg);color:var(--ink);overflow-x:hidden;}
+.page-bg{position:fixed;inset:0;z-index:-2;background:radial-gradient(ellipse 70% 60% at 80% 20%,rgba(34,197,94,0.14) 0%,transparent 60%),radial-gradient(ellipse 50% 50% at 10% 80%,rgba(250,204,21,0.10) 0%,transparent 50%),var(--bg);}
+.page-grid{position:fixed;inset:0;z-index:-1;background-image:linear-gradient(rgba(26,140,63,0.05) 1px,transparent 1px),linear-gradient(90deg,rgba(26,140,63,0.05) 1px,transparent 1px);background-size:60px 60px;pointer-events:none;}
+nav{position:fixed;top:0;left:0;right:0;z-index:500;display:flex;align-items:center;justify-content:space-between;padding:18px 5%;background:rgba(240,250,242,0.92);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);}
+.nav-logo{font-family:var(--serif);font-size:1.15rem;font-weight:700;color:var(--ink);text-decoration:none;display:flex;align-items:center;gap:9px;}
+.nav-logo img{height:30px;width:auto;}
+.nav-logo em{color:var(--green);font-style:normal;}
+.nav-links{display:flex;list-style:none;gap:36px;align-items:center;}
+.nav-links a{font-size:0.875rem;font-weight:500;color:var(--ink-light);text-decoration:none;transition:color 0.2s;}
+.nav-links a:hover,.nav-links a.active{color:var(--green);}
+.nav-cta{background:var(--green)!important;color:white!important;padding:9px 20px;border-radius:24px;font-weight:600!important;}
+@media(max-width:900px){.nav-links{display:none;}}
+.page-wrapper{padding-top:90px;}
+.page-hero{padding:72px 5% 56px;max-width:960px;}
+.page-eyebrow{display:inline-flex;align-items:center;font-size:0.72rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--green);background:var(--green-pale);padding:5px 14px;border-radius:24px;border:1px solid rgba(34,197,94,0.25);margin-bottom:24px;}
+.page-hero h1{font-family:var(--serif);font-size:clamp(2.4rem,4vw,3.6rem);font-weight:900;line-height:1.08;letter-spacing:-0.03em;margin-bottom:16px;}
+.page-hero h1 em{font-style:italic;color:var(--green);}
+.page-hero p{font-size:1.05rem;color:var(--ink-light);line-height:1.7;max-width:600px;}
+.proof-strip{max-width:960px;padding:0 5% 56px;display:flex;gap:20px;flex-wrap:wrap;}
+.proof-chip{background:white;border:1px solid var(--border-dark);border-radius:12px;padding:14px 20px;display:flex;align-items:center;gap:10px;box-shadow:0 2px 8px rgba(18,39,26,0.05);}
+.proof-chip .chip-num{font-family:var(--serif);font-size:1.4rem;font-weight:900;color:var(--green);line-height:1;}
+.proof-chip .chip-label{font-size:0.8rem;color:var(--ink-light);line-height:1.4;}
+.snapshot-layout{max-width:960px;padding:0 5% 80px;display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:start;}
+@media(max-width:700px){.snapshot-layout{grid-template-columns:1fr;}}
+.steps-list{display:flex;flex-direction:column;gap:0;}
+.step-row{display:flex;gap:20px;padding:24px 0;border-bottom:1px solid var(--border-dark);}
+.step-row:last-child{border-bottom:none;}
+.step-circle{width:40px;height:40px;border-radius:50%;background:var(--green);color:white;font-size:0.85rem;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;}
+.step-body h3{font-size:0.95rem;font-weight:700;color:var(--ink);margin-bottom:5px;}
+.step-body p{font-size:0.85rem;color:var(--ink-light);line-height:1.65;}
+.for-whom{margin-top:8px;}
+.for-whom h3{font-family:var(--serif);font-size:1.2rem;font-weight:700;margin-bottom:16px;color:var(--ink);}
+.for-item{display:flex;gap:12px;align-items:flex-start;padding:14px 0;border-bottom:1px solid var(--border-dark);}
+.for-item:last-child{border-bottom:none;}
+.for-icon{font-size:1.2rem;flex-shrink:0;margin-top:2px;}
+.for-item strong{display:block;font-size:0.88rem;font-weight:700;color:var(--ink);margin-bottom:3px;}
+.for-item span{font-size:0.82rem;color:var(--ink-light);line-height:1.5;}
+.form-section{max-width:960px;padding:0 5% 80px;}
+.form-card{background:white;border:1px solid var(--border-dark);border-radius:20px;padding:48px 44px;box-shadow:0 4px 20px rgba(18,39,26,0.06);position:relative;overflow:hidden;}
+.form-card::before{content:'';position:absolute;top:0;left:0;right:0;height:5px;background:linear-gradient(90deg,var(--green),var(--green-bright));}
+.form-card h2{font-family:var(--serif);font-size:1.7rem;font-weight:900;margin-bottom:8px;color:var(--ink);}
+.form-card .form-sub{font-size:0.9rem;color:var(--ink-light);margin-bottom:32px;line-height:1.6;}
+.form-embed{width:100%;min-height:600px;border:none;}
+footer{background:var(--ink);border-top:1px solid rgba(245,242,236,0.07);padding:48px 5% 32px;}
+.footer-inner{display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:32px;margin-bottom:32px;}
+.footer-brand a{font-family:var(--serif);font-size:1.1rem;font-weight:700;color:white;text-decoration:none;display:block;margin-bottom:8px;}
+.footer-brand a em{color:var(--green-bright);font-style:normal;}
+.footer-brand p{font-size:0.82rem;color:rgba(245,242,236,0.4);max-width:240px;line-height:1.6;}
+.footer-links{display:flex;gap:40px;flex-wrap:wrap;}
+.footer-col h5{font-size:0.7rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:rgba(245,242,236,0.3);margin-bottom:16px;}
+.footer-col ul{list-style:none;}
+.footer-col li{margin-bottom:10px;}
+.footer-col a{font-size:0.85rem;color:rgba(245,242,236,0.5);text-decoration:none;transition:color 0.2s;}
+.footer-col a:hover{color:var(--green-bright);}
+.footer-bottom{border-top:1px solid rgba(245,242,236,0.07);padding-top:24px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;}
+.footer-copy{font-size:0.78rem;color:rgba(245,242,236,0.3);}
+.footer-legal{display:flex;gap:20px;}
+.footer-legal a{font-size:0.78rem;color:rgba(245,242,236,0.3);text-decoration:none;}
+.footer-legal a:hover{color:rgba(245,242,236,0.6);}
+</style>
 </head>
 <body>
-  <nav>
-    <a href="/" class="nav-logo">Play<span>for</span>Earth</a>
-    <ul class="nav-links">
-      <li><a href="/">Home</a></li>
-      <li><a href="/esg-impact-snapshot" class="active" style="color:var(--lime)">ESG Snapshot</a></li>
-      <li><a href="/pricing">Pricing</a></li>
-      <li><a href="/about">About</a></li>
-      <li><a href="/faq">FAQ</a></li>
-      <li><a href="/contact" class="nav-cta">Contact</a></li>
-    </ul>
-  </nav>
+<div class="page-bg"></div><div class="page-grid"></div>
+<nav>
+  <a href="/" class="nav-logo"><img src="/logo.png" alt="Play for Earth" onerror="this.style.display='none'">Play for <em>Earth</em></a>
+  <ul class="nav-links">
+    <li><a href="/#solution">How It Works</a></li>
+    <li><a href="/#gti">GTI</a></li>
+    <li><a href="/esg-impact-snapshot" class="active">ESG Snapshot</a></li>
+    <li><a href="/faq">FAQ</a></li>
+    <li><a href="/contact" class="nav-cta">Contact</a></li>
+  </ul>
+</nav>
+<div class="page-wrapper">
+  <div class="page-hero">
+    <div class="page-eyebrow">Free · No commitment · Delivered in 1 week</div>
+    <h1>Know exactly what <em>circular proof</em> you can generate</h1>
+    <p>We map your existing field rep network against a circular use case and show you — with real numbers — what verified data you could capture, how fast, and what it would mean for EPR compliance.</p>
+  </div>
 
-  <!-- HERO -->
-  <div class="hero">
-    <div class="hero-left">
-      <div class="tag"><span class="dot"></span> Free · No commitment</div>
-      <h1>Know exactly what <em>circular proof</em> you can generate.</h1>
-      <p class="hero-desc">A scoped feasibility assessment for your territory. One use case. One context. Delivered in one week.</p>
+  <div class="proof-strip">
+    <div class="proof-chip"><span class="chip-num">20K+</span><span class="chip-label">Verified actions<br>in Vietnam pilot</span></div>
+    <div class="proof-chip"><span class="chip-num">TRL 7</span><span class="chip-label">Operational<br>prototype proven</span></div>
+    <div class="proof-chip"><span class="chip-num">2–4wk</span><span class="chip-label">Average time to<br>first field actions</span></div>
+    <div class="proof-chip"><span class="chip-num">0</span><span class="chip-label">New headcount<br>required to deploy</span></div>
+  </div>
 
-      <div class="delivers">
-        <div class="deliver-item">
-          <span class="deliver-icon">✦</span>
-          <span class="deliver-text"><strong>What actions</strong> you can verify with your existing field teams</span>
-        </div>
-        <div class="deliver-item">
-          <span class="deliver-icon">✦</span>
-          <span class="deliver-text"><strong>What proof</strong> you'd generate — EPR-ready, Scope 3-ready</span>
-        </div>
-        <div class="deliver-item">
-          <span class="deliver-icon">✦</span>
-          <span class="deliver-text"><strong>How fast</strong> you could be generating verified field data</span>
-        </div>
-        <div class="deliver-item">
-          <span class="deliver-icon">✦</span>
-          <span class="deliver-text"><strong>A clear go / no-go</strong> assessment — honest, scoped, actionable</span>
-        </div>
+  <div class="snapshot-layout">
+    <div class="steps-list">
+      <div style="font-size:0.72rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--green);margin-bottom:4px;">What happens after you apply</div>
+      <div class="step-row">
+        <div class="step-circle">1</div>
+        <div class="step-body"><h3>We review your context</h3><p>We read your submission and identify the most relevant circular use case for your network — packaging recovery, display compliance, collection verification, or other.</p></div>
       </div>
-
-      <a href="#get-snapshot" class="hero-cta">Get my free snapshot →</a>
-      <div class="hero-fine">Delivered within 5 business days. No sales call required.</div>
+      <div class="step-row">
+        <div class="step-circle">2</div>
+        <div class="step-body"><h3>We scope the opportunity</h3><p>We estimate the verified data volume your field network could generate, the GTI baseline you'd start from, and what a 90-day pilot would look like in practice.</p></div>
+      </div>
+      <div class="step-row">
+        <div class="step-circle">3</div>
+        <div class="step-body"><h3>We deliver a one-page snapshot</h3><p>Within one week, you receive a concise assessment: use case, data estimate, pilot outline, and a suggested next step. No pitch deck, no commitment required.</p></div>
+      </div>
     </div>
-
-    <div class="hero-right">
-      <div class="proof-card">
-        <div class="proof-card-title">Proof of traction</div>
-        <div class="stat-row">
-          <div class="stat">
-            <div class="stat-num">20K+</div>
-            <div class="stat-label">Verified field actions</div>
-          </div>
-          <div class="stat">
-            <div class="stat-num">TRL 7</div>
-            <div class="stat-label">Technology readiness</div>
-          </div>
-        </div>
-        <div class="stat-row">
-          <div class="stat">
-            <div class="stat-num">Vietnam</div>
-            <div class="stat-label">Deployed market</div>
-          </div>
-          <div class="stat">
-            <div class="stat-num">Africa</div>
-            <div class="stat-label">Active expansion</div>
-          </div>
-        </div>
-        <div class="recognition-row">
-          <div class="rec-item">
-            <div class="rec-badge">🏆</div>
-            <div class="rec-text"><strong>L'Oréal Big Bang</strong> — SAPMENA Finalist</div>
-          </div>
-          <div class="rec-item">
-            <div class="rec-badge">🌏</div>
-            <div class="rec-text"><strong>ERIA HITS4KIDS</strong> — ASEAN & India Finalist</div>
-          </div>
-        </div>
-      </div>
+    <div class="for-whom">
+      <h3>Who this is for</h3>
+      <div class="for-item"><span class="for-icon">📦</span><div><strong>FMCG brands & bottlers</strong><span>Facing EPR compliance obligations or Scope 3 reporting requirements with no verified last-mile data</span></div></div>
+      <div class="for-item"><span class="for-icon">🚛</span><div><strong>Distributors & field networks</strong><span>With existing sales rep coverage across retail and want to monetize or structure that network for circular outcomes</span></div></div>
+      <div class="for-item"><span class="for-icon">🌱</span><div><strong>NGOs & public programmes</strong><span>Running circular economy or waste recovery programmes that need verified field execution and behavioral data</span></div></div>
+      <div class="for-item"><span class="for-icon">📊</span><div><strong>Sustainability & ESG teams</strong><span>Looking for auditable Scope 3 and packaging recovery data to satisfy regulatory, investor, or board reporting demands</span></div></div>
     </div>
   </div>
 
-  <!-- HOW IT WORKS -->
-  <div class="section">
-    <div class="section-label">The process</div>
-    <h2>How the snapshot works</h2>
-    <p class="section-sub">Three steps. One week. A clear picture of what's possible in your territory.</p>
-
-    <div class="steps">
-      <div class="step">
-        <div class="step-num">01</div>
-        <h3>You fill in the form</h3>
-        <p>Tell us your sector, geography, and what challenge you're trying to solve. Takes under 3 minutes.</p>
-      </div>
-      <div class="step">
-        <div class="step-num">02</div>
-        <h3>We map your context</h3>
-        <p>We assess your existing field infrastructure against our verification logic and identify the highest-value use case for your situation.</p>
-      </div>
-      <div class="step">
-        <div class="step-num">03</div>
-        <h3>You receive your snapshot</h3>
-        <p>A concise document: what actions you can verify, what proof you'd generate, estimated timeline, and a clear feasibility verdict.</p>
-      </div>
-    </div>
-  </div>
-
-  <!-- FOR WHO -->
-  <div class="for-section">
-    <div class="for-inner">
-      <div>
-        <div class="section-label">Who it's for</div>
-        <h2 style="font-family:'Syne',sans-serif;font-size:clamp(1.6rem,3vw,2.2rem);font-weight:800;line-height:1.1;letter-spacing:-0.03em;margin-bottom:0.6rem;">Built for organisations with field teams and compliance pressure.</h2>
-        <p style="color:var(--grey);font-size:0.95rem;margin-bottom:2rem;">If you have people in the field and ESG commitments on paper, the snapshot will tell you exactly how to connect the two.</p>
-        <div class="for-list">
-          <div class="for-item">
-            <span class="for-item-icon">🏭</span>
-            <div class="for-item-text">
-              <h4>FMCG companies & bottlers</h4>
-              <p>EPR compliance, packaging recovery, Scope 3 verified data</p>
-            </div>
-          </div>
-          <div class="for-item">
-            <span class="for-item-icon">🌍</span>
-            <div class="for-item-text">
-              <h4>NGOs & foundations</h4>
-              <p>Circular economy programmes needing verifiable field execution</p>
-            </div>
-          </div>
-          <div class="for-item">
-            <span class="for-item-icon">🏛️</span>
-            <div class="for-item-text">
-              <h4>Public & development programmes</h4>
-              <p>Distributed initiatives requiring audit-ready action evidence</p>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div>
-        <div class="section-label" style="margin-bottom:1rem;">What it is not</div>
-        <div class="not-for">
-          <h4>THE SNAPSHOT WON'T HELP IF YOU NEED:</h4>
-          <div class="not-for-item">A generic ESG report or benchmarking exercise</div>
-          <div class="not-for-item">A sensor or IoT installation project</div>
-          <div class="not-for-item">A full external audit replacement</div>
-          <div class="not-for-item">A reporting dashboard with no field component</div>
-        </div>
-        <p style="color:var(--grey);font-size:0.85rem;margin-top:1.2rem;">Play for Earth is an execution layer — it works best when you already have people in the field and need to turn their activity into verified proof.</p>
-      </div>
-    </div>
-  </div>
-
-  <!-- FORM -->
-  <div class="form-section" id="get-snapshot">
-    <div class="form-header">
-      <div class="tag" style="margin:0 auto 1.5rem;">Takes under 3 minutes</div>
-      <h2>Get your <em>free snapshot</em></h2>
-      <p>Tell us about your context. We'll do the rest and be back within 5 business days.</p>
-    </div>
-
-    <div class="form-wrapper">
-      <!-- ============================================================
-           REPLACE THIS BLOCK WITH YOUR GOOGLE FORM IFRAME
-           
-           Steps:
-           1. Open your Google Form
-           2. Click Send → Embed ( < > icon )
-           3. Copy the iframe src URL
-           4. Replace the .form-placeholder div below with:
-
-           <iframe
-             src="https://docs.google.com/forms/d/e/YOUR_FORM_ID/viewform?embedded=true"
-             width="100%"
-             height="700"
-             frameborder="0"
-             marginheight="0"
-             marginwidth="0"
-             style="display:block;"
-           >Loading…</iframe>
-           ============================================================ -->
-
-      <div class="form-placeholder">
-        <div class="placeholder-icon">📋</div>
-        <h3>Google Form goes here</h3>
-        <p>Replace this block with your Google Form embed iframe. See the HTML comment above for exact instructions.</p>
-        <p style="margin-top:0.5rem;">The embed src will look like:<br>
-        <code>https://docs.google.com/forms/d/e/[YOUR_ID]/viewform?embedded=true</code></p>
-        <p style="margin-top:1rem;font-size:0.82rem;color:var(--grey);">Alternatively, <a href="/contact" style="color:var(--lime)">contact us directly</a> or <a href="https://calendly.com/play-for-earth-info/30min" style="color:var(--lime)" target="_blank">book a demo</a>.</p>
-      </div>
-    </div>
-
-    <div class="form-guarantee">
-      <div class="guarantee-item"><span>✓</span> Free, no commitment</div>
-      <div class="guarantee-item"><span>✓</span> Delivered in 5 business days</div>
-      <div class="guarantee-item"><span>✓</span> No sales call required</div>
-      <div class="guarantee-item"><span>✓</span> Honest feasibility assessment</div>
+  <div class="form-section">
+    <div class="form-card">
+      <h2>Request your free snapshot</h2>
+      <p class="form-sub">Takes 3 minutes. We'll be in touch within 2 business days to confirm receipt and timeline.</p>
+      <!-- Replace this iframe src with your actual Google Form embed URL -->
+      <!-- Go to your Google Form → Send → < > Embed → copy the src URL -->
+      <iframe
+        class="form-embed"
+        src="https://docs.google.com/forms/d/e/1FAIpQLSexample/viewform?embedded=true"
+        frameborder="0"
+        marginheight="0"
+        marginwidth="0"
+        title="ESG Snapshot Request Form">
+        Loading form…
+      </iframe>
+      <p style="font-size:0.8rem;color:var(--ink-light);margin-top:16px;text-align:center;">Or email us directly at <a href="mailto:play.for.earth.info@gmail.com" style="color:var(--green);font-weight:600;">play.for.earth.info@gmail.com</a></p>
     </div>
   </div>
 
   <footer>
-    <a href="/" class="footer-logo">PlayforEarth</a>
-    <div class="footer-links-row">
-      <a href="/">Home</a>
-      <a href="/faq">FAQ</a>
-      <a href="/pricing">Pricing</a>
-      <a href="/terms">Terms of Use</a>
-      <a href="/privacy">Privacy Policy</a>
-      <a href="/contact">Contact</a>
+    <div class="footer-inner">
+      <div class="footer-brand"><a href="/">Play for <em>Earth</em></a><p>The behavioral OS for the circular economy.</p></div>
+      <div class="footer-links">
+        <div class="footer-col"><h5>Platform</h5><ul><li><a href="/#solution">How It Works</a></li><li><a href="/#pricing">Pricing</a></li><li><a href="/esg-impact-snapshot">ESG Snapshot</a></li></ul></div>
+        <div class="footer-col"><h5>Company</h5><ul><li><a href="/contact">Contact</a></li><li><a href="/faq">FAQ</a></li><li><a href="/terms">Terms</a></li><li><a href="/privacy">Privacy</a></li></ul></div>
+      </div>
     </div>
-    <div class="footer-copy">© 2025 Play for Earth. All rights reserved.</div>
+    <div class="footer-bottom">
+      <span class="footer-copy">© 2025 Play for Earth. Nairobi, Kenya. All rights reserved.</span>
+      <div class="footer-legal"><a href="/terms">Terms</a><a href="/privacy">Privacy</a></div>
+    </div>
   </footer>
+</div>
+<script>window.addEventListener('scroll',()=>{document.querySelector('nav').style.background=window.scrollY>60?'rgba(240,250,242,0.98)':'rgba(240,250,242,0.92)';});</script>
 </body>
 </html>
-
-      <div class="form-placeholder">
-        <div class="placeholder-icon">📋</div>
-        <h3>Google Form goes here</h3>
-        <p>Replace this block with your Google Form embed iframe. See the HTML comment above for exact instructions.</p>
-        <p style="margin-top:0.5rem;">The embed src will look like:<br>
-        <code>https://docs.google.com/forms/d/e/[YOUR_ID]/viewform?embedded=true</code></p>
-        <p style="margin-top:1rem;font-size:0.82rem;color:var(--grey);">Alternatively, <a href="/contact" style="color:var(--lime)">contact us directly</a> or <a href="https://calendly.com/play-for-earth-info/30min" style="color:var(--lime)" target="_blank">book a demo</a>.</p>
-      </div>
-    </div>
-
-    <div class="form-guarantee">
-      <div class="guarantee-item"><span>✓</span> Free, no commitment</div>
-      <div class="guarantee-item"><span>✓</span> Delivered in 5 business days</div>
-      <div class="guarantee-item"><span>✓</span> No sales call required</div>
-      <div class="guarantee-item"><span>✓</span> Honest feasibility assessment</div>
-    </div>
-  </div>
-
-  <footer>
-    <a href="/" class="footer-logo">PlayforEarth</a>
-    <div class="footer-links-row">
-      <a href="/">Home</a>
-      <a href="/faq">FAQ</a>
-      <a href="/pricing">Pricing</a>
-      <a href="/terms">Terms of Use</a>
-      <a href="/privacy">Privacy Policy</a>
-      <a href="/contact">Contact</a>
-    </div>
-    <div class="footer-copy">© 2025 Play for Earth. All rights reserved.</div>
-  </footer>
-</body>
 </html>
 Claude
