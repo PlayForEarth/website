@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FAQ — Play for Earth</title>
+  <meta name="description" content="Frequently asked questions about Play for Earth — the circular economy field execution platform for FMCG EPR compliance.">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://www.playforearth.org/faq">
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --dark: #0a1a0e;
+      --green-deep: #0d2b14;
+      --green-mid: #1a4a24;
+      --lime: #8aff4a;
+      --lime-soft: #b8ff8a;
+      --white: #f5f5f0;
+      --grey: #8a9a8e;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { background: var(--dark); color: var(--white); font-family: 'DM Sans', sans-serif; font-size: 16px; line-height: 1.6; }
+
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1.2rem 2.5rem;
+      background: rgba(10,26,14,0.95); backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(138,255,74,0.12);
+    }
+    .nav-logo { font-family: 'Syne', sans-serif; font-size: 1.15rem; font-weight: 800; color: var(--lime); text-decoration: none; letter-spacing: -0.02em; }
+    .nav-logo span { color: var(--white); }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a { color: var(--grey); text-decoration: none; font-size: 0.875rem; font-weight: 500; transition: color 0.2s; }
+    .nav-links a:hover, .nav-links a.active { color: var(--lime); }
+    .nav-cta { background: var(--lime) !important; color: var(--dark) !important; padding: 0.5rem 1.2rem !important; border-radius: 2px; font-weight: 700 !important; }
+    @media (max-width: 768px) { .nav-links { display: none; } }
+
+    .page-wrapper { padding-top: 80px; }
+
+    .page-hero { padding: 5rem 2.5rem 3rem; max-width: 860px; margin: 0 auto; }
+    .tag { display: inline-block; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: var(--lime); border: 1px solid rgba(138,255,74,0.3); padding: 0.3rem 0.8rem; border-radius: 2px; margin-bottom: 1.5rem; }
+    .page-hero h1 { font-family: 'Syne', sans-serif; font-size: clamp(2.5rem, 5vw, 3.8rem); font-weight: 800; line-height: 1.05; letter-spacing: -0.03em; margin-bottom: 1.2rem; }
+    .page-hero h1 em { color: var(--lime); font-style: normal; }
+    .page-hero p { color: var(--grey); font-size: 1.05rem; max-width: 580px; }
+
+    .faq-container { max-width: 860px; margin: 0 auto; padding: 2rem 2.5rem 6rem; }
+
+    .faq-category { margin-bottom: 3.5rem; }
+    .faq-category-title {
+      font-family: 'Syne', sans-serif;
+      font-size: 0.75rem; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase;
+      color: var(--lime); margin-bottom: 1.5rem;
+      display: flex; align-items: center; gap: 0.8rem;
+    }
+    .faq-category-title::after { content: ''; flex: 1; height: 1px; background: rgba(138,255,74,0.15); }
+
+    .faq-item { border-bottom: 1px solid rgba(255,255,255,0.06); }
+    .faq-question {
+      width: 100%; background: none; border: none; cursor: pointer;
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 1.4rem 0; gap: 1rem;
+      color: var(--white); font-family: 'DM Sans', sans-serif; font-size: 1rem; font-weight: 600;
+      text-align: left; transition: color 0.2s;
+    }
+    .faq-question:hover { color: var(--lime); }
+    .faq-question .icon {
+      width: 28px; height: 28px; border: 1px solid rgba(138,255,74,0.25); border-radius: 50%;
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+      font-size: 1.1rem; color: var(--lime); transition: transform 0.3s;
+    }
+    .faq-item.open .icon { transform: rotate(45deg); }
+    .faq-answer { max-height: 0; overflow: hidden; transition: max-height 0.35s ease; }
+    .faq-answer-inner { padding: 0 0 1.5rem; color: var(--grey); font-size: 0.95rem; line-height: 1.7; }
+    .faq-answer-inner a { color: var(--lime); }
+    .faq-item.open .faq-answer { max-height: 400px; }
+
+    .cta-block {
+      max-width: 860px; margin: 0 auto 6rem; padding: 3rem 2.5rem;
+      background: var(--green-deep); border: 1px solid rgba(138,255,74,0.15);
+      border-radius: 4px; text-align: center;
+    }
+    .cta-block h2 { font-family: 'Syne', sans-serif; font-size: 1.8rem; font-weight: 800; margin-bottom: 0.8rem; }
+    .cta-block p { color: var(--grey); margin-bottom: 1.8rem; }
+    .btn-primary { display: inline-block; background: var(--lime); color: var(--dark); padding: 0.85rem 2rem; font-family: 'Syne', sans-serif; font-weight: 700; font-size: 0.9rem; text-decoration: none; border-radius: 2px; transition: background 0.2s; margin: 0.4rem; }
+    .btn-primary:hover { background: var(--lime-soft); }
+    .btn-ghost { display: inline-block; border: 1px solid rgba(138,255,74,0.4); color: var(--lime); padding: 0.85rem 2rem; font-family: 'Syne', sans-serif; font-weight: 600; font-size: 0.9rem; text-decoration: none; border-radius: 2px; transition: all 0.2s; margin: 0.4rem; }
+    .btn-ghost:hover { border-color: var(--lime); background: rgba(138,255,74,0.08); }
+
+    footer { padding: 3rem 2.5rem; border-top: 1px solid rgba(138,255,74,0.1); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1.5rem; }
+    .footer-logo { font-family: 'Syne', sans-serif; color: var(--lime); font-weight: 800; font-size: 1rem; text-decoration: none; }
+    .footer-links-row { display: flex; gap: 1.5rem; flex-wrap: wrap; }
+    .footer-links-row a { color: var(--grey); text-decoration: none; font-size: 0.85rem; transition: color 0.2s; }
+    .footer-links-row a:hover { color: var(--lime); }
+    .footer-copy { color: var(--grey); font-size: 0.8rem; }
+  </style>
+</head>
+<body>
+  <nav>
+    <a href="/" class="nav-logo">Play<span>for</span>Earth</a>
+    <ul class="nav-links">
+      <li><a href="/">Home</a></li>
+      <li><a href="/esg-impact-snapshot">ESG Snapshot</a></li>
+      <li><a href="/pricing">Pricing</a></li>
+      <li><a href="/about">About</a></li>
+      <li><a href="/faq" class="active">FAQ</a></li>
+      <li><a href="/contact" class="nav-cta">Contact</a></li>
+    </ul>
+  </nav>
+
+  <div class="page-wrapper">
+    <div class="page-hero">
+      <div class="tag">FAQ</div>
+      <h1>Questions about <em>Play for Earth</em></h1>
+      <p>Everything you need to know about how the platform works, who it's for, and how to get started.</p>
+    </div>
+
+    <div class="faq-container">
+
+      <div class="faq-category">
+        <div class="faq-category-title">The Platform</div>
+
+        <div class="faq-item">
+          <button class="faq-question">What is Play for Earth? <span class="icon">+</span></button>
+          <div class="faq-answer"><div class="faq-answer-inner">Play for Earth is a circular economy operating system that activates existing FMCG field agents and sales reps to verify real-world ESG and EPR actions — photo by photo, visit by visit. No new headcount, no new infrastructure required.</div></div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question">What kinds of actions does the platform verify? <span class="icon">+</span></button>
+          <div class="faq-answer"><div class="faq-answer-inner">We verify actions like device or packaging returns, reuse and refill actions, cold-chain compliance (fridge temperatures), on-site ESG practices, and EPR-related collection activities. Each action is verified via photo, geo-tag, and behavioral data.</div></div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question">Is it a reporting tool or an audit tool? <span class="icon">+</span></button>
+          <div class="faq-answer"><div class="faq-answer-inner">Neither. Play for Earth is an <strong>execution and verification layer</strong>. It doesn't replace your ESG reporting software or external audits — it provides the verified field evidence those systems need. Think of it as the missing proof layer between commitment and report.</div></div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question">Does it require sensors or special hardware? <span class="icon">+</span></button>
+          <div class="faq-answer"><div class="faq-answer-inner">No. The platform works entirely through smartphones already carried by field agents. No sensors, no IoT devices, no new equipment purchases. This is a core design principle: we work with what already exists in the field.</div></div>
+        </div>
+      </div>
+
+      <div class="faq-category">
+        <div class="faq-category-title">Who It's For</div>
+
+        <div class="faq-item">
+          <button class="faq-question">Who is Play for Earth built for? <span class="icon">+</span></button>
+          <div class="faq-answer"><div class="faq-answer-inner">Primarily FMCG companies, bottlers, and distributors who need verified EPR compliance and Scope 3 emissions data. Also NGOs, foundations, and development programmes that need field execution infrastructure for circular economy or sustainability programmes.</div></div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question">In which geographies do you operate? <span class="icon">+</span></button>
+          <div class="faq-answer"><div class="faq-answer-inner">We're active in Vietnam (20,000+ verified field actions) and developing markets in Africa — Kenya and Zambia are primary targets. We're also tracking EPR regulatory rollouts in Malaysia and Thailand as entry signals.</div></div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question">Can NGOs or development programmes use the platform? <span class="icon">+</span></button>
+          <div class="faq-answer"><div class="faq-answer-inner">Yes. While our primary commercial focus is FMCG companies, the platform is designed for any organisation running distributed field programmes that require verified action data — NGOs, public health programmes, and development funders included.</div></div>
+        </div>
+      </div>
+
+      <div class="faq-category">
+        <div class="faq-category-title">Getting Started</div>
+
+        <div class="faq-item">
+          <button class="faq-question">What is the free ESG snapshot? <span class="icon">+</span></button>
+          <div class="faq-answer"><div class="faq-answer-inner">It's a scoped feasibility assessment for your specific context: one use case, one geography, clear output. We map your existing field infrastructure against the platform's verification logic and deliver a concrete picture of what proof you could generate and how fast. No commitment required.</div></div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question">How long does onboarding take? <span class="icon">+</span></button>
+          <div class="faq-answer"><div class="faq-answer-inner">A standard territory onboarding takes 4–6 weeks. This includes field agent configuration, verification logic setup, dashboard configuration, and a pilot run. We offer a one-time onboarding fee per territory (USD 15–35K depending on scope).</div></div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question">What does it cost? <span class="icon">+</span></button>
+          <div class="faq-answer"><div class="faq-answer-inner">Licensing is seat-based at USD 25–60 per user per month, plus a one-time territory onboarding fee. See our <a href="/pricing">Pricing page</a> for details, or <a href="/contact">contact us</a> for a custom quote.</div></div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question">How do I get started? <span class="icon">+</span></button>
+          <div class="faq-answer"><div class="faq-answer-inner">The best first step is requesting a free ESG snapshot — it's a no-commitment scoping session that gives you a clear picture of what's possible in your context. You can also book a 30-minute demo directly via Calendly. Both options are available on our <a href="/contact">Contact page</a>.</div></div>
+        </div>
+      </div>
+
+      <div class="faq-category">
+        <div class="faq-category-title">Legal & Data</div>
+
+        <div class="faq-item">
+          <button class="faq-question">How is field agent data handled? <span class="icon">+</span></button>
+          <div class="faq-answer"><div class="faq-answer-inner">Each client environment is isolated in a multi-tenant architecture. Field verification data (photos, geo-tags, timestamps) is stored securely and only accessible to the relevant client account. We do not share data between clients.</div></div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question">Where can I find your Terms of Use and Privacy Policy? <span class="icon">+</span></button>
+          <div class="faq-answer"><div class="faq-answer-inner">You can find our <a href="/terms">Terms of Use here</a> and our <a href="/privacy">Privacy Policy here</a>.</div></div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="cta-block">
+      <h2>Still have questions?</h2>
+      <p>We're happy to walk you through the platform in a 30-minute demo.</p>
+      <a href="/contact" class="btn-primary">Contact us</a>
+      <a href="/esg-impact-snapshot" class="btn-ghost">Get free ESG snapshot</a>
+    </div>
+
+    <footer>
+      <a href="/" class="footer-logo">PlayforEarth</a>
+      <div class="footer-links-row">
+        <a href="/">Home</a>
+        <a href="/faq">FAQ</a>
+        <a href="/pricing">Pricing</a>
+        <a href="/terms">Terms of Use</a>
+        <a href="/privacy">Privacy Policy</a>
+        <a href="/contact">Contact</a>
+      </div>
+      <div class="footer-copy">© 2025 Play for Earth. All rights reserved.</div>
+    </footer>
+  </div>
+
+  <script>
+    document.querySelectorAll('.faq-question').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const item = btn.parentElement;
+        const isOpen = item.classList.contains('open');
+        document.querySelectorAll('.faq-item.open').forEach(i => i.classList.remove('open'));
+        if (!isOpen) item.classList.add('open');
+      });
+    });
+  </script>
+</body>
+</html>
