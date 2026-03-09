@@ -186,11 +186,11 @@ nav {
 
 /* ─── HERO ─── */
 .hero {
-  min-height: 100vh;
+  min-height: 85vh;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-  padding: 0 5% 100px;
+  padding: 0 5% 60px;
   position: relative;
   overflow: hidden;
   background: var(--bg);
@@ -278,38 +278,58 @@ nav {
   animation: fadeUp 0.8s ease 0.6s both;
 }
 
-.hero-bullets {
-  list-style: none;
-  margin-bottom: 44px;
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 12px;
+/* hero-bullets removed — moved to .value-props section below */
+
+/* ─── VALUE PROPS (below hero CTA) ─── */
+.value-props {
+  background: var(--bg);
+  padding: 0 5% 80px;
   position: relative;
   z-index: 2;
-  max-width: 680px;
 }
-.hero-bullets li {
-  background: rgba(255,255,255,0.75);
-  border: 1px solid rgba(26,140,63,0.12);
-  border-radius: 12px;
-  padding: 16px 18px;
+.value-props-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  max-width: 900px;
+}
+.value-prop-card {
+  background: white;
+  border: 1px solid rgba(26,140,63,0.14);
+  border-radius: 16px;
+  padding: 28px 24px;
   display: flex;
   flex-direction: column;
-  gap: 5px;
+  gap: 8px;
+  box-shadow: 0 2px 12px rgba(18,39,26,0.05);
+  transition: box-shadow 0.2s, transform 0.2s;
 }
-.hero-bullets li .bullet-label {
-  font-size: 0.7rem;
+.value-prop-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 24px rgba(18,39,26,0.09);
+}
+.value-prop-label {
+  font-size: 0.68rem;
   font-weight: 700;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--green);
   display: flex;
   align-items: center;
-  gap: 5px;
+  gap: 6px;
 }
-.hero-bullets li .bullet-label::before { content: '✓'; font-size: 0.65rem; }
-.hero-bullets li .bullet-title { font-size: 0.88rem; font-weight: 700; color: var(--ink); line-height: 1.3; }
-.hero-bullets li .bullet-desc { font-size: 0.75rem; color: var(--ink-light); line-height: 1.5; }
+.value-prop-label::before { content: '✓'; }
+.value-prop-title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--ink);
+  line-height: 1.3;
+}
+.value-prop-desc {
+  font-size: 0.85rem;
+  color: var(--ink-light);
+  line-height: 1.6;
+}
 
 .hero-actions {
   display: flex;
@@ -400,8 +420,6 @@ nav {
 }
 @keyframes scanLine { 0% { left: -100%; } 100% { left: 100%; } }
 
-/* ─── MOBILE STATS STRIP (removed) ─── */
-
 /* ─── LOGOS / SOCIAL PROOF ─── */
 .logos-strip { background: white; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 36px 5%; overflow: hidden; }
 .logos-inner { display: flex; align-items: center; gap: 48px; flex-wrap: wrap; justify-content: center; }
@@ -481,14 +499,42 @@ section { padding: 120px 5%; }
 #gti .gti-intro { font-size: 17px; line-height: 1.65; color: #2a4a2a; max-width: 560px; margin-bottom: 56px; font-weight: 300; }
 #gti .gti-intro strong { font-weight: 500; color: var(--ink); }
 #gti .gti-body { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: start; }
-#gti .formula-card { background: #0d2d0d; border-radius: 12px; padding: 36px; color: #7ddb7d; font-family: monospace; }
-#gti .formula-main { font-size: 15px; font-weight: 500; color: #7ddb7d; margin-bottom: 28px; line-height: 1.5; }
-#gti .formula-vars { display: flex; flex-direction: column; gap: 10px; margin-bottom: 28px; }
-#gti .var-row { display: grid; grid-template-columns: 20px 1fr 40px; gap: 12px; font-size: 13px; align-items: center; }
-#gti .var-letter { color: #7ddb7d; font-weight: 500; }
-#gti .var-label { color: #4aaa4a; font-size: 12px; }
-#gti .var-weight { color: #2d6b2d; font-size: 11px; text-align: right; }
-#gti .formula-footer { font-size: 11px; color: #2d6b2d; line-height: 1.6; border-top: 1px solid #1a4a1a; padding-top: 20px; }
+
+/* ── GTI Formula Card: lightened for readability ── */
+#gti .formula-card {
+  background: #1a4a1a;
+  border-radius: 12px;
+  padding: 36px;
+  color: #a8edaa;
+  font-family: monospace;
+  border: 1px solid #2a6a2a;
+}
+#gti .formula-main {
+  font-size: 17px;
+  font-weight: 600;
+  color: #d0f5d0;
+  margin-bottom: 28px;
+  line-height: 1.6;
+}
+#gti .formula-vars { display: flex; flex-direction: column; gap: 12px; margin-bottom: 28px; }
+#gti .var-row {
+  display: grid;
+  grid-template-columns: 20px 1fr 40px;
+  gap: 12px;
+  font-size: 14px;
+  align-items: center;
+}
+#gti .var-letter { color: #d0f5d0; font-weight: 600; font-size: 15px; }
+#gti .var-label { color: #88cc88; font-size: 13px; }
+#gti .var-weight { color: #66aa66; font-size: 12px; text-align: right; }
+#gti .formula-footer {
+  font-size: 12px;
+  color: #66aa66;
+  line-height: 1.6;
+  border-top: 1px solid #2a5a2a;
+  padding-top: 20px;
+}
+
 #gti .gti-stages-label { font-size: 11px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: #1a5c1a; margin-bottom: 20px; }
 #gti .gti-stages-list { display: flex; flex-direction: column; }
 #gti .gti-stage-row { display: grid; grid-template-columns: 44px 1fr auto; gap: 14px; align-items: center; padding: 16px 0; border-bottom: 1px solid #c5dfc5; }
@@ -664,7 +710,6 @@ footer { background: var(--ink); border-top: 1px solid rgba(245,242,236,0.07); p
 .hero-video-placeholder { width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; background: linear-gradient(135deg, #0d2d0d 0%, #1a5c1a 100%); color: rgba(255,255,255,0.5); font-size: 0.75rem; letter-spacing: 0.08em; text-transform: uppercase; }
 .hero-video-placeholder .play-btn { width: 48px; height: 48px; border-radius: 50%; border: 2px solid rgba(255,255,255,0.3); display: flex; align-items: center; justify-content: center; color: rgba(255,255,255,0.6); font-size: 1.2rem; }
 
-/* actor-photo defined in actor-card block above */
 .rep-profile { display: flex; align-items: center; gap: 12px; margin-bottom: 18px; padding-bottom: 16px; border-bottom: 1px solid rgba(18,39,26,0.07); }
 .rep-profile img { width: 46px; height: 46px; border-radius: 50%; border: 2px solid var(--green-pale); flex-shrink: 0; background: var(--green-pale); object-fit: cover; }
 .rep-profile-info { flex: 1; }
@@ -674,8 +719,6 @@ footer { background: var(--ink); border-top: 1px solid rgba(245,242,236,0.07); p
 .cta-faces img { width: 52px; height: 52px; border-radius: 50%; border: 3px solid rgba(240,250,242,0.25); margin-left: -14px; background: rgba(34,197,94,0.2); }
 .cta-faces img:first-child { margin-left: 0; }
 .cta-faces-label { margin-left: 18px; font-size: 0.82rem; color: rgba(245,242,236,0.55); font-weight: 500; max-width: 160px; line-height: 1.4; }
-
-/* ─── REVEAL (disabled - content always visible) ─── */
 
 /* ─── HERO ENTRANCE ─── */
 @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
@@ -706,41 +749,38 @@ footer { background: var(--ink); border-top: 1px solid rgba(245,242,236,0.07); p
   section { padding: 72px 5%; }
   #contact { padding: 100px 5%; }
 
-  /* ── Hero ── */
+  /* ── Hero: focused, no bullets ── */
   .hero {
     min-height: 100svh;
-    padding: 96px 5% 72px;
+    padding: 100px 5% 48px;
     justify-content: center;
   }
   .hero-stats, .hero-video { display: none; }
   .hero-scroll { display: none; }
 
   .hero-headline {
-    font-size: clamp(2.1rem, 7vw, 2.8rem);
+    font-size: clamp(2.2rem, 7.5vw, 3rem);
     max-width: 100%;
+    margin-bottom: 20px;
   }
   .hero-sub {
-    font-size: 0.98rem;
-    margin-bottom: 28px;
+    font-size: 1rem;
+    margin-bottom: 32px;
     max-width: 100%;
+    line-height: 1.7;
   }
   .hero-eyebrow {
     font-size: 0.7rem;
     padding: 5px 12px;
-    margin-bottom: 20px;
+    margin-bottom: 22px;
   }
 
-  /* Hero bullets: keep 3-col, scale down text, show all info */
-  .hero-bullets {
-    grid-template-columns: repeat(3, 1fr);
-    gap: 10px;
-    margin-bottom: 32px;
-    max-width: 100%;
-  }
-  .hero-bullets li { padding: 13px 12px; }
-  .hero-bullets li .bullet-label { font-size: 0.6rem; }
-  .hero-bullets li .bullet-title { font-size: 0.8rem; }
-  .hero-bullets li .bullet-desc { font-size: 0.71rem; display: block; }
+  /* ── Value props: stack to 1 column ── */
+  .value-props { padding: 0 5% 60px; }
+  .value-props-grid { grid-template-columns: 1fr; gap: 12px; }
+  .value-prop-card { padding: 22px 20px; }
+  .value-prop-title { font-size: 1rem; }
+  .value-prop-desc { font-size: 0.87rem; }
 
   /* Hero actions: full-width stack */
   .hero-actions {
@@ -760,10 +800,7 @@ footer { background: var(--ink); border-top: 1px solid rgba(245,242,236,0.07); p
   }
 
   /* ── Logos ── */
-  .logos-inner {
-    gap: 24px;
-    row-gap: 16px;
-  }
+  .logos-inner { gap: 24px; row-gap: 16px; }
   .logos-label { width: 100%; text-align: center; }
   .logo-item { font-size: 1rem; }
 
@@ -773,62 +810,38 @@ footer { background: var(--ink); border-top: 1px solid rgba(245,242,236,0.07); p
   .problem-card::before { font-size: 3.5rem; }
 
   /* ── Solution ── */
-  .solution-layout {
-    grid-template-columns: 1fr;
-    gap: 40px;
-    margin-top: 48px;
-  }
-  .solution-visual {
-    padding: 24px 20px;
-  }
-  /* Reorder: visual first on mobile for context */
+  .solution-layout { grid-template-columns: 1fr; gap: 40px; margin-top: 48px; }
+  .solution-visual { padding: 24px 20px; }
   .solution-right { order: -1; }
   .flow-tag { display: none; }
   .flow-dot { width: 28px; height: 28px; font-size: 0.68rem; }
 
   /* ── How it Works ── */
-  .steps-grid {
-    grid-template-columns: 1fr 1fr;
-    border-radius: 12px;
-    margin-top: 48px;
-  }
+  .steps-grid { grid-template-columns: 1fr 1fr; border-radius: 12px; margin-top: 48px; }
   .step { padding: 24px 18px; }
   .step:nth-child(1), .step:nth-child(2) { border-bottom: 1px solid rgba(18,39,26,0.07); }
   .step:nth-child(3), .step:nth-child(4) { border-bottom: 1px solid rgba(18,39,26,0.07); }
   .step:nth-child(2) { border-right: none; }
   .step:nth-child(4) { border-right: none; }
-  .step:nth-child(5) {
-    grid-column: 1 / -1;
-    border-right: none;
-    border-top: 1px solid rgba(18,39,26,0.07);
-  }
+  .step:nth-child(5) { grid-column: 1 / -1; border-right: none; border-top: 1px solid rgba(18,39,26,0.07); }
   .step-num { font-size: 1.6rem; margin-bottom: 8px; }
-
   .actors-grid { grid-template-columns: 1fr; gap: 14px; margin-top: 32px; }
-  .actor-card {
-    padding: 20px;
-    gap: 10px;
-  }
+  .actor-card { padding: 20px; gap: 10px; }
   .actor-photo { width: 52px; height: 52px; }
 
   /* ── GTI ── */
   #gti { padding: 72px 5%; }
   #gti .gti-intro { font-size: 15px; margin-bottom: 36px; }
-  #gti .gti-body {
-    grid-template-columns: 1fr;
-    gap: 28px;
-  }
-  #gti .formula-card { padding: 24px 20px; }
-  #gti .formula-main { font-size: 13px; }
+  #gti .gti-body { grid-template-columns: 1fr; gap: 28px; }
+  #gti .formula-card { padding: 28px 24px; }
+  #gti .formula-main { font-size: 16px; }
+  #gti .var-row { font-size: 14px; }
+  #gti .var-label { font-size: 13px; }
   #gti .gti-stage-row { grid-template-columns: 40px 1fr; gap: 10px; }
   #gti .gti-badge { display: none; }
 
   /* ── Traction ── */
-  .traction-layout {
-    grid-template-columns: 1fr;
-    gap: 40px;
-    margin-top: 48px;
-  }
+  .traction-layout { grid-template-columns: 1fr; gap: 40px; margin-top: 48px; }
   .traction-numbers { grid-template-columns: 1fr 1fr; gap: 12px; }
   .traction-card { padding: 22px 18px; }
   .traction-num { font-size: 1.9rem; }
@@ -843,11 +856,7 @@ footer { background: var(--ink); border-top: 1px solid rgba(245,242,236,0.07); p
   .market-card p { font-size: 0.78rem; }
 
   /* ── Pricing ── */
-  .pricing-grid {
-    grid-template-columns: 1fr;
-    gap: 16px;
-    margin-top: 48px;
-  }
+  .pricing-grid { grid-template-columns: 1fr; gap: 16px; margin-top: 48px; }
   .price-card { padding: 32px 24px; }
   .price-card.featured { transform: none; }
   .price-card.featured:hover { transform: translateY(-3px); }
@@ -861,35 +870,16 @@ footer { background: var(--ink); border-top: 1px solid rgba(245,242,236,0.07); p
 
   /* ── CTA ── */
   #contact .section-title { font-size: clamp(1.9rem, 6vw, 2.6rem); }
-  .cta-buttons {
-    flex-direction: column;
-    align-items: center;
-    gap: 12px;
-  }
-  .btn-outline, .btn-primary.btn-large {
-    width: 100%;
-    max-width: 320px;
-    text-align: center;
-  }
+  .cta-buttons { flex-direction: column; align-items: center; gap: 12px; }
+  .btn-outline, .btn-primary.btn-large { width: 100%; max-width: 320px; text-align: center; }
 
   /* ── Footer ── */
   footer { padding: 56px 5% 32px; }
-  .footer-grid {
-    grid-template-columns: 1fr 1fr;
-    gap: 32px;
-    margin-bottom: 40px;
-  }
-  .footer-grid > div:first-child {
-    grid-column: 1 / -1;
-  }
+  .footer-grid { grid-template-columns: 1fr 1fr; gap: 32px; margin-bottom: 40px; }
+  .footer-grid > div:first-child { grid-column: 1 / -1; }
   .footer-tagline { max-width: 100%; }
-  .footer-bottom {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 14px;
-  }
+  .footer-bottom { flex-direction: column; align-items: flex-start; gap: 14px; }
 
-  /* Reduce section-title size */
   .section-title { font-size: clamp(1.9rem, 6vw, 2.8rem); }
   .section-sub { font-size: 0.95rem; }
 }
@@ -900,15 +890,19 @@ footer { background: var(--ink); border-top: 1px solid rgba(245,242,236,0.07); p
 @media (max-width: 480px) {
   section { padding: 60px 5%; }
 
-  .hero-headline { font-size: clamp(1.85rem, 8vw, 2.4rem); }
-  .hero-sub { font-size: 0.92rem; line-height: 1.7; }
+  .hero-headline { font-size: clamp(1.9rem, 8vw, 2.5rem); }
+  .hero-sub { font-size: 0.95rem; line-height: 1.7; }
 
-  /* Bullets stay 3-col even on small screens */
-  .hero-bullets { gap: 8px; }
-  .hero-bullets li { padding: 11px 10px; }
-  .hero-bullets li .bullet-label { font-size: 0.55rem; }
-  .hero-bullets li .bullet-title { font-size: 0.75rem; }
-  .hero-bullets li .bullet-desc { font-size: 0.67rem; }
+  /* Bullets stay stacked, comfortable padding */
+  .hero-bullets li { padding: 16px 18px; }
+  .hero-bullets li .bullet-title { font-size: 0.92rem; }
+  .hero-bullets li .bullet-desc { font-size: 0.8rem; }
+
+  /* GTI formula card: comfortable on smallest screens */
+  #gti .formula-card { padding: 22px 18px; }
+  #gti .formula-main { font-size: 14px; }
+  #gti .var-row { font-size: 13px; gap: 8px; }
+  #gti .var-label { font-size: 12px; }
 
   .traction-numbers { grid-template-columns: 1fr 1fr; }
   .traction-card { padding: 18px 14px; }
@@ -927,9 +921,6 @@ footer { background: var(--ink); border-top: 1px solid rgba(245,242,236,0.07); p
   .logos-inner { gap: 16px; }
   .logo-item { font-size: 0.9rem; }
   .logo-item sup { display: none; }
-
-  #gti .formula-card { padding: 20px 16px; overflow-x: auto; }
-  #gti .formula-main { font-size: 12px; word-break: break-all; }
 
   .price-card { padding: 28px 20px; }
   .pricing-grid { gap: 14px; }
@@ -1009,22 +1000,8 @@ footer { background: var(--ink); border-top: 1px solid rgba(245,242,236,0.07); p
     Play for Earth layers onto your <strong>existing field rep network</strong> — turning routine visits into auditable compliance actions, verified metrics, and governance evidence. No new headcount needed.
   </p>
 
-  <ul class="hero-bullets">
-    <li>
-      <span class="bullet-label">Verified field data</span>
-      <span class="bullet-title">Photo + geo-validated actions</span>
-      <span class="bullet-desc">Audit-ready records from every visit, usable for EPR, ESG, and regulatory reporting</span>
-    </li>
-    <li>
-      <span class="bullet-label">Zero new infrastructure</span>
-      <span class="bullet-title">Runs on existing routines</span>
-      <span class="bullet-desc">Works through your sales reps, field agents, and distributor visit cycles</span>
-    </li>
-    <li>
-      <span class="bullet-label">Behavioral incentive loops</span>
-      <span class="bullet-title">Sustained compliance at scale</span>
-      <span class="bullet-desc">Drives lasting behavior change — not just one-off data collection</span>
-    </li>
+  <ul class="hero-bullets" style="display:none;" aria-hidden="true">
+    <!-- moved to .value-props section below -->
   </ul>
 
   <div class="hero-actions">
@@ -1039,6 +1016,27 @@ footer { background: var(--ink); border-top: 1px solid rgba(245,242,236,0.07); p
     Scroll to explore
   </div>
 </section>
+
+<!-- ─── VALUE PROPS ─── -->
+<div class="value-props">
+  <div class="value-props-grid">
+    <div class="value-prop-card">
+      <span class="value-prop-label">Verified field data</span>
+      <span class="value-prop-title">Photo + geo-validated actions</span>
+      <span class="value-prop-desc">Audit-ready records from every visit, usable for EPR, ESG, and regulatory reporting</span>
+    </div>
+    <div class="value-prop-card">
+      <span class="value-prop-label">Zero new infrastructure</span>
+      <span class="value-prop-title">Runs on existing routines</span>
+      <span class="value-prop-desc">Works through your sales reps, field agents, and distributor visit cycles</span>
+    </div>
+    <div class="value-prop-card">
+      <span class="value-prop-label">Behavioral incentive loops</span>
+      <span class="value-prop-title">Sustained compliance at scale</span>
+      <span class="value-prop-desc">Drives lasting behavior change — not just one-off data collection</span>
+    </div>
+  </div>
+</div>
 
 <!-- ─── LOGOS ─── -->
 <div class="logos-strip">
@@ -1378,4 +1376,11 @@ hamburger.addEventListener('click', toggleMenu);
 // Close menu on link click
 mobileMenu.querySelectorAll('a').forEach(link => {
   link.addEventListener('click', () => {
-    hamburger.clas
+    hamburger.classList.remove('open');
+    mobileMenu.classList.remove('open');
+    body.style.overflow = '';
+  });
+});
+</script>
+</body>
+</html>
