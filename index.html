@@ -279,59 +279,123 @@ footer { background: var(--ink); border-top: 1px solid rgba(255,255,255,0.06); p
   .hw-step:nth-child(3) { border-right: none; }
   .hw-step:nth-child(4), .hw-step:nth-child(5) { border-top: 1px solid rgba(18,39,26,0.07); }
   .hw-step:nth-child(5) { border-right: none; }
-  /* science cards */
   .sci-grid { grid-template-columns: repeat(2,1fr) !important; }
 }
 @media (max-width: 900px) {
+  /* Nav */
   .nav-links { display: none; }
   .nav-hamburger { display: flex; }
   .mobile-menu { display: flex; }
-  section { padding: 72px 5%; }
-  #contact { padding: 96px 5%; }
-  .hero { min-height: 100svh; padding: 100px 5% 56px; justify-content: center; }
-  .hero h1 { font-size: clamp(2.4rem, 8vw, 3.2rem); }
-  .hero-sub { font-size: 1rem; }
+
+  /* Sections */
+  section { padding: 64px 5%; }
+  #contact { padding: 80px 5%; }
+  #mission { padding: 80px 5%; }
+
+  /* Hero */
+  .hero { min-height: 100svh; padding: 90px 5% 48px; justify-content: center; }
+  .hero h1 { font-size: clamp(2.2rem, 7vw, 3rem); }
+  .hero-sub { font-size: 0.97rem; margin-bottom: 28px; }
+  .hero-eyebrow { font-size: 0.68rem; }
   .hero-video { display: none; }
-  .hero-proof { grid-template-columns: 1fr; gap: 10px; max-width: 100%; margin-top: 24px; }
-  .hero-actions { flex-direction: column; align-items: stretch; }
+  .hero-proof { grid-template-columns: 1fr; gap: 8px; max-width: 100%; margin-top: 20px; }
+  .proof-card { padding: 14px 16px; }
+  .hero-actions { flex-direction: column; align-items: stretch; margin-bottom: 32px; }
   .btn-primary { text-align: center; }
   .btn-ghost { justify-content: center; }
-  .who-grid { grid-template-columns: 1fr; gap: 14px; margin-top: 40px; }
+
+  /* Logos */
+  .logos-inner { gap: 20px; justify-content: flex-start; }
+  .logos-label { width: 100%; margin-bottom: 4px; }
+
+  /* Who */
+  .who-grid { grid-template-columns: 1fr; gap: 12px; margin-top: 36px; }
+  .who-card { padding: 24px 20px; }
+
+  /* How */
   .how-steps-full { grid-template-columns: 1fr 1fr; }
+  .hw-step { padding: 24px 18px; }
   .hw-step:nth-child(2) { border-right: none; }
   .hw-step:nth-child(3) { border-top: 1px solid rgba(18,39,26,0.07); border-right: 1px solid rgba(18,39,26,0.07); }
   .hw-step:nth-child(4) { border-top: 1px solid rgba(18,39,26,0.07); border-right: none; }
   .hw-step:nth-child(5) { grid-column: 1/-1; border-top: 1px solid rgba(18,39,26,0.07); border-right: none; }
-  .traction-grid { grid-template-columns: 1fr; gap: 40px; margin-top: 48px; }
-  .traction-numbers { grid-template-columns: 1fr 1fr; gap: 12px; }
-  .gti-layout { grid-template-columns: 1fr; gap: 32px; margin-top: 48px; }
-  .markets-grid { grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 40px; }
-  .pricing-grid { grid-template-columns: 1fr; max-width: 420px; margin: 40px auto 0; }
-  .price-card.featured { transform: none; }
-  .cta-buttons { flex-direction: column; align-items: center; }
-  .btn-large, .btn-outline { width: 100%; max-width: 320px; text-align: center; }
-  .footer-grid { grid-template-columns: 1fr 1fr; gap: 28px; }
-  .footer-grid > div:first-child { grid-column: 1/-1; }
-  .footer-bottom { flex-direction: column; align-items: flex-start; }
-  /* science + transformation responsive */
-  .sci-grid { grid-template-columns: 1fr 1fr !important; }
-  .transform-grid { grid-template-columns: 1fr !important; }
+
+  /* Science */
+  .sci-grid { grid-template-columns: 1fr !important; }
   .sci-chain { flex-wrap: wrap !important; row-gap: 8px !important; }
   .sci-chain-arrow { display: none !important; }
-  .measure-callout { flex-direction: column !important; gap: 20px !important; }
+
+  /* Transformation */
+  .transform-grid { grid-template-columns: 1fr !important; }
+
+  /* Traction */
+  .traction-grid { grid-template-columns: 1fr; gap: 36px; margin-top: 40px; }
+  .traction-numbers { grid-template-columns: 1fr 1fr; gap: 10px; }
+  .t-card { padding: 20px 16px; }
+  .t-num { font-size: 2rem; }
+
+  /* GTI */
+  .gti-layout { grid-template-columns: 1fr; gap: 28px; margin-top: 40px; }
+
+  /* Markets */
+  .markets-grid { grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 36px; }
+  .market-card { padding: 18px 16px; }
+
+  /* Pricing */
+  .pricing-grid { grid-template-columns: 1fr; max-width: 100%; margin: 36px auto 0; }
+  .price-card { padding: 32px 24px; }
+  .price-card.featured { transform: none; }
+
+  /* CTA */
+  .cta-buttons { flex-direction: column; align-items: stretch; }
+  .btn-large, .btn-outline { width: 100%; text-align: center; }
+
+  /* Footer */
+  .footer-grid { grid-template-columns: 1fr 1fr; gap: 28px; }
+  .footer-grid > div:first-child { grid-column: 1/-1; }
+  .footer-bottom { flex-direction: column; align-items: flex-start; gap: 8px; }
 }
 @media (max-width: 480px) {
-  section { padding: 60px 5%; }
-  .hero h1 { font-size: clamp(2.1rem, 9vw, 2.6rem); }
+  section { padding: 52px 4%; }
+  nav { padding: 14px 4%; }
+
+  /* Hero */
+  .hero { padding: 80px 4% 40px; }
+  .hero h1 { font-size: clamp(1.9rem, 9vw, 2.4rem); }
+  .hero-sub { font-size: 0.93rem; }
+  .hero-proof { display: none; } /* Too cramped — key proof is in the hero copy */
+
+  /* How */
+  .how-steps-full { grid-template-columns: 1fr; }
+  .hw-step { border-right: none !important; border-top: 1px solid rgba(18,39,26,0.07) !important; padding: 20px 16px; }
+  .hw-step:first-child { border-top: none !important; }
+
+  /* Science chain — tiny pills */
+  .sci-chain > div { min-width: auto !important; padding: 10px 14px !important; }
+
+  /* Traction */
   .traction-numbers { grid-template-columns: 1fr 1fr; }
+
+  /* Markets */
   .markets-grid { grid-template-columns: 1fr 1fr; }
-  .footer-grid { grid-template-columns: 1fr; }
+
+  /* GTI */
   .gti-stage { grid-template-columns: 36px 1fr; }
   .stage-badge { display: none; }
-  .how-steps-full { grid-template-columns: 1fr; }
-  .hw-step { border-right: none !important; border-top: 1px solid rgba(18,39,26,0.07) !important; }
-  .hw-step:first-child { border-top: none !important; }
+
+  /* Footer */
+  .footer-grid { grid-template-columns: 1fr; gap: 24px; }
+  .footer-col { margin-bottom: 0; }
+
+  /* Section titles */
+  .section-title { font-size: clamp(1.7rem, 7vw, 2.2rem); }
+
+  /* Sci grid */
   .sci-grid { grid-template-columns: 1fr !important; }
+
+  /* Pricing */
+  .price-card { padding: 28px 20px; }
+  .price-main { font-size: 2.2rem; }
 }
 </style>
 </head>
@@ -574,12 +638,12 @@ footer { background: var(--ink); border-top: 1px solid rgba(255,255,255,0.06); p
       </div>
 
       <!-- Synthesis card — full width -->
-      <div style="grid-column:1/-1;background:var(--green-pale);border:1px solid rgba(26,140,63,0.2);border-radius:12px;padding:28px 36px;display:flex;align-items:center;justify-content:space-between;gap:32px;flex-wrap:wrap;">
+      <div style="grid-column:1/-1;background:var(--green-pale);border:1px solid rgba(26,140,63,0.2);border-radius:12px;padding:clamp(20px,4%,36px) clamp(20px,5%,36px);display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap;">
         <div>
           <div style="font-size:0.65rem;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--green);margin-bottom:10px;">Play for Earth — why it works</div>
           <p style="font-size:0.95rem;color:var(--ink);line-height:1.7;max-width:700px;">We embed a structured, visible system inside existing FMCG routes. The science takes over. Behavior shifts. Habits form. Data accumulates. Impact becomes auditable — not declared.</p>
         </div>
-        <a href="/contact" class="btn-primary" style="flex-shrink:0;white-space:nowrap;">Request a Pilot →</a>
+        <a href="/contact" class="btn-primary" style="flex-shrink:0;white-space:nowrap;width:fit-content;">Request a Pilot →</a>
       </div>
 
     </div>
