@@ -67,8 +67,12 @@ nav {
 
 /* ── HERO ── */
 .hero {
-  min-height: 92vh; display: flex; flex-direction: column; justify-content: flex-end;
-  padding: 120px 5% 80px; position: relative; overflow: hidden;
+  min-height: 92vh;
+  padding: 80px 5% 64px;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
 }
 .hero-bg {
   position: absolute; inset: 0;
@@ -78,34 +82,39 @@ nav {
     var(--bg);
 }
 .hero-grid { position: absolute; inset: 0; background-image: linear-gradient(rgba(26,140,63,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(26,140,63,0.04) 1px, transparent 1px); background-size: 56px 56px; }
-.hero > * { position: relative; z-index: 2; }
-
+.hero-inner {
+  position: relative; z-index: 2;
+  width: 100%; max-width: 1200px; margin: 0 auto;
+  display: flex; align-items: center; gap: 56px;
+}
+.hero-content {
+  flex: 0 0 52%; min-width: 0;
+  display: flex; flex-direction: column; align-items: flex-start;
+}
 .hero-eyebrow { display: inline-flex; align-items: center; gap: 10px; background: var(--green-pale); border: 1px solid rgba(34,197,94,0.3); color: var(--green); font-size: 0.75rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; padding: 5px 14px; border-radius: 24px; width: fit-content; margin-bottom: 24px; }
-
-.hero h1 { font-size: clamp(2.6rem, 4.5vw, 4.2rem); font-weight: 900; line-height: 1.07; letter-spacing: -0.03em; max-width: 52%; margin-bottom: 20px; color: var(--ink); }
+.hero h1 { font-size: clamp(2.4rem, 4vw, 3.8rem); font-weight: 900; line-height: 1.07; letter-spacing: -0.03em; margin-bottom: 20px; color: var(--ink); }
 .hero h1 em { font-style: italic; color: var(--green); }
-.hero-sub { font-size: 1.1rem; line-height: 1.75; color: var(--ink-light); max-width: 480px; margin-bottom: 36px; }
-.hero-actions { display: flex; gap: 16px; align-items: center; flex-wrap: wrap; margin-bottom: 56px; }
+.hero-sub { font-size: 1.05rem; line-height: 1.75; color: var(--ink-light); max-width: 460px; margin-bottom: 32px; }
+.hero-actions { display: flex; gap: 16px; align-items: center; flex-wrap: wrap; margin-bottom: 40px; }
 
 .btn-primary { background: var(--green); color: white; padding: 14px 32px; border-radius: 32px; font-size: 0.95rem; font-weight: 700; text-decoration: none; transition: all 0.2s; box-shadow: 0 4px 20px rgba(26,140,63,0.3); display: inline-block; }
 .btn-primary:hover { background: var(--green-dark); transform: translateY(-2px); }
 .btn-ghost { color: var(--ink-light); font-size: 0.9rem; font-weight: 600; text-decoration: none; display: flex; align-items: center; gap: 7px; transition: color 0.2s; }
 .btn-ghost:hover { color: var(--green); }
 
-.hero-proof { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; max-width: 52%; }
-.proof-card { background: rgba(255,255,255,0.85); border: 1px solid rgba(26,140,63,0.14); border-radius: 14px; padding: 20px 18px; backdrop-filter: blur(6px); }
+.hero-proof { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; width: 100%; }
+.proof-card { background: rgba(255,255,255,0.85); border: 1px solid rgba(26,140,63,0.14); border-radius: 14px; padding: 18px 16px; backdrop-filter: blur(6px); }
 .proof-card-label { font-size: 0.67rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--green); margin-bottom: 5px; }
-.proof-card-title { font-size: 0.9rem; font-weight: 700; color: var(--ink); line-height: 1.3; margin-bottom: 4px; }
-.proof-card-desc { font-size: 0.77rem; color: var(--ink-light); line-height: 1.5; }
+.proof-card-title { font-size: 0.88rem; font-weight: 700; color: var(--ink); line-height: 1.3; margin-bottom: 4px; }
+.proof-card-desc { font-size: 0.76rem; color: var(--ink-light); line-height: 1.5; }
 
 .hero-video {
-  position: absolute; right: 5%; top: 50%; transform: translateY(-50%);
-  z-index: 2; width: min(460px, 38vw);
+  flex: 1 1 auto; min-width: 0;
   border-radius: 16px; overflow: hidden;
   box-shadow: 0 20px 60px rgba(18,39,26,0.2);
   border: 3px solid white;
   background: #0d2d0d;
-  aspect-ratio: 16/9;
+  aspect-ratio: 4/3;
 }
 .hero-video video { width: 100%; height: 100%; object-fit: cover; display: block; }
 .hero-video-placeholder {
@@ -324,18 +333,7 @@ footer { background: var(--ink); border-top: 1px solid rgba(255,255,255,0.06); p
 
 
 /* ── MOBILE VIDEO STRIP ── */
-.mobile-video-strip {
-  display: none;
-  background: var(--ink);
-  padding: 0;
-  overflow: hidden;
-}
-.mobile-video-strip video {
-  width: 100%;
-  display: block;
-  aspect-ratio: 16/9;
-  object-fit: cover;
-}
+
 .mobile-video-placeholder {
   width: 100%;
   aspect-ratio: 16/9;
@@ -370,7 +368,7 @@ footer { background: var(--ink); border-top: 1px solid rgba(255,255,255,0.06); p
 }
 @media (max-width: 900px) {
   /* Mobile video strip */
-  .mobile-video-strip { display: block; }
+
   /* Nav */
   .nav-links { display: none; }
   .nav-hamburger { display: flex; }
@@ -382,15 +380,16 @@ footer { background: var(--ink); border-top: 1px solid rgba(255,255,255,0.06); p
   #mission { padding: 80px 5%; }
 
   /* Hero */
-  .hero { min-height: 100svh; padding: 90px 5% 48px; justify-content: center; }
-  .hero h1 { font-size: clamp(2.2rem, 7vw, 3rem); max-width: 100%; }
+  .hero { min-height: 100svh; padding: 80px 5% 48px; }
+  .hero-inner { flex-direction: column; gap: 32px; }
+  .hero-content { flex: none; width: 100%; }
+  .hero h1 { font-size: clamp(2.2rem, 7vw, 3rem); }
   .hero-sub { font-size: 0.97rem; margin-bottom: 28px; max-width: 100%; }
-  .hero-proof { max-width: 100%; }
   .hero-eyebrow { font-size: 0.68rem; }
   .hero-video { display: none; }
-  .hero-proof { grid-template-columns: 1fr; gap: 8px; max-width: 100%; margin-top: 20px; }
+  .hero-proof { grid-template-columns: 1fr; gap: 8px; width: 100%; margin-top: 4px; }
   .proof-card { padding: 14px 16px; }
-  .hero-actions { flex-direction: column; align-items: stretch; margin-bottom: 32px; }
+  .hero-actions { flex-direction: column; align-items: stretch; margin-bottom: 28px; }
   .btn-primary { text-align: center; }
   .btn-ghost { justify-content: center; }
 
@@ -452,10 +451,10 @@ footer { background: var(--ink); border-top: 1px solid rgba(255,255,255,0.06); p
   nav { padding: 14px 4%; }
 
   /* Hero */
-  .hero { padding: 80px 4% 40px; }
+  .hero { padding: 72px 4% 36px; }
   .hero h1 { font-size: clamp(1.9rem, 9vw, 2.4rem); }
   .hero-sub { font-size: 0.93rem; }
-  .hero-proof { display: none; } /* Too cramped — key proof is in the hero copy */
+  .hero-proof { display: none; }
 
   /* How */
   .how-steps-full { grid-template-columns: 1fr; }
@@ -524,50 +523,48 @@ footer { background: var(--ink); border-top: 1px solid rgba(255,255,255,0.06); p
 <section class="hero">
   <div class="hero-bg"></div>
   <div class="hero-grid"></div>
-  <div class="hero-video">
-    <video src="/hero-video.mp4" autoplay muted loop playsinline
-      onerror="this.parentElement.innerHTML='<div class=hero-video-placeholder><div class=play-btn>▶</div><span>Platform Demo</span></div>'">
-    </video>
-  </div>
-  <div class="hero-eyebrow">EPR Compliance · Scope 3 Data · Packaging Recovery</div>
-  <h1>Your field reps already visit every outlet.<br><em>Now that data counts.</em></h1>
-  <p class="hero-sub">
-    Play for Earth turns routine FMCG distributor visits into
-    verified EPR compliance records, Scope 3 data,
-    and packaging recovery proof — using
-    reps you already have, routes you already run.
-  </p>
-  <div class="hero-actions">
-    <a href="/contact" class="btn-primary btn-large">Start a Pilot</a>
-    <a href="#how" class="btn-ghost">See how it works →</a>
-  </div>
-  <div class="hero-proof">
-    <div class="proof-card">
-      <div class="proof-card-label">✓ No new headcount</div>
-      <div class="proof-card-title">Runs on existing field teams</div>
-      <div class="proof-card-desc">Works through your sales reps and distributor visit cycles</div>
+  <div class="hero-inner">
+    <div class="hero-content">
+      <div class="hero-eyebrow">EPR Compliance · Scope 3 Data · Packaging Recovery</div>
+      <h1>Your field reps already visit every outlet.<br><em>Now that data counts.</em></h1>
+      <p class="hero-sub">
+        Play for Earth turns routine FMCG distributor visits into
+        verified EPR compliance records, Scope 3 data,
+        and packaging recovery proof — using
+        reps you already have, routes you already run.
+      </p>
+      <div class="hero-actions">
+        <a href="/contact" class="btn-primary btn-large">Start a Pilot</a>
+        <a href="#how" class="btn-ghost">See how it works →</a>
+      </div>
+      <div class="hero-proof">
+        <div class="proof-card">
+          <div class="proof-card-label">✓ No new headcount</div>
+          <div class="proof-card-title">Runs on existing field teams</div>
+          <div class="proof-card-desc">Works through your sales reps and distributor visit cycles</div>
+        </div>
+        <div class="proof-card">
+          <div class="proof-card-label">✓ Audit-ready proof</div>
+          <div class="proof-card-title">Photo + GPS verified actions</div>
+          <div class="proof-card-desc">Every action geo-tagged, timestamped, exportable for EPR reporting</div>
+        </div>
+        <div class="proof-card">
+          <div class="proof-card-label">✓ Behavior that sticks</div>
+          <div class="proof-card-title">Not one-off data collection</div>
+          <div class="proof-card-desc">Incentive loops drive sustained compliance month after month</div>
+        </div>
+      </div>
     </div>
-    <div class="proof-card">
-      <div class="proof-card-label">✓ Audit-ready proof</div>
-      <div class="proof-card-title">Photo + GPS verified actions</div>
-      <div class="proof-card-desc">Every action geo-tagged, timestamped, exportable for EPR reporting</div>
-    </div>
-    <div class="proof-card">
-      <div class="proof-card-label">✓ Behavior that sticks</div>
-      <div class="proof-card-title">Not one-off data collection</div>
-      <div class="proof-card-desc">Incentive loops drive sustained compliance month after month</div>
+    <div class="hero-video">
+      <video src="/hero-video.mp4" autoplay muted loop playsinline
+        onerror="this.parentElement.innerHTML='<div class=hero-video-placeholder><div class=play-btn>▶</div><span>Platform Demo</span></div>'">
+      </video>
     </div>
   </div>
 </section>
 
 
 <!-- MOBILE VIDEO STRIP -->
-<div class="mobile-video-strip">
-  <video src="/hero-video.mp4" autoplay muted loop playsinline
-    onerror="this.parentElement.innerHTML='<div class=mobile-video-placeholder><div class=play-btn>▶</div><span>Platform Demo</span></div>'">
-  </video>
-</div>
-
 <!-- LOGOS STRIP -->
 <div class="logos-strip">
   <div class="logos-inner">
@@ -1109,4 +1106,14 @@ hamburger.addEventListener('click', () => {
   mobileMenu.classList.toggle('open', open);
   document.body.style.overflow = open ? 'hidden' : '';
 });
-mobileMenu.querySelectorAll('
+mobileMenu.querySelectorAll('a').forEach(a => {
+  a.addEventListener('click', () => {
+    hamburger.classList.remove('open');
+    mobileMenu.classList.remove('open');
+    document.body.style.overflow = '';
+  });
+});
+</script>
+-e 
+</body>
+</html>
