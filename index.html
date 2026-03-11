@@ -163,9 +163,8 @@ section > .section-sub { max-width: 1200px; }
 .how-steps-full {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
-  grid-template-rows: auto auto auto auto; /* num · icon · title · body */
-  gap: 0;
   grid-template-rows: auto auto auto auto;
+  gap: 0;
   margin-top: 56px;
   border: 1px solid var(--border-dark);
   border-radius: 16px;
@@ -308,8 +307,6 @@ footer { background: var(--ink); border-top: 1px solid rgba(255,255,255,0.06); p
 .footer-legal a { font-size: 0.76rem; color: rgba(255,255,255,0.28); text-decoration: none; transition: color 0.2s; }
 .footer-legal a:hover { color: rgba(255,255,255,0.6); }
 
-
-/* Transformation cards — clean flex alignment */
 .transform-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -330,9 +327,6 @@ footer { background: var(--ink); border-top: 1px solid rgba(255,255,255,0.06); p
   min-height: 168px;
   margin-bottom: 20px;
 }
-
-
-/* ── MOBILE VIDEO STRIP ── */
 
 .mobile-video-placeholder {
   width: 100%;
@@ -367,19 +361,12 @@ footer { background: var(--ink); border-top: 1px solid rgba(255,255,255,0.06); p
   .sci-grid { grid-template-columns: repeat(2,1fr) !important; }
 }
 @media (max-width: 900px) {
-  /* Mobile video strip */
-
-  /* Nav */
   .nav-links { display: none; }
   .nav-hamburger { display: flex; }
   .mobile-menu { display: flex; }
-
-  /* Sections */
   section { padding: 64px 5%; }
   #contact { padding: 80px 5%; }
   #mission { padding: 80px 5%; }
-
-  /* Hero */
   .hero { min-height: 100svh; padding: 72px 5% 40px; }
   .hero-inner { flex-direction: column; gap: 32px; }
   .hero-content { flex: none; width: 100%; }
@@ -392,56 +379,34 @@ footer { background: var(--ink); border-top: 1px solid rgba(255,255,255,0.06); p
   .hero-actions { flex-direction: column; align-items: stretch; margin-bottom: 28px; }
   .btn-primary { text-align: center; }
   .btn-ghost { justify-content: center; }
-
-  /* Logos */
   .logos-inner { gap: 20px; justify-content: flex-start; }
   .logos-label { width: 100%; margin-bottom: 4px; }
-
-  /* Who */
   .who-grid { grid-template-columns: 1fr; gap: 12px; margin-top: 36px; }
   .who-card { padding: 24px 20px; }
-
-  /* How */
   .how-steps-full { grid-template-columns: 1fr 1fr; }
   .hw-step { padding: 24px 18px; }
   .hw-step:nth-child(2) { border-right: none; }
   .hw-step:nth-child(3) { border-top: 1px solid rgba(18,39,26,0.07); border-right: 1px solid rgba(18,39,26,0.07); }
   .hw-step:nth-child(4) { border-top: 1px solid rgba(18,39,26,0.07); border-right: none; }
   .hw-step:nth-child(5) { grid-column: 1/-1; border-top: 1px solid rgba(18,39,26,0.07); border-right: none; }
-
-  /* Science */
   .sci-grid { grid-template-columns: 1fr !important; }
   .sci-chain { flex-wrap: wrap !important; row-gap: 8px !important; }
   .sci-chain-arrow { display: none !important; }
-
-  /* Transformation */
   .transform-grid { grid-template-columns: 1fr !important; }
   .transform-card { min-height: unset; }
   .transform-card-header { min-height: unset; }
-
-  /* Traction */
   .traction-grid { grid-template-columns: 1fr; gap: 36px; margin-top: 40px; }
   .traction-numbers { grid-template-columns: 1fr 1fr; gap: 10px; }
   .t-card { padding: 20px 16px; }
   .t-num { font-size: 2rem; }
-
-  /* GTI */
   .gti-layout { grid-template-columns: 1fr; gap: 28px; margin-top: 40px; }
-
-  /* Markets */
   .markets-grid { grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 36px; }
   .market-card { padding: 18px 16px; }
-
-  /* Pricing */
   .pricing-grid { grid-template-columns: 1fr; max-width: 100%; margin: 36px auto 0; }
   .price-card { padding: 32px 24px; }
   .price-card.featured { transform: none; }
-
-  /* CTA */
   .cta-buttons { flex-direction: column; align-items: stretch; }
   .btn-large, .btn-outline { width: 100%; text-align: center; }
-
-  /* Footer */
   .footer-grid { grid-template-columns: 1fr 1fr; gap: 28px; }
   .footer-grid > div:first-child { grid-column: 1/-1; }
   .footer-bottom { flex-direction: column; align-items: flex-start; gap: 8px; }
@@ -449,42 +414,22 @@ footer { background: var(--ink); border-top: 1px solid rgba(255,255,255,0.06); p
 @media (max-width: 480px) {
   section { padding: 52px 4%; }
   nav { padding: 14px 4%; }
-
-  /* Hero */
   .hero { padding: 68px 4% 32px; }
   .hero h1 { font-size: clamp(1.9rem, 9vw, 2.4rem); }
   .hero-sub { font-size: 0.93rem; }
   .hero-proof { display: none; }
-
-  /* How */
   .how-steps-full { grid-template-columns: 1fr; }
   .hw-step { border-right: none !important; border-top: 1px solid rgba(18,39,26,0.07) !important; padding: 20px 16px; }
   .hw-step:first-child { border-top: none !important; }
-
-  /* Science chain — tiny pills */
   .sci-chain > div { min-width: auto !important; padding: 10px 14px !important; }
-
-  /* Traction */
   .traction-numbers { grid-template-columns: 1fr 1fr; }
-
-  /* Markets */
   .markets-grid { grid-template-columns: 1fr 1fr; }
-
-  /* GTI */
   .gti-stage { grid-template-columns: 36px 1fr; }
   .stage-badge { display: none; }
-
-  /* Footer */
   .footer-grid { grid-template-columns: 1fr; gap: 24px; }
   .footer-col { margin-bottom: 0; }
-
-  /* Section titles */
   .section-title { font-size: clamp(1.7rem, 7vw, 2.2rem); }
-
-  /* Sci grid */
   .sci-grid { grid-template-columns: 1fr !important; }
-
-  /* Pricing */
   .price-card { padding: 28px 20px; }
   .price-main { font-size: 2.2rem; }
 }
@@ -501,7 +446,7 @@ footer { background: var(--ink); border-top: 1px solid rgba(255,255,255,0.06); p
     <li><a href="#traction">Traction</a></li>
     <li><a href="#pricing">Pricing</a></li>
     <li><a href="/insight-series">Insight Series</a></li>
-<li><a href="/faq">FAQ</a></li>
+    <li><a href="/faq">FAQ</a></li>
     <li><a href="/contact" class="nav-cta">Request Pilot</a></li>
   </ul>
   <button class="nav-hamburger" id="hamburger" aria-label="Menu">
@@ -518,7 +463,7 @@ footer { background: var(--ink); border-top: 1px solid rgba(255,255,255,0.06); p
   <a href="#pricing" class="mobile-menu-link">Pricing <span class="arrow">→</span></a>
   <a href="#markets" class="mobile-menu-link">Markets <span class="arrow">→</span></a>
   <a href="/insight-series" class="mobile-menu-link">Insight Series <span class="arrow">→</span></a>
-<a href="/contact" class="mobile-menu-cta">Request a Pilot →</a>
+  <a href="/contact" class="mobile-menu-cta">Request a Pilot →</a>
 </nav>
 
 <!-- ─── HERO ─── -->
@@ -528,7 +473,10 @@ footer { background: var(--ink); border-top: 1px solid rgba(255,255,255,0.06); p
   <div class="hero-inner">
     <div class="hero-content">
       <div class="hero-eyebrow">EPR Compliance · Scope 3 Data · Packaging Recovery</div>
-      <h1>Your field reps already visit every outlet.<br><em>Now that data counts.</em></h1>
+
+      <!-- CHANGE 1: sharpened headline -->
+      <h1>Your field reps already visit every outlet.<br><em>EPR regulators want proof. Here it is.</em></h1>
+
       <p class="hero-sub">
         Play for Earth turns routine FMCG distributor visits into
         verified EPR compliance records, Scope 3 data,
@@ -565,8 +513,6 @@ footer { background: var(--ink); border-top: 1px solid rgba(255,255,255,0.06); p
   </div>
 </section>
 
-
-<!-- MOBILE VIDEO STRIP -->
 <!-- LOGOS STRIP -->
 <div class="logos-strip">
   <div class="logos-inner">
@@ -609,7 +555,8 @@ footer { background: var(--ink); border-top: 1px solid rgba(255,255,255,0.06); p
     <div class="who-card">
       <span class="who-icon">🌿</span>
       <div class="who-role">NGO / EPR Compliance Scheme · Governance</div>
-      <h3>Running a PRO scheme on surveys and estimates.</h3>
+      <!-- CHANGE 4: sharpened NGO/PRO card headline -->
+      <h3>Your EPR scheme needs field execution infrastructure. You don't have it. We do.</h3>
       <p>Producer responsibility organizations need traceable recovery data at scale. Play for Earth provides the field execution layer.</p>
       <ul>
         <li><span class="li-icon">✅</span> Verified collection records across territories</li>
@@ -659,7 +606,7 @@ footer { background: var(--ink); border-top: 1px solid rgba(255,255,255,0.06); p
   </div>
 </section>
 
-<!-- ─── BEHAVIORAL SCIENCE — "The system is the intervention" ─── -->
+<!-- ─── BEHAVIORAL SCIENCE ─── -->
 <section id="system-science" style="background:white;border-top:1px solid var(--border);padding:100px 5%;position:relative;overflow:hidden;">
   <div style="position:absolute;inset:0;background-image:radial-gradient(circle,rgba(26,140,63,0.08) 1px,transparent 1px);background-size:28px 28px;mask-image:radial-gradient(ellipse 80% 80% at 50% 50%,black 20%,transparent 100%);pointer-events:none;"></div>
   <div style="max-width:1200px;margin:0 auto;position:relative;z-index:2;">
@@ -672,7 +619,6 @@ footer { background: var(--ink); border-top: 1px solid rgba(255,255,255,0.06); p
     <p style="font-size:1.05rem;color:var(--ink-light);line-height:1.7;max-width:640px;margin-bottom:20px;">Behavioral science is unambiguous: participation rises when structured, visible systems exist inside daily routines — not because people are convinced, not because of enforcement, but because the behavior becomes the expected norm.</p>
     <p style="font-size:1.05rem;color:var(--ink-light);line-height:1.7;max-width:640px;margin-bottom:56px;">Five decades of research — from organ donation to bottle return rates — point to the same conclusion: infrastructure is the intervention.</p>
 
-    <!-- CHAIN -->
     <div class="sci-chain" style="display:flex;align-items:center;margin-bottom:64px;flex-wrap:wrap;row-gap:10px;">
       <div style="padding:12px 18px;background:var(--bg2);border:1px solid rgba(26,140,63,0.15);border-radius:8px;min-width:110px;">
         <div style="font-size:0.62rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--green);margin-bottom:4px;">Step 1</div>
@@ -700,7 +646,6 @@ footer { background: var(--ink); border-top: 1px solid rgba(255,255,255,0.06); p
       </div>
     </div>
 
-    <!-- 5 evidence cards — 3×2 grid with synthesis card -->
     <div class="sci-grid" style="display:grid;grid-template-columns:repeat(2,1fr);gap:14px;">
 
       <div style="background:white;padding:32px 28px;border:1px solid var(--border-dark);border-radius:12px;box-shadow:0 2px 8px rgba(18,39,26,0.04);transition:all 0.2s;" onmouseover="this.style.background='var(--green-pale)';this.style.boxShadow='0 6px 20px rgba(18,39,26,0.08)'" onmouseout="this.style.background='white';this.style.boxShadow='0 2px 8px rgba(18,39,26,0.04)'">
@@ -736,7 +681,6 @@ footer { background: var(--ink); border-top: 1px solid rgba(255,255,255,0.06); p
         <p style="font-size:0.88rem;color:var(--ink-light);line-height:1.65;">People adopt behaviors that appear normal in their environment. A structured system creates a <b>descriptive norm</b> — participation becomes <b>expected, not exceptional</b>.</p>
       </div>
 
-      <!-- Synthesis card — full width -->
       <div style="grid-column:1/-1;background:var(--green-pale);border:1px solid rgba(26,140,63,0.2);border-radius:12px;padding:clamp(20px,4%,36px) clamp(20px,5%,36px);display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap;">
         <div>
           <div style="font-size:0.65rem;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--green);margin-bottom:10px;">Play for Earth — why it works</div>
@@ -757,10 +701,8 @@ footer { background: var(--ink); border-top: 1px solid rgba(255,255,255,0.06); p
     <h2 class="section-title">What change<br><em>actually looks like.</em></h2>
     <p class="section-sub" style="margin-bottom:56px;">Three actors. One system. Real behavioral shift — tracked, verified, and auditable.</p>
 
-    <!-- 3-column narrative -->
     <div class="transform-grid">
 
-      <!-- REP -->
       <div class="transform-card" style="border-top:4px solid var(--green);">
         <div class="transform-card-header"><div style="font-size:1.8rem;margin-bottom:12px;">🧑‍💼</div>
         <div style="font-size:0.72rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--green);margin-bottom:8px;">The Sales Rep</div>
@@ -785,7 +727,6 @@ footer { background: var(--ink); border-top: 1px solid rgba(255,255,255,0.06); p
         </div>
       </div>
 
-      <!-- RETAILER -->
       <div class="transform-card" style="border-top:4px solid var(--earth);">
         <div class="transform-card-header"><div style="font-size:1.8rem;margin-bottom:12px;">🏪</div>
         <div style="font-size:0.72rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--earth);margin-bottom:8px;">The Retailer</div>
@@ -810,7 +751,6 @@ footer { background: var(--ink); border-top: 1px solid rgba(255,255,255,0.06); p
         </div>
       </div>
 
-      <!-- BRAND -->
       <div class="transform-card" style="border-top:4px solid #0284c7;">
         <div class="transform-card-header"><div style="font-size:1.8rem;margin-bottom:12px;">🏢</div>
         <div style="font-size:0.72rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:#0284c7;margin-bottom:8px;">The Brand</div>
@@ -835,8 +775,7 @@ footer { background: var(--ink); border-top: 1px solid rgba(255,255,255,0.06); p
         </div>
       </div>
 
-    </div><!-- /3-col -->
-
+    </div>
   </div>
 </section>
 
@@ -846,10 +785,13 @@ footer { background: var(--ink); border-top: 1px solid rgba(255,255,255,0.06); p
   <h2 class="section-title">Real data.<br><em>Real markets.</em></h2>
   <div class="traction-grid">
     <div class="traction-numbers">
+
+      <!-- CHANGE 2: 20K softened -->
       <div class="t-card">
         <div class="t-num">20K+</div>
-        <div class="t-desc">Verified field actions logged across pilot operations</div>
+        <div class="t-desc">Field actions logged across pilot operations — independent verification in progress</div>
       </div>
+
       <div class="t-card">
         <div class="t-num">TRL 7</div>
         <div class="t-desc">System prototype demonstrated in an operational environment</div>
@@ -858,10 +800,13 @@ footer { background: var(--ink); border-top: 1px solid rgba(255,255,255,0.06); p
         <div class="t-num">2</div>
         <div class="t-desc">Active markets: Kenya and Vietnam</div>
       </div>
+
+      <!-- CHANGE 6: $0 card sharpened -->
       <div class="t-card">
         <div class="t-num">$0</div>
-        <div class="t-desc">New field headcount required to deploy</div>
+        <div class="t-desc">No new headcount. No new infrastructure. Deploys on your existing routes.</div>
       </div>
+
     </div>
     <div class="proof-list">
       <div class="proof-item">
@@ -923,12 +868,19 @@ footer { background: var(--ink); border-top: 1px solid rgba(255,255,255,0.06); p
         <div class="gti-stage"><div class="stage-num">4</div><div><div class="stage-name">Internalized</div><div class="stage-desc">Circular behavior is self-sustaining</div></div><div></div></div>
       </div>
     </div>
+
+    <!-- CHANGE 3: GTI "In plain English" + new investor sentence -->
     <div style="margin-top:32px;padding:24px 28px;background:var(--green-pale);border:1px solid rgba(26,140,63,0.2);border-radius:10px;">
       <div style="font-size:0.7rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--green);margin-bottom:8px;">In plain English</div>
       <p style="font-size:0.9rem;color:var(--ink-light);line-height:1.7;">We measure <b>frequency</b> (how often the behavior happens) · <b>spread</b> (how many people and outlets) · <b>persistence</b> (what happens when the incentives are removed).</p>
     </div>
+    <div style="margin-top:16px;padding:20px 24px;background:white;border:1px solid var(--border-dark);border-radius:10px;">
+      <p style="font-size:0.88rem;color:var(--ink-light);line-height:1.7;">The GTI is the first composite behavioral scoring standard designed to satisfy EPR auditors, Scope 3 reporting frameworks, and DFI impact measurement requirements — simultaneously.</p>
+    </div>
+
   </div>
 </section>
+
 <section id="markets">
   <div class="section-eyebrow">Where We Operate</div>
   <h2 class="section-title">Africa and Southeast Asia —<br><em>where EPR is being built.</em></h2>
@@ -936,7 +888,7 @@ footer { background: var(--ink); border-top: 1px solid rgba(255,255,255,0.06); p
     <div class="market-card">
       <div class="market-flag"><span class="fi fi-vn"></span></div>
       <h4>Vietnam</h4>
-      <p>Proof-of-concept market. 20,000+ verified actions logged. EPR framework actively developing.</p>
+      <p>Proof-of-concept market. Field operations active. EPR framework actively developing.</p>
       <span class="market-status status-active">Active</span>
     </div>
     <div class="market-card">
@@ -1030,7 +982,10 @@ footer { background: var(--ink); border-top: 1px solid rgba(255,255,255,0.06); p
   <div class="mission-inner">
     <div class="section-eyebrow" style="justify-content:center;margin:0 auto 24px;">North Star</div>
     <p class="mission-quote">Recovery is where we start.<br>Avoidance is where we're going.</p>
-    <p class="mission-body">We start with recovery — because that's where regulatory pressure is real and companies act today. The verified field data we build makes the business case for returnables, material alternatives, and circular design decisions that don't need recovering in the first place.</p>
+
+    <!-- CHANGE 5: mission body rewritten for investor scale signal -->
+    <p class="mission-body">EPR regulations now cover 127 countries. Most have no verified field data layer. Play for Earth is building the infrastructure standard — starting where distribution density is highest and compliance infrastructure is lowest.</p>
+
     <div class="mission-north-star">⭐ &nbsp; Less waste in the world — verified at field level</div>
   </div>
 </section>
@@ -1065,7 +1020,7 @@ footer { background: var(--ink); border-top: 1px solid rgba(255,255,255,0.06); p
         <li><a href="#gti">GTI Framework</a></li>
         <li><a href="#pricing">Pricing</a></li>
         <li><a href="/esg-impact-snapshot">ESG Snapshot</a></li>
-<li><a href="/insight-series">Insight Series</a></li>
+        <li><a href="/insight-series">Insight Series</a></li>
       </ul>
     </div>
     <div class="footer-col">
@@ -1117,6 +1072,5 @@ mobileMenu.querySelectorAll('a').forEach(a => {
   });
 });
 </script>
--e 
 </body>
 </html>
