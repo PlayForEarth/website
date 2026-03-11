@@ -7,7 +7,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Familjen+Grotesk:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,700;0,900;1,700&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#f0faf2;--ink:#12271a;--ink-light:#3a5444;--green:#1a8c3f;--green-dark:#127030;--green-pale:#dcfce7;--border:rgba(26,140,63,0.15);--serif:'Playfair Display',serif;--sans:'Familjen Grotesk',sans-serif;}
+:root{--bg:#f0faf2;--ink:#12271a;--ink-light:#3a5444;--green:#1a8c3f;--green-dark:#127030;--green-bright:#22c55e;--green-pale:#dcfce7;--border:rgba(26,140,63,0.15);--serif:'Playfair Display',serif;--sans:'Familjen Grotesk',sans-serif;}
 *{margin:0;padding:0;box-sizing:border-box;}
 body{font-family:var(--sans);background:var(--bg);color:var(--ink);line-height:1.6;}
 nav{position:fixed;top:0;left:0;right:0;z-index:500;display:flex;justify-content:space-between;align-items:center;padding:18px 5%;background:rgba(240,250,242,0.95);backdrop-filter:blur(10px);border-bottom:1px solid var(--border);}
@@ -33,8 +33,13 @@ nav{position:fixed;top:0;left:0;right:0;z-index:500;display:flex;justify-content
 .card-num{font-family:var(--serif);font-size:1.8rem;font-weight:900;color:var(--green);margin-bottom:12px;}
 .card h3{font-family:var(--serif);font-size:1.1rem;font-weight:900;line-height:1.3;margin-bottom:14px;color:var(--ink);}
 .card p{font-size:0.85rem;color:var(--ink-light);line-height:1.6;margin-bottom:20px;min-height:48px;}
+.card-badge{display:inline-block;font-size:0.65rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;padding:4px 10px;border-radius:12px;margin-bottom:12px;}
+.card-badge.open{color:var(--green);background:var(--green-pale);border:1px solid rgba(26,140,63,0.2);}
+.card-badge.gated{color:#666;background:#f0f0f0;border:1px solid #ddd;}
 .btn{display:inline-block;background:var(--green);color:white;padding:11px 22px;border-radius:20px;font-size:0.8rem;font-weight:700;text-decoration:none;border:none;cursor:pointer;transition:all 0.2s;font-family:var(--sans);}
 .btn:hover{background:var(--green-dark);transform:translateX(2px);}
+.btn.unlock{background:#999;}
+.btn.unlock:hover{background:#777;transform:translateX(2px);}
 .modal{display:none;position:fixed;z-index:1000;left:0;top:0;width:100%;height:100%;background:rgba(18,39,26,0.55);align-items:center;justify-content:center;}
 .modal.show{display:flex;}
 .modal-box{background:white;padding:44px 36px;border-radius:16px;width:95%;max-width:460px;box-shadow:0 20px 60px rgba(0,0,0,0.15);}
@@ -77,8 +82,8 @@ footer a:hover{color:rgba(255,255,255,0.8);}
   </section>
 
   <section class="section">
-    <h2 class="section-title">Fiche 01 — Now Available</h2>
-    <p class="section-desc">Scope 3: Turning Consumer Behavior into Climate Proof. 9 more frameworks coming soon.</p>
+    <h2 class="section-title">All Fiches</h2>
+    <p class="section-desc">2 frameworks open access • 8 gated (email to unlock)</p>
     <div class="grid" id="grid"></div>
   </section>
 </div>
@@ -86,8 +91,8 @@ footer a:hover{color:rgba(255,255,255,0.8);}
 <div id="modal" class="modal">
   <div class="modal-box">
     <button class="close" onclick="closeModal()">&times;</button>
-    <h3>Get Access</h3>
-    <p>Enter your email to download <strong id="modalTitle">Fiche</strong>.</p>
+    <h3>Unlock <strong id="modalTitle">Fiche</strong></h3>
+    <p>Enter your email to download this fiche and access all 10 frameworks.</p>
     <form onsubmit="sendEmail(event)">
       <input type="email" id="email" placeholder="your@email.com" required>
       <input type="hidden" id="ficheId" value="">
@@ -102,37 +107,45 @@ footer a:hover{color:rgba(255,255,255,0.8);}
 </footer>
 
 <script>
-// Currently available fiches
-const fiches = [
-  { id: 1, title: 'Scope 3: Turning Consumer Behavior into Climate Proof', desc: 'Convert field-verified packaging recovery into auditable Scope 3 emissions data without new infrastructure.' }
+const openFiches = [
+  { id: 1, title: 'Scope 3: Turning Consumer Behavior into Climate Proof', desc: 'Convert field-verified packaging recovery into auditable Scope 3 emissions data without new infrastructure.' },
+  { id: 2, title: 'Why Recycling Systems Fail in Emerging Markets', desc: 'Infrastructure alone doesn't close the loop. Maps exactly where plastic leaks — and what stops it.' }
 ];
 
-// Coming soon
-const fichesComing = [
-  { id: 2, title: 'Why Recycling Systems Fail in Emerging Markets', desc: 'Maps where plastic leaks and what stops it.' },
-  { id: 3, title: 'Behavioral Internalization: From Compliance to Habit', desc: 'Measure whether behavior persists when incentives are removed.' },
+const gatedFiches = [
+  { id: 3, title: 'Behavioral Internalization: From Compliance to Habit', desc: 'Building systems that measure whether behavior persists when incentives are removed.' },
   { id: 4, title: 'Green Transformation Index (GTI)', desc: '5-stage framework for distinguishing forced compliance from genuine internalization.' },
-  { id: 5, title: 'Multi-Client Operations', desc: 'How one field team can serve multiple FMCG brands simultaneously.' },
-  { id: 6, title: 'EPR Compliance Without Overhead', desc: 'Territory-level governance from collection data to auditable proof.' },
-  { id: 7, title: 'Retail Economics', desc: 'How informal collectors and retailers profit from structured packaging recovery.' },
+  { id: 5, title: 'Multi-Client Operations', desc: 'How the same territory operation can serve multiple FMCG brands simultaneously.' },
+  { id: 6, title: 'EPR Compliance Without the Overhead', desc: 'Territory-level governance from collection data to auditable proof.' },
+  { id: 7, title: 'Retail Circular Economics', desc: 'How informal collectors and retailers profit from structured packaging recovery.' },
   { id: 8, title: 'Verification as Moat', desc: 'Photo + Geo + Time as tamper-resistant proof architecture.' },
-  { id: 9, title: 'Territory Planning', desc: 'Scaling from single-market pilot to pan-African network.' },
-  { id: 10, title: 'Play4Health: Device Return & Pharma Adherence', desc: 'Adapt circular economy framework to pharmaceutical device tracking.' }
+  { id: 9, title: 'Territory Scaling Model', desc: 'From single-market pilot to pan-African network expansion.' },
+  { id: 10, title: 'Play4Health: Device Return & Pharma Adherence', desc: 'Adapt circular economy framework to pharmaceutical device tracking and patient adherence.' }
 ];
 
+const allFiches = [...openFiches, ...gatedFiches];
 let currentFiche = null;
 
 function render() {
   const grid = document.getElementById('grid');
-  grid.innerHTML = fiches.map(f => `
-    <div class="card">
-      <div class="card-num">0${f.id}</div>
-      <h3>${f.title}</h3>
-      <p>${f.desc}</p>
-      <button class="btn" onclick="openModal(${f.id}, '${f.title.replace(/'/g, "\\'")}')">Download →</button>
-    </div>
-  `).join('');
-  console.log('✓ Rendered ' + fiches.length + ' fiches');
+  grid.innerHTML = allFiches.map(f => {
+    const isOpen = openFiches.some(o => o.id === f.id);
+    const badge = isOpen ? '<span class="card-badge open">FREE</span>' : '<span class="card-badge gated">GATED</span>';
+    const btn = isOpen 
+      ? `<button class="btn" onclick="openModal(${f.id}, '${f.title.replace(/'/g, "\\'")}')">Download →</button>`
+      : `<button class="btn unlock" onclick="openModal(${f.id}, '${f.title.replace(/'/g, "\\'")}')">Unlock with email →</button>`;
+    
+    return `
+      <div class="card">
+        ${badge}
+        <div class="card-num">0${f.id}</div>
+        <h3>${f.title}</h3>
+        <p>${f.desc}</p>
+        ${btn}
+      </div>
+    `;
+  }).join('');
+  console.log('✓ Rendered ' + allFiches.length + ' fiches (2 open, 8 gated)');
 }
 
 function openModal(id, title) {
@@ -162,7 +175,7 @@ async function sendEmail(e) {
       body: JSON.stringify({
         email: email,
         fiche_id: currentFiche,
-        title: fiches[currentFiche - 1].title
+        title: allFiches[currentFiche - 1].title
       })
     });
     if (res.ok) {
