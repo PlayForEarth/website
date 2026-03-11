@@ -270,31 +270,34 @@ function closeModal() {
   document.getElementById('emailModal').style.display = 'none';
 }
 
-function submitEmail() {
+async function submitEmail() {
   const email = document.getElementById('emailInput').value;
+
   if (!email || !email.includes('@')) {
     alert('Please enter a valid email.');
     return;
   }
 
-  // For now: store locally (demo)
-  // In production: POST to your backend/Formspree
-  const savedEmails = JSON.parse(localStorage.getItem('ficheEmails') || '{}');
-  if (!savedEmails[email]) {
-    savedEmails[email] = { timestamp: new Date().toISOString(), fiches: [] };
-  }
-  if (!savedEmails[email].fiches.includes(currentFicheId)) {
-    savedEmails[email].fiches.push(currentFicheId);
-  }
-  localStorage.setItem('ficheEmails', JSON.stringify(savedEmails));
+  try {
+    await fetch("https://formspree.io/f/xaqpowav", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        email: email,
+        fiche: currentFicheId
+      })
+    });
 
-  alert(`✓ Download link sent to ${email}. Check your inbox!`);
-  
-  // Trigger PDF download (optional - requires PDFs to be hosted)
-  const pdfPath = `/fiches/PFE_Fiche_${String(currentFicheId).padStart(2, '0')}.pdf`;
-  // window.open(pdfPath, '_blank');
-  
-  closeModal();
+    const pdfPath = `/fiches/PFE_Fiche_${String(currentFicheId).padStart(2,'0')}.pdf`;
+    window.open(pdfPath, "_blank");
+
+    closeModal();
+
+  } catch (error) {
+    alert("Something went wrong. Please try again.");
+  }
 }
 
 window.onclick = function(e) {
