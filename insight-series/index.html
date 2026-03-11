@@ -82,24 +82,10 @@ footer a:hover{color:rgba(255,255,255,0.8);}
   </section>
 
   <section class="section">
-    <h2 class="section-title">All Fiches</h2>
-    <p class="section-desc">2 frameworks open access • 8 gated (email to unlock)</p>
+    <h2 class="section-title">Available Now</h2>
+    <p class="section-desc">Download verified frameworks on circular economy operations.</p>
     <div class="grid" id="grid"></div>
   </section>
-</div>
-
-<div id="modal" class="modal">
-  <div class="modal-box">
-    <button class="close" onclick="closeModal()">&times;</button>
-    <h3>Unlock <strong id="modalTitle">Fiche</strong></h3>
-    <p>Enter your email to download this fiche and access all 10 frameworks.</p>
-    <form onsubmit="sendEmail(event)">
-      <input type="email" id="email" placeholder="your@email.com" required>
-      <input type="hidden" id="ficheId" value="">
-      <button type="submit">Send Download Link</button>
-    </form>
-    <p class="modal-note">We respect your privacy. No spam.</p>
-  </div>
 </div>
 
 <footer>
@@ -128,73 +114,27 @@ let currentFiche = null;
 
 function render() {
   const grid = document.getElementById('grid');
-  grid.innerHTML = allFiches.map(f => {
-    const isOpen = openFiches.some(o => o.id === f.id);
-    const badge = isOpen ? '<span class="card-badge open">FREE</span>' : '<span class="card-badge gated">GATED</span>';
-    const btn = isOpen 
-      ? `<button class="btn" onclick="openModal(${f.id}, '${f.title.replace(/'/g, "\\'")}')">Download →</button>`
-      : `<button class="btn unlock" onclick="openModal(${f.id}, '${f.title.replace(/'/g, "\\'")}')">Unlock with email →</button>`;
-    
+  // Show only open fiches for now
+  grid.innerHTML = openFiches.map(f => {
     return `
       <div class="card">
-        ${badge}
+        <span class="card-badge open">FREE</span>
         <div class="card-num">0${f.id}</div>
         <h3>${f.title}</h3>
         <p>${f.desc}</p>
-        ${btn}
+        <button class="btn" onclick="downloadFiche(${f.id})">Download →</button>
       </div>
     `;
   }).join('');
-  console.log('✓ Rendered ' + allFiches.length + ' fiches (2 open, 8 gated)');
+  console.log('✓ Showing ' + openFiches.length + ' open fiches');
 }
 
-function openModal(id, title) {
-  currentFiche = id;
-  document.getElementById('modalTitle').textContent = 'Fiche ' + id;
-  document.getElementById('ficheId').value = id;
-  document.getElementById('email').value = '';
-  document.getElementById('modal').classList.add('show');
-  document.getElementById('email').focus();
-}
-
-function closeModal() {
-  document.getElementById('modal').classList.remove('show');
-}
-
-async function sendEmail(e) {
-  e.preventDefault();
-  const email = document.getElementById('email').value;
-  if (!email.includes('@')) {
-    alert('Invalid email');
-    return;
-  }
-  try {
-    const res = await fetch('https://formspree.io/f/xaqpowav', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        email: email,
-        fiche_id: currentFiche,
-        title: allFiches[currentFiche - 1].title
-      })
-    });
-    if (res.ok) {
-      alert('✓ Link sent to ' + email);
-      window.open('/fiches/PFE_Fiche_' + String(currentFiche).padStart(2, '0') + '.pdf', '_blank');
-      closeModal();
-    } else {
-      alert('Error. Please try again.');
-    }
-  } catch (err) {
-    alert('Network error');
-  }
-}
-
-window.onclick = (e) => {
-  if (e.target.id === 'modal') closeModal();
+function downloadFiche(id) {
+  window.open('/fiches/PFE_Fiche_' + String(id).padStart(2, '0') + '.pdf', '_blank');
 }
 
 render();
+
 </script>
 </body>
 </html>
