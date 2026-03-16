@@ -136,15 +136,14 @@ section > * { max-width: 1200px; margin-left: auto; margin-right: auto; }
 
 /* HOW */
 #how { background: white; border-top: 1px solid var(--border); }
-.how-steps-full { display: grid; grid-template-columns: repeat(5, 1fr); grid-template-rows: auto auto auto auto; gap: 0; margin-top: 56px; border: 1px solid var(--border-dark); border-radius: 16px; overflow: hidden; background: white; box-shadow: 0 4px 20px rgba(18,39,26,0.06); }
-.hw-step { padding: 32px 24px; border-right: 1px solid rgba(18,39,26,0.07); transition: background 0.25s; display: grid; grid-template-rows: subgrid; grid-row: span 4; }
-@supports not (grid-template-rows: subgrid) { .hw-step { display: flex; flex-direction: column; } }
+.how-steps-full { display: grid; grid-template-columns: repeat(5, 1fr); gap: 0; margin-top: 56px; border: 1px solid var(--border-dark); border-radius: 16px; overflow: hidden; background: white; box-shadow: 0 4px 20px rgba(18,39,26,0.06); }
+.hw-step { padding: 28px 22px; border-right: 1px solid rgba(18,39,26,0.07); transition: background 0.25s; }
 .hw-step:last-child { border-right: none; }
 .hw-step:hover { background: var(--green-pale); }
-.hw-num { font-size: 2rem; font-weight: 900; color: rgba(18,39,26,0.18); line-height: 1; padding-bottom: 8px; }
-.hw-icon { font-size: 1.5rem; display: block; padding-bottom: 10px; }
-.hw-step h4 { font-size: 0.9rem; font-weight: 700; color: var(--ink); line-height: 1.3; padding-bottom: 8px; }
-.hw-step p { font-size: 0.8rem; color: var(--ink-light); line-height: 1.6; }
+.hw-step-header { display: flex; align-items: baseline; gap: 10px; margin-bottom: 12px; }
+.hw-num { font-size: 0.95rem; font-weight: 900; color: var(--green); opacity: 0.45; line-height: 1; flex-shrink: 0; }
+.hw-step h4 { font-size: 0.95rem; font-weight: 700; color: var(--ink); line-height: 1.3; }
+.hw-step p { font-size: 0.82rem; color: var(--ink-light); line-height: 1.65; }
 
 /* ===== DASHBOARD SECTION ===== */
 #dashboard {
@@ -694,33 +693,38 @@ footer { background: var(--ink); border-top: 1px solid rgba(255,255,255,0.06); p
   <p class="section-sub">No new infrastructure. No new staff. Play for Earth layers onto your existing field operation and makes every visit count.</p>
   <div class="how-steps-full">
     <div class="hw-step">
-      <div class="hw-num">01</div>
-      <span class="hw-icon">&#128205;</span>
-      <h4>GPS Check-in</h4>
+      <div class="hw-step-header">
+        <div class="hw-num">01</div>
+        <h4>GPS Check-in</h4>
+      </div>
       <p>Rep arrives at the outlet. Location confirmed automatically. No manual entry, no ghost visits.</p>
     </div>
     <div class="hw-step">
-      <div class="hw-num">02</div>
-      <span class="hw-icon">&#128248;</span>
-      <h4>Photo Verification</h4>
+      <div class="hw-step-header">
+        <div class="hw-num">02</div>
+        <h4>Photo Verification</h4>
+      </div>
       <p>Rep photographs the collection point. Basket in place, fill level, poster visible. Thirty seconds. Timestamped and geo-tagged.</p>
     </div>
     <div class="hw-step">
-      <div class="hw-num">03</div>
-      <span class="hw-icon">&#127919;</span>
-      <h4>Points &amp; Rewards</h4>
+      <div class="hw-step-header">
+        <div class="hw-num">03</div>
+        <h4>Points &amp; Rewards</h4>
+      </div>
       <p>Action verified instantly. Rep earns points. Streaks multiply them. Hit a milestone, the Lucky Spin triggers.</p>
     </div>
     <div class="hw-step">
-      <div class="hw-num">04</div>
-      <span class="hw-icon">&#128202;</span>
-      <h4>Live Dashboard</h4>
+      <div class="hw-step-header">
+        <div class="hw-num">04</div>
+        <h4>Live Dashboard</h4>
+      </div>
       <p>Recovery rate, territory coverage, GTI score, and Scope 3 data &mdash; updated in real time. EPR export in one click.</p>
     </div>
     <div class="hw-step">
-      <div class="hw-num">05</div>
-      <span class="hw-icon">&#128260;</span>
-      <h4>Habit Loop</h4>
+      <div class="hw-step-header">
+        <div class="hw-num">05</div>
+        <h4>Habit Loop</h4>
+      </div>
       <p>Challenge missions, leaderboards, and streak mechanics turn one-off visits into a verified monthly routine.</p>
     </div>
   </div>
