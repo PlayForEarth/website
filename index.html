@@ -135,7 +135,7 @@ section > * { max-width: 1200px; margin-left: auto; margin-right: auto; }
 .who-card ul li .li-icon { flex-shrink: 0; font-size: 1rem; line-height: 1.4; }
 
 /* HOW */
-#how { background: var(--bg2); border-top: 1px solid var(--border); }
+#how { background: white; border-top: 1px solid var(--border); }
 .how-steps-full { display: grid; grid-template-columns: repeat(5, 1fr); grid-template-rows: auto auto auto auto; gap: 0; margin-top: 56px; border: 1px solid var(--border-dark); border-radius: 16px; overflow: hidden; background: white; box-shadow: 0 4px 20px rgba(18,39,26,0.06); }
 .hw-step { padding: 32px 24px; border-right: 1px solid rgba(18,39,26,0.07); transition: background 0.25s; display: grid; grid-template-rows: subgrid; grid-row: span 4; }
 @supports not (grid-template-rows: subgrid) { .hw-step { display: flex; flex-direction: column; } }
@@ -170,16 +170,32 @@ section > * { max-width: 1200px; margin-left: auto; margin-right: auto; }
 .dash-card { background: var(--bg); border: 1px solid var(--border); border-radius: 14px; padding: 24px; }
 .dash-card-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.7px; color: var(--ink-light); opacity: 0.6; margin-bottom: 20px; }
 
-.comp-row { margin-bottom: 14px; }
-.comp-header { display: flex; justify-content: space-between; margin-bottom: 6px; }
+.comp-row { margin-bottom: 8px; }
+.comp-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
 .comp-name { font-size: 13px; font-weight: 600; color: var(--ink); }
-.comp-pct { font-size: 13px; font-weight: 700; color: var(--green); }
+.comp-pct { font-size: 14px; font-weight: 700; color: var(--green); }
 .comp-pct.amber { color: var(--amber); }
 .comp-pct.red { color: var(--red); }
-.bar-track { height: 6px; background: var(--border); border-radius: 3px; overflow: hidden; }
-.bar-fill { height: 100%; background: var(--green); border-radius: 3px; }
+.bar-track { height: 8px; background: var(--border); border-radius: 4px; overflow: hidden; }
+.bar-fill { height: 100%; background: var(--green); border-radius: 4px; }
 .bar-fill.amber { background: var(--amber); }
 .bar-fill.red { background: var(--red); }
+
+/* Enhanced compliance cards */
+.comp-card { border-radius: 10px; padding: 12px 14px; margin-bottom: 8px; border-left: 4px solid transparent; }
+.comp-card-green { background: rgba(26,140,63,0.06); border-left-color: var(--green); }
+.comp-card-amber { background: rgba(245,158,11,0.08); border-left-color: var(--amber); }
+.comp-card-red { background: rgba(239,68,68,0.08); border-left-color: var(--red); }
+.bar-track-lg { height: 10px; background: rgba(0,0,0,0.07); border-radius: 5px; overflow: hidden; margin-top: 8px; }
+.bar-fill-lg { height: 100%; border-radius: 5px; transition: width 1.2s cubic-bezier(0.4,0,0.2,1); }
+.comp-badge { font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 4px; letter-spacing: 0.04em; }
+.comp-badge-green { background: var(--green-pale); color: var(--green-dark); }
+.comp-badge-amber { background: #fef3c7; color: #92400e; }
+.comp-badge-red { background: #fee2e2; color: #991b1b; }
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.25} }
+.comp-blink { animation: blink 1.2s ease-in-out infinite; }
+@keyframes pulse-bar { 0%,100%{opacity:1} 50%{opacity:0.55} }
+.bar-pulse { animation: pulse-bar 1.5s ease-in-out infinite; }
 
 .verified-row { display: flex; gap: 10px; margin-top: 20px; flex-wrap: wrap; }
 .verified-pill { display: flex; align-items: center; gap: 5px; background: var(--green-pale); border: 1px solid rgba(26,140,63,0.2); border-radius: 20px; padding: 4px 11px; font-size: 11px; font-weight: 600; color: var(--green); }
@@ -195,7 +211,7 @@ section > * { max-width: 1200px; margin-left: auto; margin-right: auto; }
 .gti-stages { width: 100%; }
 .gti-stage-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; font-size: 11px; }
 .gti-stage-name { color: var(--ink-light); width: 80px; }
-.gti-stage-bar { flex: 1; height: 3px; background: var(--border); border-radius: 2px; margin: 0 8px; overflow: hidden; }
+.gti-stage-bar { flex: 1; height: 8px; background: var(--border); border-radius: 4px; margin: 0 8px; overflow: hidden; }
 .gti-stage-fill { height: 100%; background: var(--green); border-radius: 2px; }
 .gti-stage-fill.amber { background: var(--amber); }
 .gti-stage-fill.red { background: var(--red); }
@@ -392,6 +408,7 @@ footer { background: var(--ink); border-top: 1px solid rgba(255,255,255,0.06); p
   <a href="/" class="nav-logo">Play for <em>Earth</em></a>
   <ul class="nav-links">
     <li><a href="#who">Who It's For</a></li>
+    <li><a href="#dashboard">What You Buy</a></li>
     <li><a href="#how">How It Works</a></li>
     <li><a href="#traction">Traction</a></li>
     <li><a href="#pricing">Pricing</a></li>
@@ -423,7 +440,7 @@ footer { background: var(--ink); border-top: 1px solid rgba(255,255,255,0.06); p
     <div class="hero-content">
       <div class="hero-eyebrow">EPR Compliance &middot; Scope 3 Data &middot; Packaging Recovery</div>
       <h1>Your field reps already visit every outlet.<br><em>EPR regulators want proof. Here it is.</em></h1>
-      <p class="hero-sub">Play for Earth turns routine FMCG distributor visits into verified EPR compliance records, Scope 3 data, and packaging recovery proof &mdash; using reps you already have, routes you already run.</p>
+      <p class="hero-sub">Play for Earth turns routine FMCG distributor visits into verified EPR compliance records, Scope 3 data, and packaging recovery proof &mdash; using reps you already have, routes you already run. You also get real-time coverage data across your entire distributor network.</p>
       <div class="hero-actions">
         <a href="/contact" class="btn-primary btn-large">Start a Pilot</a>
         <a href="#how" class="btn-ghost">See how it works &rarr;</a>
@@ -465,87 +482,6 @@ footer { background: var(--ink); border-top: 1px solid rgba(255,255,255,0.06); p
   </div>
 </div>
 
-<!-- WHO -->
-<section id="who">
-  <div class="section-eyebrow">Who It&rsquo;s For</div>
-  <h2 class="section-title">Built for three buyers.<br><em>One field operation.</em></h2>
-  <p class="section-sub">The same verified field data serves EPR compliance teams, sustainability directors, and CFOs &mdash; each with a different reason to act.</p>
-  <div class="who-grid">
-    <div class="who-card">
-      <span class="who-icon">&#128230;</span>
-      <div class="who-role">FMCG Brand &middot; Sustainability &amp; EPR</div>
-      <h3>No verified recovery data. Overpaying EPR fees.</h3>
-      <p>EPR obligations are calculated on declared production, not verified recovery. You can&rsquo;t audit or defend what you&rsquo;re paying.</p>
-      <ul>
-        <li><span class="li-icon">&#128202;</span> Verified recovery data for EPR declarations</li>
-        <li><span class="li-icon">&#127783;&#65039;</span> Scope 3 category 11 emissions evidence</li>
-        <li><span class="li-icon">&#128193;</span> Audit-ready territory dashboards</li>
-      </ul>
-    </div>
-    <div class="who-card">
-      <span class="who-icon">&#127981;</span>
-      <div class="who-role">Bottler / Distributor &middot; Operations</div>
-      <h3>Reps visit thousands of outlets. None of it counts.</h3>
-      <p>Your distribution network already touches every retail point. The infrastructure exists. The verification layer doesn&rsquo;t.</p>
-      <ul>
-        <li><span class="li-icon">&#128260;</span> Turn route visits into verified circular actions</li>
-        <li><span class="li-icon">&#127919;</span> Incentivize reps without changing their workflow</li>
-        <li><span class="li-icon">&#128176;</span> New revenue from EPR-linked data licensing</li>
-      </ul>
-    </div>
-    <div class="who-card">
-      <span class="who-icon">&#127807;</span>
-      <div class="who-role">NGO / EPR Compliance Scheme &middot; Governance</div>
-      <h3>Your EPR scheme needs field execution infrastructure. You don&rsquo;t have it. We do.</h3>
-      <p>Producer responsibility organizations need traceable recovery data at scale. Play for Earth provides the field execution layer.</p>
-      <ul>
-        <li><span class="li-icon">&#9989;</span> Verified collection records across territories</li>
-        <li><span class="li-icon">&#128200;</span> GTI scores per brand, per territory</li>
-        <li><span class="li-icon">&#9878;&#65039;</span> EPR fee calculation based on actual recovery</li>
-      </ul>
-    </div>
-  </div>
-</section>
-
-<!-- HOW IT WORKS -->
-<section id="how">
-  <div class="section-eyebrow">How It Works</div>
-  <h2 class="section-title">Three minutes per visit.<br><em>Fully auditable data.</em></h2>
-  <p class="section-sub">No new infrastructure. No new staff. Play for Earth layers onto your existing field operation and makes every visit count.</p>
-  <div class="how-steps-full">
-    <div class="hw-step">
-      <div class="hw-num">01</div>
-      <span class="hw-icon">&#128205;</span>
-      <h4>GPS Check-in</h4>
-      <p>Rep arrives at the outlet. Location confirmed automatically. No manual entry, no ghost visits.</p>
-    </div>
-    <div class="hw-step">
-      <div class="hw-num">02</div>
-      <span class="hw-icon">&#128248;</span>
-      <h4>Photo Verification</h4>
-      <p>Rep photographs the collection point. Basket in place, fill level, poster visible. Thirty seconds. Timestamped and geo-tagged.</p>
-    </div>
-    <div class="hw-step">
-      <div class="hw-num">03</div>
-      <span class="hw-icon">&#127919;</span>
-      <h4>Points &amp; Rewards</h4>
-      <p>Action verified instantly. Rep earns points. Streaks multiply them. Hit a milestone, the Lucky Spin triggers.</p>
-    </div>
-    <div class="hw-step">
-      <div class="hw-num">04</div>
-      <span class="hw-icon">&#128202;</span>
-      <h4>Live Dashboard</h4>
-      <p>Recovery rate, territory coverage, GTI score, and Scope 3 data &mdash; updated in real time. EPR export in one click.</p>
-    </div>
-    <div class="hw-step">
-      <div class="hw-num">05</div>
-      <span class="hw-icon">&#128260;</span>
-      <h4>Habit Loop</h4>
-      <p>Challenge missions, leaderboards, and streak mechanics turn one-off visits into a verified monthly routine.</p>
-    </div>
-  </div>
-</section>
-
 <!-- DASHBOARD -->
 <section id="dashboard">
   <div style="max-width:1200px;margin:0 auto;">
@@ -566,41 +502,85 @@ footer { background: var(--ink); border-top: 1px solid rgba(255,255,255,0.06); p
         <div class="dash-kpi-sub">geo-validated, timestamped</div>
       </div>
       <div class="dash-kpi">
+        <div class="dash-kpi-label">Distributor Coverage</div>
+        <div class="dash-kpi-value">94%</div>
+        <div class="dash-kpi-delta">&#8593; +4pp vs last month</div>
+        <div class="dash-kpi-sub">of declared distribution network</div>
+      </div>
+      <div class="dash-kpi">
         <div class="dash-kpi-label">Collection Point Active</div>
         <div class="dash-kpi-value">78%</div>
         <div class="dash-kpi-delta">&#8593; +6pp vs last month</div>
         <div class="dash-kpi-sub">basket in place &amp; poster visible</div>
-      </div>
-      <div class="dash-kpi">
-        <div class="dash-kpi-label">Content Detected</div>
-        <div class="dash-kpi-value">61%</div>
-        <div class="dash-kpi-delta">&#8593; +9pp vs last month</div>
-        <div class="dash-kpi-sub">partial or full on visit</div>
       </div>
     </div>
 
     <div class="dash-grid">
       <div class="dash-card">
         <div class="dash-card-title">Compliance by Territory &mdash; 30-day rolling</div>
-        <div class="comp-row">
-          <div class="comp-header"><div class="comp-name">Westlands</div><div class="comp-pct">89%</div></div>
-          <div class="bar-track"><div class="bar-fill" style="width:89%"></div></div>
+
+        <div class="comp-card comp-card-green">
+          <div class="comp-header">
+            <div class="comp-name">Westlands</div>
+            <div style="display:flex;align-items:center;gap:8px;">
+              <span class="comp-badge comp-badge-green">&#8593; High</span>
+              <div class="comp-pct">89%</div>
+            </div>
+          </div>
+          <div class="bar-track-lg"><div class="bar-fill-lg" style="width:89%;background:var(--green)"></div></div>
         </div>
-        <div class="comp-row">
-          <div class="comp-header"><div class="comp-name">CBD / Nairobi Central</div><div class="comp-pct">81%</div></div>
-          <div class="bar-track"><div class="bar-fill" style="width:81%"></div></div>
+
+        <div class="comp-card comp-card-green">
+          <div class="comp-header">
+            <div class="comp-name">CBD / Nairobi Central</div>
+            <div style="display:flex;align-items:center;gap:8px;">
+              <span class="comp-badge comp-badge-green">&#8593; High</span>
+              <div class="comp-pct">81%</div>
+            </div>
+          </div>
+          <div class="bar-track-lg"><div class="bar-fill-lg" style="width:81%;background:var(--green)"></div></div>
         </div>
-        <div class="comp-row">
-          <div class="comp-header"><div class="comp-name">Kasarani</div><div class="comp-pct">74%</div></div>
-          <div class="bar-track"><div class="bar-fill" style="width:74%"></div></div>
+
+        <div class="comp-card comp-card-green">
+          <div class="comp-header">
+            <div class="comp-name">Kasarani</div>
+            <div style="display:flex;align-items:center;gap:8px;">
+              <span class="comp-badge comp-badge-green">&#8593; Good</span>
+              <div class="comp-pct">74%</div>
+            </div>
+          </div>
+          <div class="bar-track-lg"><div class="bar-fill-lg" style="width:74%;background:var(--green)"></div></div>
         </div>
-        <div class="comp-row">
-          <div class="comp-header"><div class="comp-name">Kibera / Lang&rsquo;ata</div><div class="comp-pct amber">58%</div></div>
-          <div class="bar-track"><div class="bar-fill amber" style="width:58%"></div></div>
+
+        <div class="comp-card comp-card-amber">
+          <div class="comp-header">
+            <div class="comp-name">Kibera / Lang&rsquo;ata</div>
+            <div style="display:flex;align-items:center;gap:8px;">
+              <span class="comp-badge comp-badge-amber">&#9888; Watch</span>
+              <div class="comp-pct amber">58%</div>
+            </div>
+          </div>
+          <div class="bar-track-lg"><div class="bar-fill-lg" style="width:58%;background:var(--amber)"></div></div>
         </div>
-        <div class="comp-row">
-          <div class="comp-header"><div class="comp-name">Eastleigh</div><div class="comp-pct red">41%</div></div>
-          <div class="bar-track"><div class="bar-fill red" style="width:41%"></div></div>
+
+        <div class="comp-card comp-card-red">
+          <div class="comp-header">
+            <div class="comp-name">Eastleigh</div>
+            <div style="display:flex;align-items:center;gap:8px;">
+              <span class="comp-badge comp-badge-red comp-blink">&#9679; Alert</span>
+              <div class="comp-pct red">41%</div>
+            </div>
+          </div>
+          <div class="bar-track-lg"><div class="bar-fill-lg bar-pulse" style="width:41%;background:var(--red)"></div></div>
+          <div style="font-size:10px;color:var(--red);margin-top:6px;font-weight:600;">Action required &mdash; below 50% threshold</div>
+        </div>
+        <div style="margin-top:16px;padding-top:16px;border-top:1px solid var(--border);">
+          <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.6px;color:var(--ink-light);opacity:0.6;margin-bottom:10px;">Distributor Network Coverage</div>
+          <div class="comp-row">
+            <div class="comp-header"><div class="comp-name" style="font-size:12px;">Declared network visited</div><div class="comp-pct">94%</div></div>
+            <div class="bar-track"><div class="bar-fill" style="width:94%"></div></div>
+          </div>
+          <div style="font-size:11px;color:var(--ink-light);opacity:0.6;margin-top:4px;">3 distributors below threshold &mdash; flagged for follow-up</div>
         </div>
         <div class="verified-row">
           <div class="verified-pill">&#10003; Photo-verified</div>
@@ -626,11 +606,11 @@ footer { background: var(--ink); border-top: 1px solid rgba(255,255,255,0.06); p
           <div class="gti-label">Green Transformation Index</div>
           <div class="gti-sub">Behavioral compliance score &mdash; Nairobi Metro</div>
           <div class="gti-stages">
-            <div class="gti-stage-row"><div class="gti-stage-name">Internalized</div><div class="gti-stage-bar"><div class="gti-stage-fill" style="width:18%"></div></div><div class="gti-stage-count">44</div></div>
-            <div class="gti-stage-row"><div class="gti-stage-name">Embedded</div><div class="gti-stage-bar"><div class="gti-stage-fill" style="width:35%"></div></div><div class="gti-stage-count">87</div></div>
-            <div class="gti-stage-row"><div class="gti-stage-name">Reinforced</div><div class="gti-stage-bar"><div class="gti-stage-fill" style="width:22%"></div></div><div class="gti-stage-count">54</div></div>
-            <div class="gti-stage-row"><div class="gti-stage-name">Declared</div><div class="gti-stage-bar"><div class="gti-stage-fill amber" style="width:15%"></div></div><div class="gti-stage-count">37</div></div>
-            <div class="gti-stage-row"><div class="gti-stage-name">Inactive</div><div class="gti-stage-bar"><div class="gti-stage-fill red" style="width:10%"></div></div><div class="gti-stage-count">25</div></div>
+            <div class="gti-stage-row"><div class="gti-stage-name">Internalized</div><div class="gti-stage-bar"><div class="gti-stage-fill" style="width:44%"></div></div><div class="gti-stage-count">44</div></div>
+            <div class="gti-stage-row"><div class="gti-stage-name">Embedded</div><div class="gti-stage-bar"><div class="gti-stage-fill" style="width:87%"></div></div><div class="gti-stage-count">87</div></div>
+            <div class="gti-stage-row"><div class="gti-stage-name">Reinforced</div><div class="gti-stage-bar"><div class="gti-stage-fill" style="width:54%"></div></div><div class="gti-stage-count">54</div></div>
+            <div class="gti-stage-row"><div class="gti-stage-name">Declared</div><div class="gti-stage-bar"><div class="gti-stage-fill amber" style="width:37%"></div></div><div class="gti-stage-count">37</div></div>
+            <div class="gti-stage-row"><div class="gti-stage-name">Inactive</div><div class="gti-stage-bar"><div class="gti-stage-fill red" style="width:25%"></div></div><div class="gti-stage-count">25</div></div>
           </div>
         </div>
       </div>
@@ -703,6 +683,45 @@ footer { background: var(--ink); border-top: 1px solid rgba(255,255,255,0.06); p
         <div style="font-size:0.7rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--green);margin-bottom:8px;">In plain English</div>
         <p style="font-size:0.88rem;color:var(--ink-light);line-height:1.7;">We measure <strong>frequency</strong> (how often) &middot; <strong>spread</strong> (how many outlets) &middot; <strong>persistence</strong> (what happens when incentives are removed). The GTI satisfies EPR auditors, Scope 3 frameworks, and DFI impact requirements &mdash; simultaneously.</p>
       </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section id="how">
+  <div class="section-eyebrow">How It Works</div>
+  <h2 class="section-title">Three minutes per visit.<br><em>Fully auditable data.</em></h2>
+  <p class="section-sub">No new infrastructure. No new staff. Play for Earth layers onto your existing field operation and makes every visit count.</p>
+  <div class="how-steps-full">
+    <div class="hw-step">
+      <div class="hw-num">01</div>
+      <span class="hw-icon">&#128205;</span>
+      <h4>GPS Check-in</h4>
+      <p>Rep arrives at the outlet. Location confirmed automatically. No manual entry, no ghost visits.</p>
+    </div>
+    <div class="hw-step">
+      <div class="hw-num">02</div>
+      <span class="hw-icon">&#128248;</span>
+      <h4>Photo Verification</h4>
+      <p>Rep photographs the collection point. Basket in place, fill level, poster visible. Thirty seconds. Timestamped and geo-tagged.</p>
+    </div>
+    <div class="hw-step">
+      <div class="hw-num">03</div>
+      <span class="hw-icon">&#127919;</span>
+      <h4>Points &amp; Rewards</h4>
+      <p>Action verified instantly. Rep earns points. Streaks multiply them. Hit a milestone, the Lucky Spin triggers.</p>
+    </div>
+    <div class="hw-step">
+      <div class="hw-num">04</div>
+      <span class="hw-icon">&#128202;</span>
+      <h4>Live Dashboard</h4>
+      <p>Recovery rate, territory coverage, GTI score, and Scope 3 data &mdash; updated in real time. EPR export in one click.</p>
+    </div>
+    <div class="hw-step">
+      <div class="hw-num">05</div>
+      <span class="hw-icon">&#128260;</span>
+      <h4>Habit Loop</h4>
+      <p>Challenge missions, leaderboards, and streak mechanics turn one-off visits into a verified monthly routine.</p>
     </div>
   </div>
 </section>
