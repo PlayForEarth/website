@@ -63,7 +63,8 @@ nav {
 .nav-hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
 .nav-hamburger.open span:nth-child(2) { opacity: 0; }
 .nav-hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
-.mobile-menu { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: var(--bg); z-index: 499; padding: 96px 6% 48px; flex-direction: column; transform: translateX(100%); transition: transform 0.35s cubic-bezier(0.4,0,0.2,1); overflow-y: auto; }
+.mobile-menu { display: flex; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: var(--bg); z-index: 499; padding: 96px 6% 48px; flex-direction: column; transform: translateX(110%); transition: transform 0.35s cubic-bezier(0.4,0,0.2,1); overflow-y: auto; visibility: hidden; }
+.mobile-menu.open { transform: translateX(0); visibility: visible; }
 .mobile-menu.open { transform: translateX(0); }
 .mobile-menu-link { display: flex; align-items: center; justify-content: space-between; padding: 18px 0; font-size: 1.4rem; font-weight: 700; color: var(--ink); text-decoration: none; border-bottom: 1px solid var(--border); }
 .mobile-menu-link .arrow { color: var(--green); opacity: 0.5; }
@@ -100,7 +101,8 @@ nav {
 .proof-card-desc { font-size: 0.76rem; color: var(--ink-light); line-height: 1.5; }
 .hero-video { flex: 1 1 auto; min-width: 0; border-radius: 16px; overflow: hidden; box-shadow: 0 20px 60px rgba(18,39,26,0.2); border: 3px solid white; background: #0d2d0d; aspect-ratio: 4/3; }
 .hero-video video { width: 100%; height: 100%; object-fit: cover; display: block; }
-.hero-video-placeholder { width: 100%; height: 100%; min-height: 300px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; background: linear-gradient(135deg, #0d2d0d 0%, #1a5c1a 100%); color: rgba(255,255,255,0.55); font-size: 0.75rem; letter-spacing: 0.08em; text-transform: uppercase; }
+.hero-video-placeholder { width: 100%; height: 100%; min-height: 300px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; background: linear-gradient(135deg, #0d2d0d 0%, #1a5c1a 100%); color: rgba(255,255,255,0.55); font-size: 0.75rem; letter-spacing: 0.08em; text-transform: uppercase; text-decoration: none; cursor: pointer; transition: opacity 0.2s; }
+.hero-video-placeholder:hover { opacity: 0.85; }
 .hero-video-placeholder .play-btn { width: 52px; height: 52px; border-radius: 50%; border: 2px solid rgba(255,255,255,0.35); display: flex; align-items: center; justify-content: center; font-size: 1.3rem; color: rgba(255,255,255,0.7); }
 
 /* LOGOS */
@@ -331,7 +333,6 @@ footer { background: var(--ink); border-top: 1px solid rgba(255,255,255,0.06); p
 @media (max-width: 900px) {
   .nav-links { display: none; }
   .nav-hamburger { display: flex; }
-  .mobile-menu { display: flex; }
   section { padding: 64px 5%; }
   #contact { padding: 80px 5%; }
   #mission { padding: 80px 5%; }
@@ -446,10 +447,9 @@ footer { background: var(--ink); border-top: 1px solid rgba(255,255,255,0.06); p
       </div>
     </div>
     <div class="hero-video">
-      <div class="hero-video-placeholder">
-        <div class="play-btn">&#9654;</div>
-        <span>Platform Demo</span>
-      </div>
+      <video src="/hero-video.mp4" autoplay muted loop playsinline poster="">
+        <source src="/hero-video.mp4" type="video/mp4">
+      </video>
     </div>
   </div>
 </section>
@@ -940,6 +940,34 @@ footer { background: var(--ink); border-top: 1px solid rgba(255,255,255,0.06); p
 window.addEventListener('scroll', () => {
   document.getElementById('mainNav').style.background =
     window.scrollY > 60 ? 'rgba(240,250,242,0.98)' : 'rgba(240,250,242,0.94)';
+});
+
+// iOS video autoplay fallback
+document.querySelectorAll('video').forEach(v => {
+  v.play().catch(() => {
+    v.closest('.hero-video').innerHTML =
+      '<div class="hero-video-placeholder" style="cursor:pointer" onclick="this.closest(\'.hero-video\').querySelector(\'video\')&&this.closest(\'.hero-video\').querySelector(\'video\').play()">' +
+      '<div class="play-btn">&#9654;</div><span>Platform Demo</span></div>';
+    const vid = document.createElement('video');
+    vid.src = '/hero-video.mp4';
+    vid.muted = true;
+    vid.loop = true;
+    vid.playsInline = true;
+    vid.setAttribute('playsinline', '');
+    vid.style.cssText = 'width:100%;height:100%;object-fit:cover;display:block;';
+    const wrap = document.querySelector('.hero-video');
+    wrap.innerHTML = '';
+    wrap.appendChild(vid);
+    wrap.addEventListener('click', () => vid.play(), { once: true });
+    wrap.style.cursor = 'pointer';
+    const overlay = document.createElement('div');
+    overlay.className = 'hero-video-placeholder';
+    overlay.style.cssText = 'position:absolute;inset:0;cursor:pointer;';
+    overlay.innerHTML = '<div class="play-btn">&#9654;</div><span>Tap to play</span>';
+    wrap.style.position = 'relative';
+    wrap.appendChild(overlay);
+    overlay.addEventListener('click', () => { vid.play(); overlay.remove(); }, { once: true });
+  });
 });
 
 // Hamburger
