@@ -72,10 +72,10 @@ nav {
 /* HERO */
 .hero {
   min-height: 92vh; padding: 56px 5% 64px;
-  position: relative; overflow: hidden; display: flex; align-items: center;
+  position: relative; display: flex; align-items: center;
 }
 .hero-bg {
-  position: absolute; inset: 0;
+  position: absolute; inset: 0; overflow: hidden;
   background:
     radial-gradient(ellipse 70% 60% at 70% 30%, rgba(34,197,94,0.16) 0%, transparent 60%),
     radial-gradient(ellipse 50% 50% at 15% 75%, rgba(250,204,21,0.12) 0%, transparent 50%),
@@ -335,7 +335,7 @@ footer { background: var(--ink); border-top: 1px solid rgba(255,255,255,0.06); p
   section { padding: 64px 5%; }
   #contact { padding: 80px 5%; }
   #mission { padding: 80px 5%; }
-  .hero { min-height: 100svh; padding: 72px 5% 40px; }
+  .hero { min-height: 100vh; min-height: 100svh; padding: 80px 5% 48px; overflow: visible; }
   .hero-inner { flex-direction: column; gap: 32px; }
   .hero-content { flex: none; width: 100%; }
   .hero h1 { font-size: clamp(2.2rem, 7vw, 3rem); }
@@ -446,7 +446,7 @@ footer { background: var(--ink); border-top: 1px solid rgba(255,255,255,0.06); p
       </div>
     </div>
     <div class="hero-video">
-      <video src="/hero-video.mp4" autoplay muted loop playsinline>
+      <div class="hero-video-placeholder">
         <div class="play-btn">&#9654;</div>
         <span>Platform Demo</span>
       </div>
