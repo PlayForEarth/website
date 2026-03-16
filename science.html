@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Science Behind It &mdash; Play for Earth</title>
+<meta name="description" content="Why behavioral infrastructure beats awareness campaigns every time. The science behind Play for Earth's field execution model.">
+<link rel="canonical" href="https://www.playforearth.org/science">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Familjen+Grotesk:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Playfair+Display:ital,wght@0,700;0,900;1,700&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --bg: #f0faf2;
+  --bg2: #e8f7ed;
+  --ink: #12271a;
+  --ink-light: #3a5444;
+  --green: #1a8c3f;
+  --green-dark: #127030;
+  --green-bright: #22c55e;
+  --green-pale: #dcfce7;
+  --white: #ffffff;
+  --border: rgba(26,140,63,0.15);
+  --border-dark: rgba(18,39,26,0.1);
+  --serif: 'Playfair Display', Georgia, serif;
+  --sans: 'Familjen Grotesk', sans-serif;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; font-size: 16px; }
+body { font-family: var(--sans); background: var(--bg); color: var(--ink); overflow-x: hidden; }
+
+/* NAV */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 500;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 16px 5%;
+  background: rgba(240,250,242,0.94);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border);
+}
+.nav-logo { font-size: 1.1rem; font-weight: 700; color: var(--ink); text-decoration: none; letter-spacing: -0.01em; }
+.nav-logo em { color: var(--green); font-style: normal; }
+.nav-links { display: flex; list-style: none; gap: 32px; align-items: center; }
+.nav-links a { font-size: 0.875rem; font-weight: 500; color: var(--ink-light); text-decoration: none; transition: color 0.2s; }
+.nav-links a:hover { color: var(--green); }
+.nav-cta { background: var(--green) !important; color: white !important; padding: 9px 20px; border-radius: 24px; font-weight: 600 !important; }
+.nav-hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 6px; background: none; border: none; }
+.nav-hamburger span { display: block; width: 22px; height: 2px; background: var(--ink); border-radius: 2px; transition: all 0.3s; }
+.nav-hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.nav-hamburger.open span:nth-child(2) { opacity: 0; }
+.nav-hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+.mobile-menu { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: var(--bg); z-index: 499; padding: 96px 6% 48px; flex-direction: column; transform: translateX(100%); transition: transform 0.35s cubic-bezier(0.4,0,0.2,1); overflow-y: auto; }
+.mobile-menu.open { transform: translateX(0); }
+.mobile-menu-link { display: flex; align-items: center; justify-content: space-between; padding: 18px 0; font-size: 1.4rem; font-weight: 700; color: var(--ink); text-decoration: none; border-bottom: 1px solid var(--border); }
+.mobile-menu-cta { margin-top: 32px; display: block; background: var(--green); color: white; text-align: center; padding: 18px 28px; border-radius: 40px; font-size: 1rem; font-weight: 700; text-decoration: none; }
+
+/* HERO */
+.page-hero {
+  padding: 140px 5% 80px;
+  background: var(--bg);
+  position: relative;
+  overflow: hidden;
+  border-bottom: 1px solid var(--border);
+}
+.page-hero::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse 60% 70% at 80% 20%, rgba(34,197,94,0.12) 0%, transparent 60%);
+}
+.page-hero-inner { max-width: 800px; margin: 0 auto; position: relative; z-index: 2; }
+.page-eyebrow { display: inline-flex; align-items: center; gap: 8px; background: var(--green-pale); border: 1px solid rgba(34,197,94,0.3); color: var(--green); font-size: 0.72rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; padding: 5px 14px; border-radius: 20px; margin-bottom: 20px; }
+.page-hero h1 { font-family: var(--serif); font-size: clamp(2.4rem, 5vw, 4rem); font-weight: 900; line-height: 1.08; letter-spacing: -0.03em; color: var(--ink); margin-bottom: 24px; }
+.page-hero h1 em { font-style: italic; color: var(--green); }
+.page-hero-sub { font-size: 1.1rem; line-height: 1.75; color: var(--ink-light); max-width: 640px; margin-bottom: 40px; }
+.page-hero-claim {
+  display: inline-flex; align-items: flex-start; gap: 16px;
+  background: white; border: 1px solid var(--border-dark);
+  border-radius: 14px; padding: 20px 24px;
+  max-width: 600px;
+}
+.page-hero-claim-icon { font-size: 1.6rem; flex-shrink: 0; }
+.page-hero-claim-text { font-size: 0.92rem; color: var(--ink); line-height: 1.6; }
+.page-hero-claim-text strong { color: var(--green); }
+
+/* TOC */
+.toc-strip {
+  background: white;
+  border-bottom: 1px solid var(--border);
+  padding: 16px 5%;
+  display: flex; gap: 32px; align-items: center; flex-wrap: wrap;
+}
+.toc-label { font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: rgba(18,39,26,0.35); flex-shrink: 0; }
+.toc-links { display: flex; gap: 24px; flex-wrap: wrap; }
+.toc-links a { font-size: 0.82rem; font-weight: 600; color: var(--ink-light); text-decoration: none; transition: color 0.2s; }
+.toc-links a:hover { color: var(--green); }
+
+/* SECTION */
+.science-section { padding: 88px 5%; border-top: 1px solid var(--border); }
+.science-section:nth-child(odd) { background: white; }
+.science-section:nth-child(even) { background: var(--bg2); }
+.science-inner { max-width: 1100px; margin: 0 auto; }
+
+.section-number { font-size: 0.65rem; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(18,39,26,0.25); margin-bottom: 8px; }
+.section-eyebrow { display: inline-flex; align-items: center; gap: 8px; background: var(--green-pale); border: 1px solid rgba(34,197,94,0.25); color: var(--green); font-size: 0.72rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; padding: 5px 14px; border-radius: 20px; margin-bottom: 16px; }
+.section-title { font-family: var(--serif); font-size: clamp(1.8rem, 3vw, 2.6rem); font-weight: 700; line-height: 1.15; letter-spacing: -0.02em; color: var(--ink); margin-bottom: 16px; }
+.section-title em { font-style: italic; color: var(--green); }
+.section-body { font-size: 1rem; line-height: 1.8; color: var(--ink-light); max-width: 660px; margin-bottom: 48px; }
+
+/* STUDY CARD */
+.study-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; margin-bottom: 16px; }
+.study-card {
+  background: white; border: 1px solid var(--border-dark); border-radius: 14px;
+  padding: 28px; transition: all 0.2s;
+  box-shadow: 0 2px 8px rgba(18,39,26,0.04);
+}
+.study-card:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(18,39,26,0.08); border-color: rgba(26,140,63,0.2); }
+.study-tag { display: inline-block; font-size: 0.63rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--green); background: var(--green-pale); border: 1px solid rgba(34,197,94,0.25); border-radius: 3px; padding: 3px 9px; margin-bottom: 14px; }
+.study-source { font-size: 0.68rem; color: var(--ink-light); opacity: 0.6; margin-bottom: 10px; font-weight: 500; }
+.study-insight { font-size: 0.9rem; color: var(--ink-light); line-height: 1.65; margin-bottom: 18px; }
+.study-insight strong { color: var(--ink); }
+.study-stats { display: flex; gap: 20px; flex-wrap: wrap; }
+.study-stat-val { font-family: var(--serif); font-size: 1.8rem; font-weight: 700; color: var(--green); line-height: 1; margin-bottom: 2px; }
+.study-stat-label { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--ink-light); opacity: 0.7; }
+
+/* CHAIN */
+.sci-chain {
+  display: flex; align-items: center; gap: 0;
+  background: white; border: 1px solid var(--border-dark);
+  border-radius: 14px; overflow: hidden;
+  margin-bottom: 48px;
+}
+.chain-step {
+  flex: 1; padding: 24px 20px; text-align: center;
+  border-right: 1px solid var(--border-dark);
+  position: relative;
+}
+.chain-step:last-child { border-right: none; }
+.chain-step-num { font-size: 0.62rem; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: var(--green); margin-bottom: 8px; }
+.chain-step-title { font-size: 0.9rem; font-weight: 700; color: var(--ink); margin-bottom: 6px; }
+.chain-step-desc { font-size: 0.76rem; color: var(--ink-light); line-height: 1.5; }
+.chain-step.active { background: var(--green-pale); }
+.chain-step.active .chain-step-title { color: var(--green-dark); }
+.chain-arrow { font-size: 1rem; color: rgba(26,140,63,0.3); padding: 0 2px; flex-shrink: 0; align-self: center; }
+
+/* KEY PRINCIPLE */
+.principle-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 48px; }
+.principle-card {
+  background: var(--bg2); border: 1px solid var(--border);
+  border-radius: 14px; padding: 28px 24px;
+  border-top: 3px solid var(--green);
+}
+.principle-icon { font-size: 1.8rem; margin-bottom: 14px; display: block; }
+.principle-title { font-size: 1rem; font-weight: 700; color: var(--ink); margin-bottom: 8px; line-height: 1.3; }
+.principle-body { font-size: 0.84rem; color: var(--ink-light); line-height: 1.65; }
+
+/* QUOTE */
+.pullquote {
+  border-left: 3px solid var(--green);
+  padding: 20px 28px;
+  background: white;
+  border-radius: 0 12px 12px 0;
+  margin: 40px 0;
+  max-width: 700px;
+}
+.pullquote p { font-family: var(--serif); font-size: 1.2rem; font-style: italic; color: var(--ink); line-height: 1.6; margin-bottom: 10px; }
+.pullquote cite { font-size: 0.78rem; color: var(--ink-light); opacity: 0.7; font-style: normal; font-weight: 600; }
+
+/* EVIDENCE TABLE */
+.evidence-table { width: 100%; border-collapse: collapse; margin-top: 40px; }
+.evidence-table th { font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--ink-light); opacity: 0.6; padding: 0 16px 12px 0; text-align: left; border-bottom: 2px solid var(--border-dark); }
+.evidence-table td { padding: 16px 16px 16px 0; border-bottom: 1px solid var(--border); font-size: 0.86rem; vertical-align: top; }
+.evidence-table tr:last-child td { border-bottom: none; }
+.evidence-table td:first-child { font-weight: 700; color: var(--ink); width: 220px; }
+.evidence-table td:nth-child(2) { color: var(--ink-light); line-height: 1.6; }
+.evidence-table td:last-child { color: var(--green); font-weight: 700; font-size: 1.1rem; font-family: var(--serif); white-space: nowrap; width: 100px; }
+
+/* CONCLUSION BANNER */
+.conclusion {
+  background: var(--ink);
+  padding: 88px 5%;
+  text-align: center;
+}
+.conclusion-inner { max-width: 760px; margin: 0 auto; }
+.conclusion h2 { font-family: var(--serif); font-size: clamp(1.8rem, 3.5vw, 3rem); font-weight: 900; color: white; line-height: 1.15; margin-bottom: 20px; letter-spacing: -0.02em; }
+.conclusion h2 em { color: var(--green-bright); font-style: italic; }
+.conclusion p { font-size: 1rem; color: rgba(255,255,255,0.55); line-height: 1.75; margin-bottom: 36px; max-width: 580px; margin-left: auto; margin-right: auto; }
+.btn-primary { background: var(--green); color: white; padding: 14px 32px; border-radius: 32px; font-size: 0.95rem; font-weight: 700; text-decoration: none; display: inline-block; transition: all 0.2s; box-shadow: 0 4px 20px rgba(26,140,63,0.3); }
+.btn-primary:hover { background: var(--green-dark); transform: translateY(-2px); }
+.btn-outline-light { color: rgba(255,255,255,0.7); border: 1px solid rgba(255,255,255,0.2); padding: 14px 32px; border-radius: 32px; font-size: 0.9rem; font-weight: 600; text-decoration: none; display: inline-block; margin-left: 12px; transition: all 0.2s; }
+.btn-outline-light:hover { border-color: var(--green-bright); color: var(--green-bright); }
+
+/* FOOTER */
+footer { background: var(--ink); border-top: 1px solid rgba(255,255,255,0.06); padding: 48px 5% 32px; }
+.footer-bottom { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
+.footer-copy { font-size: 0.78rem; color: rgba(255,255,255,0.28); }
+.footer-links { display: flex; gap: 20px; }
+.footer-links a { font-size: 0.78rem; color: rgba(255,255,255,0.28); text-decoration: none; }
+.footer-links a:hover { color: rgba(255,255,255,0.6); }
+.footer-logo { font-size: 1rem; font-weight: 700; color: white; text-decoration: none; display: block; margin-bottom: 16px; }
+.footer-logo em { color: var(--green-bright); font-style: normal; }
+
+/* RESPONSIVE */
+@media (max-width: 900px) {
+  .nav-links { display: none; }
+  .nav-hamburger { display: flex; }
+  .mobile-menu { display: flex; }
+  .study-grid { grid-template-columns: 1fr; }
+  .principle-grid { grid-template-columns: 1fr; }
+  .sci-chain { flex-direction: column; }
+  .chain-step { border-right: none; border-bottom: 1px solid var(--border-dark); }
+  .chain-step:last-child { border-bottom: none; }
+  .chain-arrow { display: none; }
+  .page-hero { padding: 120px 5% 60px; }
+  .science-section { padding: 60px 5%; }
+  .toc-strip { gap: 12px; }
+  .evidence-table td:first-child { width: auto; }
+}
+@media (max-width: 480px) {
+  .page-hero h1 { font-size: clamp(2rem, 9vw, 2.6rem); }
+  .btn-outline-light { display: block; margin-left: 0; margin-top: 12px; text-align: center; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="/" class="nav-logo">Play for <em>Earth</em></a>
+  <ul class="nav-links">
+    <li><a href="/#who">Who It's For</a></li>
+    <li><a href="/#how">How It Works</a></li>
+    <li><a href="/#traction">Traction</a></li>
+    <li><a href="/#pricing">Pricing</a></li>
+    <li><a href="/insight-series">Insight Series</a></li>
+    <li><a href="/contact" class="nav-cta">Request Pilot</a></li>
+  </ul>
+  <button class="nav-hamburger" id="hamburger" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<nav class="mobile-menu" id="mobileMenu">
+  <a href="/" class="mobile-menu-link">Home <span style="color:var(--green);opacity:0.5">&rarr;</span></a>
+  <a href="/#how" class="mobile-menu-link">How It Works <span style="color:var(--green);opacity:0.5">&rarr;</span></a>
+  <a href="/#pricing" class="mobile-menu-link">Pricing <span style="color:var(--green);opacity:0.5">&rarr;</span></a>
+  <a href="/insight-series" class="mobile-menu-link">Insight Series <span style="color:var(--green);opacity:0.5">&rarr;</span></a>
+  <a href="/contact" class="mobile-menu-cta">Request a Pilot &rarr;</a>
+</nav>
+
+<!-- HERO -->
+<div class="page-hero">
+  <div class="page-hero-inner">
+    <div class="page-eyebrow">Behavioral Science</div>
+    <h1>Awareness doesn't change behavior.<br><em>Infrastructure does.</em></h1>
+    <p class="page-hero-sub">Fifty years of behavioral research point to the same conclusion: the most reliable way to change what people do is to change the system they operate in &mdash; not to change their minds. Here is what the evidence says, and how Play for Earth is built around it.</p>
+    <div class="page-hero-claim">
+      <div class="page-hero-claim-icon">&#128201;</div>
+      <div class="page-hero-claim-text">Deposit return systems with structured infrastructure achieve <strong>90&ndash;98% recovery rates</strong> &mdash; not through education campaigns, but through the presence of a default system that makes participation the easiest path.</div>
+    </div>
+  </div>
+</div>
+
+<!-- TOC -->
+<div class="toc-strip">
+  <div class="toc-label">On this page</div>
+  <div class="toc-links">
+    <a href="#default">The Default Effect</a>
+    <a href="#infrastructure">Visible Infrastructure</a>
+    <a href="#norms">Social Norms</a>
+    <a href="#habit">Habit Formation</a>
+    <a href="#evidence">Evidence Summary</a>
+    <a href="#model">The Play for Earth Model</a>
+  </div>
+</div>
+
+<!-- SECTION 1: DEFAULT EFFECT -->
+<div class="science-section" id="default">
+  <div class="science-inner">
+    <div class="section-number">01</div>
+    <div class="section-eyebrow">The Default Effect</div>
+    <h2 class="section-title">People follow the path<br>of <em>least resistance.</em></h2>
+    <p class="section-body">When a system is designed so that participation is the default &mdash; and opting out requires deliberate effort &mdash; participation rates are dramatically higher. This isn't about convincing anyone. It's about which action is easier.</p>
+
+    <div class="study-grid">
+      <div class="study-card">
+        <div class="study-tag">Opt-out vs opt-in</div>
+        <div class="study-source">Johnson &amp; Goldstein, 2003 &mdash; Science</div>
+        <p class="study-insight">Organ donation rates across European countries varied from under 20% to over 90% &mdash; not because of culture or attitudes, but solely because of whether the default was <strong>opt-in or opt-out</strong>. The behavior was the same. The system design was different.</p>
+        <div class="study-stats">
+          <div><div class="study-stat-val">90%+</div><div class="study-stat-label">Opt-out systems</div></div>
+          <div><div class="study-stat-val">~15%</div><div class="study-stat-label">Opt-in systems</div></div>
+        </div>
+      </div>
+      <div class="study-card">
+        <div class="study-tag">Savings enrollment</div>
+        <div class="study-source">Madrian &amp; Shea, 2001 &mdash; Quarterly Journal of Economics</div>
+        <p class="study-insight">When employees were automatically enrolled in 401(k) savings plans, participation jumped from 49% to 86% &mdash; without changing incentives, salaries, or education. <strong>The default was the intervention.</strong> Most participants never changed the default contribution rate, either.</p>
+        <div class="study-stats">
+          <div><div class="study-stat-val">49%</div><div class="study-stat-label">Opt-in enrollment</div></div>
+          <div><div class="study-stat-val">86%</div><div class="study-stat-label">Auto-enrolled</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="pullquote">
+      <p>"Small changes in the choice architecture &mdash; the way options are presented &mdash; can have large effects on behavior without restricting freedom of choice."</p>
+      <cite>Thaler &amp; Sunstein, Nudge (2008)</cite>
+    </div>
+
+    <div class="principle-grid">
+      <div class="principle-card">
+        <span class="principle-icon">&#9881;&#65039;</span>
+        <div class="principle-title">What this means for circular programs</div>
+        <p class="principle-body">Recovery programs that require retailers or reps to opt in, sign up, or take extra steps will always underperform. The program needs to be built into the existing routine as the default path.</p>
+      </div>
+      <div class="principle-card">
+        <span class="principle-icon">&#128270;</span>
+        <div class="principle-title">What Play for Earth does</div>
+        <p class="principle-body">We embed the collection point check into the existing sales rep visit. It's not an additional task &mdash; it's part of the route. The default action at the outlet now includes the circular verification step.</p>
+      </div>
+      <div class="principle-card">
+        <span class="principle-icon">&#128202;</span>
+        <div class="principle-title">The result</div>
+        <p class="principle-body">Compliance is no longer a function of motivation or awareness. It's a function of system design. Reps don't need to remember to check &mdash; not checking requires deliberate effort.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SECTION 2: VISIBLE INFRASTRUCTURE -->
+<div class="science-section" id="infrastructure">
+  <div class="science-inner">
+    <div class="section-number">02</div>
+    <div class="section-eyebrow">Visible Infrastructure</div>
+    <h2 class="section-title">A visible system sends<br>a <em>behavioral signal.</em></h2>
+    <p class="section-body">Recycling and recovery rates rise significantly when infrastructure is present and visible &mdash; not because people are more motivated, but because the infrastructure communicates: <em>this is what people here do.</em> Physical presence changes the perceived norm.</p>
+
+    <div class="study-grid">
+      <div class="study-card">
+        <div class="study-tag">Recycling infrastructure</div>
+        <div class="study-source">Schultz et al., 1995 &mdash; Journal of Environmental Psychology</div>
+        <p class="study-insight">Communities with visible, accessible recycling infrastructure participated at rates 3&ndash;4x higher than comparable communities without it &mdash; <strong>independent of awareness levels</strong>. Knowledge of why to recycle had almost no additional effect once bins were present.</p>
+        <div class="study-stats">
+          <div><div class="study-stat-val">3&ndash;4x</div><div class="study-stat-label">Higher participation with visible infrastructure</div></div>
+        </div>
+      </div>
+      <div class="study-card">
+        <div class="study-tag">Deposit return systems</div>
+        <div class="study-source">OECD &mdash; Deposit Refund Systems for Beverage Containers</div>
+        <p class="study-insight">Countries with structured deposit return systems consistently achieve recovery rates above 90%. The infrastructure &mdash; machines, containers, return points &mdash; makes returning the <strong>obvious and expected</strong> behavior. Enforcement plays a minor role.</p>
+        <div class="study-stats">
+          <div><div class="study-stat-val">98%</div><div class="study-stat-label">Germany</div></div>
+          <div><div class="study-stat-val">95%</div><div class="study-stat-label">Norway</div></div>
+          <div><div class="study-stat-val">92%</div><div class="study-stat-label">Lithuania</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="pullquote">
+      <p>"The presence of a container signals that recycling is expected. Its absence signals the opposite &mdash; regardless of how strongly people are told to recycle."</p>
+      <cite>U.S. National Academies of Sciences &mdash; Recycling Infrastructure Report, 2025</cite>
+    </div>
+
+    <div class="principle-grid">
+      <div class="principle-card">
+        <span class="principle-icon">&#128717;</span>
+        <div class="principle-title">The basket is the signal</div>
+        <p class="principle-body">When a collection basket is present at the retail outlet, it communicates that circular behavior is expected here. Its absence communicates the opposite. The object itself is a behavioral intervention.</p>
+      </div>
+      <div class="principle-card">
+        <span class="principle-icon">&#128248;</span>
+        <div class="principle-title">Verification reinforces the signal</div>
+        <p class="principle-body">The act of photographing the collection point &mdash; basket in place, poster visible &mdash; strengthens the behavioral signal for both the rep and the retailer. The check-in makes the norm explicit and measurable.</p>
+      </div>
+      <div class="principle-card">
+        <span class="principle-icon">&#128260;</span>
+        <div class="principle-title">Consistency compounds</div>
+        <p class="principle-body">Each verified visit reinforces the expectation. After several consistent check-ins, retailers begin to prepare before the rep arrives. The infrastructure has created an anticipatory behavior pattern.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SECTION 3: SOCIAL NORMS -->
+<div class="science-section" id="norms">
+  <div class="science-inner">
+    <div class="section-number">03</div>
+    <div class="section-eyebrow">Social Norm Theory</div>
+    <h2 class="section-title">People do what they think<br><em>others are doing.</em></h2>
+    <p class="section-body">Descriptive norms &mdash; the behavior that appears normal in an environment &mdash; are among the most powerful drivers of human action. When a system is present and consistently used, it creates the appearance of a norm. Others conform to that norm without requiring explicit persuasion.</p>
+
+    <div class="study-grid">
+      <div class="study-card">
+        <div class="study-tag">Descriptive norms</div>
+        <div class="study-source">Cialdini, Reno &amp; Kallgren, 1990 &mdash; Journal of Personality and Social Psychology</div>
+        <p class="study-insight">In a series of field experiments, littering dropped by over 50% when environments were kept clean and when visible evidence of others' behavior (clean floors, full recycling bins) was present. <strong>People inferred the norm from what they observed</strong>, not from what they were told.</p>
+        <div class="study-stats">
+          <div><div class="study-stat-val">&gt;50%</div><div class="study-stat-label">Reduction in littering from norm cues alone</div></div>
+        </div>
+      </div>
+      <div class="study-card">
+        <div class="study-tag">Hotel towel reuse</div>
+        <div class="study-source">Goldstein, Cialdini &amp; Griskevicius, 2008 &mdash; Journal of Consumer Research</div>
+        <p class="study-insight">Messages telling hotel guests that <em>most guests in this room reused their towels</em> outperformed standard environmental messages by 26%. The descriptive norm &mdash; this is what people here do &mdash; <strong>was more persuasive than any appeal to values or environment</strong>.</p>
+        <div class="study-stats">
+          <div><div class="study-stat-val">+26%</div><div class="study-stat-label">More reuse with descriptive norm message</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="principle-grid">
+      <div class="principle-card">
+        <span class="principle-icon">&#128101;</span>
+        <div class="principle-title">Network effects in the field</div>
+        <p class="principle-body">When retailers in a zone see neighboring shops with collection baskets, the behavior normalizes. The GTI Network Engagement score (15% of the index) captures exactly this dynamic &mdash; whether circular behavior is spreading across a network.</p>
+      </div>
+      <div class="principle-card">
+        <span class="principle-icon">&#127942;</span>
+        <div class="principle-title">Leaderboards as norm signals</div>
+        <p class="principle-body">Territory-level dashboards and rep rankings make the descriptive norm explicit and competitive. Reps see what their peers are achieving. The benchmark becomes a social reference point that drives upward conformity.</p>
+      </div>
+      <div class="principle-card">
+        <span class="principle-icon">&#128200;</span>
+        <div class="principle-title">The GTI measures norm adoption</div>
+        <p class="principle-body">Moving from Stage 1 (Declared) to Stage 3 (Embedded) is precisely the transition from individual behavior under pressure to group norm adoption. The GTI tracks this progression quantitatively across territories.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SECTION 4: HABIT FORMATION -->
+<div class="science-section" id="habit">
+  <div class="science-inner">
+    <div class="section-number">04</div>
+    <div class="section-eyebrow">Habit Formation</div>
+    <h2 class="section-title">Incentives start behavior.<br><em>Repetition makes it permanent.</em></h2>
+    <p class="section-body">Habits form through repetition in stable contexts. The more consistently a behavior occurs in the same environment, the more automatic it becomes. Incentives are valuable for initiating behavior &mdash; but the goal is always to reach the point where incentives are no longer required.</p>
+
+    <div class="study-grid">
+      <div class="study-card">
+        <div class="study-tag">Habit automaticity</div>
+        <div class="study-source">Lally et al., 2010 &mdash; European Journal of Social Psychology</div>
+        <p class="study-insight">In a 12-week study of habit formation, behaviors performed consistently in stable contexts became automatic after an average of <strong>66 days</strong>. Context stability was the single most important predictor &mdash; more than motivation, intention, or reward size.</p>
+        <div class="study-stats">
+          <div><div class="study-stat-val">66</div><div class="study-stat-label">Average days to automaticity</div></div>
+          <div><div class="study-stat-val">18&ndash;254</div><div class="study-stat-label">Range depending on complexity</div></div>
+        </div>
+      </div>
+      <div class="study-card">
+        <div class="study-tag">Gamification &amp; streaks</div>
+        <div class="study-source">Hamari, Koivisto &amp; Sarsa, 2014 &mdash; Hawaii International Conference on System Sciences</div>
+        <p class="study-insight">Gamification elements &mdash; points, badges, streaks, and leaderboards &mdash; significantly increased engagement and return behavior in longitudinal studies. <strong>Streaks in particular create loss aversion</strong>: users avoid breaking them even when the original incentive becomes less relevant.</p>
+        <div class="study-stats">
+          <div><div class="study-stat-val">+40%</div><div class="study-stat-label">Return behavior with streak mechanics</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="pullquote">
+      <p>"Habits are not formed by motivation. They are formed by repetition in a consistent context. Once formed, they persist with minimal cognitive effort."</p>
+      <cite>Wood &amp; R&uuml;nger, 2016 &mdash; Annual Review of Psychology</cite>
+    </div>
+
+    <div class="principle-grid">
+      <div class="principle-card">
+        <span class="principle-icon">&#127914;</span>
+        <div class="principle-title">Lucky Spin as habit trigger</div>
+        <p class="principle-body">The gamification layer in Play for Earth &mdash; points, streaks, and the Lucky Spin &mdash; is designed to sustain behavior through the 66-day window until automaticity sets in. After that, the incentive can be reduced without behavior loss.</p>
+      </div>
+      <div class="principle-card">
+        <span class="principle-icon">&#128197;</span>
+        <div class="principle-title">The route is the stable context</div>
+        <p class="principle-body">Sales reps follow consistent routes to the same outlets on recurring schedules. This is exactly the stable context that habit science identifies as ideal for automaticity. The circular check-in happens in the same place, at the same time, every week.</p>
+      </div>
+      <div class="principle-card">
+        <span class="principle-icon">&#129309;</span>
+        <div class="principle-title">67% retention at 90 days</div>
+        <p class="principle-body">Across active pilot cohorts, 67% of retailers remain active at 90 days without incentive reminders. This is the behavioral signature of habit formation &mdash; participation has become the expected pattern, not the exceptional event.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SECTION 5: EVIDENCE SUMMARY -->
+<div class="science-section" id="evidence">
+  <div class="science-inner">
+    <div class="section-number">05</div>
+    <div class="section-eyebrow">Evidence Summary</div>
+    <h2 class="section-title">What the research says,<br><em>in one place.</em></h2>
+    <p class="section-body">Seven studies. One conclusion: behavior change at scale requires systems, not campaigns.</p>
+
+    <table class="evidence-table">
+      <thead>
+        <tr>
+          <th>Study</th>
+          <th>Finding</th>
+          <th>Effect size</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Johnson &amp; Goldstein (2003)<br><span style="font-weight:400;font-size:0.78rem;color:var(--ink-light)">Organ donation defaults &mdash; Science</span></td>
+          <td>Opt-out default design increases participation by 5&ndash;6x compared to opt-in, across comparable populations with identical stated preferences.</td>
+          <td>5&ndash;6x</td>
+        </tr>
+        <tr>
+          <td>Madrian &amp; Shea (2001)<br><span style="font-weight:400;font-size:0.78rem;color:var(--ink-light)">401(k) auto-enrollment &mdash; QJE</span></td>
+          <td>Automatic enrollment without any change in incentives increased savings participation from 49% to 86%.</td>
+          <td>+37pp</td>
+        </tr>
+        <tr>
+          <td>Schultz et al. (1995)<br><span style="font-weight:400;font-size:0.78rem;color:var(--ink-light)">Recycling infrastructure &mdash; J. Environmental Psych.</span></td>
+          <td>Visible, accessible infrastructure increased recycling participation 3&ndash;4x, independent of awareness levels or education.</td>
+          <td>3&ndash;4x</td>
+        </tr>
+        <tr>
+          <td>Cialdini et al. (1990)<br><span style="font-weight:400;font-size:0.78rem;color:var(--ink-light)">Descriptive norms &mdash; J. Personality &amp; Social Psych.</span></td>
+          <td>Visible evidence of others' prosocial behavior reduced antisocial behavior by over 50% without any explicit instruction.</td>
+          <td>&gt;50%</td>
+        </tr>
+        <tr>
+          <td>Goldstein et al. (2008)<br><span style="font-weight:400;font-size:0.78rem;color:var(--ink-light)">Descriptive norms &mdash; J. Consumer Research</span></td>
+          <td>Norm-based messaging ("most guests here do X") outperformed value-based messaging by 26% in driving towel reuse.</td>
+          <td>+26%</td>
+        </tr>
+        <tr>
+          <td>Lally et al. (2010)<br><span style="font-weight:400;font-size:0.78rem;color:var(--ink-light)">Habit automaticity &mdash; European J. Social Psych.</span></td>
+          <td>Behaviors performed consistently in stable contexts became automatic at an average of 66 days. Context stability was the primary predictor.</td>
+          <td>66 days</td>
+        </tr>
+        <tr>
+          <td>OECD Deposit Return Review<br><span style="font-weight:400;font-size:0.78rem;color:var(--ink-light)">Beverage container systems &mdash; 2022</span></td>
+          <td>Countries with structured deposit return infrastructure achieve 90&ndash;98% recovery rates. Education and enforcement are secondary factors.</td>
+          <td>90&ndash;98%</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- SECTION 6: THE MODEL -->
+<div class="science-section" id="model">
+  <div class="science-inner">
+    <div class="section-number">06</div>
+    <div class="section-eyebrow">The Play for Earth Model</div>
+    <h2 class="section-title">How the science<br><em>becomes the product.</em></h2>
+    <p class="section-body">Every design decision in Play for Earth is grounded in the research above. The five-step model maps directly onto the behavioral mechanisms that the literature identifies as essential for durable behavior change.</p>
+
+    <div class="sci-chain">
+      <div class="chain-step active">
+        <div class="chain-step-num">Step 1</div>
+        <div class="chain-step-title">Infrastructure</div>
+        <div class="chain-step-desc">Collection basket placed at outlet. Poster makes it visible. The default is set.</div>
+      </div>
+      <div class="chain-arrow">&rarr;</div>
+      <div class="chain-step">
+        <div class="chain-step-num">Step 2</div>
+        <div class="chain-step-title">Visible norm</div>
+        <div class="chain-step-desc">Rep checks the basket on every visit. Retailers in the zone see the system operating. The norm is set.</div>
+      </div>
+      <div class="chain-arrow">&rarr;</div>
+      <div class="chain-step">
+        <div class="chain-step-num">Step 3</div>
+        <div class="chain-step-title">Repeated habit</div>
+        <div class="chain-step-desc">Consistent context. Stable route. Streak mechanics reinforce repetition through the 66-day window.</div>
+      </div>
+      <div class="chain-arrow">&rarr;</div>
+      <div class="chain-step">
+        <div class="chain-step-num">Step 4</div>
+        <div class="chain-step-title">Verified data</div>
+        <div class="chain-step-desc">Every action is photo-verified, geo-validated, timestamped. The GTI score rises. Behavior becomes measurable proof.</div>
+      </div>
+      <div class="chain-arrow">&rarr;</div>
+      <div class="chain-step">
+        <div class="chain-step-num">Step 5</div>
+        <div class="chain-step-title">Auditable impact</div>
+        <div class="chain-step-desc">Territory dashboard. EPR compliance export. Scope 3 data. The behavior is now a business asset.</div>
+      </div>
+    </div>
+
+    <div style="background:var(--green-pale);border:1px solid rgba(26,140,63,0.2);border-radius:14px;padding:32px 36px;margin-top:16px;">
+      <div style="font-size:0.7rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--green);margin-bottom:12px;">The key insight</div>
+      <p style="font-size:1rem;color:var(--ink);line-height:1.75;max-width:720px;">Most EPR and circular programs fail not because people don't care &mdash; but because the system asks them to do something extra. Play for Earth removes the extra. The circular action becomes the path of least resistance, embedded in an existing routine, reinforced by visible infrastructure, sustained by habit mechanics, and measured at every step. <strong>The science takes over.</strong></p>
+    </div>
+  </div>
+</div>
+
+<!-- CONCLUSION -->
+<div class="conclusion">
+  <div class="conclusion-inner">
+    <h2>Ready to see the<br><em>system in action?</em></h2>
+    <p>90-day pilot. One territory. The first verified circular dataset your brand has ever had &mdash; built on behavior that lasts.</p>
+    <a href="/contact" class="btn-primary">Request a Pilot &rarr;</a>
+    <a href="/" class="btn-outline-light">Back to overview</a>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <a href="/" class="footer-logo">Play for <em>Earth</em></a>
+  <div class="footer-bottom">
+    <span class="footer-copy">&copy; 2026 Play for Earth. Nairobi, Kenya.</span>
+    <div class="footer-links">
+      <a href="/terms">Terms</a>
+      <a href="/privacy">Privacy</a>
+      <a href="/contact">Contact</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+const hamburger = document.getElementById('hamburger');
+const mobileMenu = document.getElementById('mobileMenu');
+hamburger.addEventListener('click', () => {
+  const open = hamburger.classList.toggle('open');
+  mobileMenu.classList.toggle('open', open);
+  document.body.style.overflow = open ? 'hidden' : '';
+});
+mobileMenu.querySelectorAll('a').forEach(a => {
+  a.addEventListener('click', () => {
+    hamburger.classList.remove('open');
+    mobileMenu.classList.remove('open');
+    document.body.style.overflow = '';
+  });
+});
+</script>
+</body>
+</html>
