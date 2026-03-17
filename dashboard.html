@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Play for Earth &mdash; Territory Dashboard</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Syne:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --g:#1a7a3a;--gl:#e8f5ed;--gm:#4caf72;--gd:#0d4f24;
+  --am:#e8a730;--al:#fff7e0;--ad:#8a6500;
+  --or:#d9451a;--ol:#fff0e8;--od:#8a3a00;
+  --bl:#5b9cf0;
+  --tx:#111;--tm:#555;--bd:#e0e0e0;--bg:#fafaf8;--cd:#fff;
+}
+body{font-family:'Syne',sans-serif;background:var(--bg);color:var(--tx);min-height:100vh}
+
+/* ── Layout ── */
+.topbar{background:var(--cd);border-bottom:.5px solid var(--bd);padding:0 2rem;display:flex;align-items:center;justify-content:space-between;height:52px}
+.logo{font-size:15px;font-weight:700;letter-spacing:-.3px;color:var(--g)}
+.logo span{color:var(--tx)}
+.lbadge{display:flex;align-items:center;gap:6px;font-size:12px;font-family:'DM Mono',monospace;color:var(--gd)}
+.pulse{width:7px;height:7px;border-radius:50%;background:var(--g);animation:pulse 1.8s infinite}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.7)}}
+.meta{font-size:12px;color:var(--tm);font-family:'DM Mono',monospace}
+
+.page{max-width:960px;margin:0 auto;padding:1.75rem 1.5rem 3rem}
+
+/* ── Header ── */
+.hrow{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:1.25rem;flex-wrap:wrap;gap:8px}
+.hl h1{font-size:22px;font-weight:700;letter-spacing:-.5px}
+.hl p{font-size:12px;color:var(--tm);margin-top:3px;font-family:'DM Mono',monospace}
+
+/* ── KPI grid ── */
+.kgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:1.25rem}
+.kpi{background:var(--cd);border:.5px solid var(--bd);border-radius:12px;padding:14px 16px}
+.kpi.hi{background:var(--g);border-color:var(--gd)}
+.kl{font-size:10px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--tm);margin-bottom:6px;font-family:'DM Mono',monospace}
+.hi .kl{color:rgba(255,255,255,.65)}
+.kv{font-size:27px;font-weight:700;line-height:1;letter-spacing:-1px;color:var(--tx)}
+.hi .kv{color:#fff}
+.kd{font-size:11px;color:var(--g);margin-top:4px;font-family:'DM Mono',monospace}
+.hi .kd{color:rgba(255,255,255,.82)}
+.ks{font-size:10px;color:var(--tm);margin-top:2px;font-family:'DM Mono',monospace}
+.hi .ks{color:rgba(255,255,255,.55)}
+
+/* ── Tabs ── */
+.tabrow{display:flex;gap:2px;margin-bottom:1.1rem;border-bottom:.5px solid var(--bd)}
+.tab{font-size:12px;font-family:'DM Mono',monospace;padding:8px 16px;cursor:pointer;border:none;border-bottom:2px solid transparent;color:var(--tm);background:none;transition:color .15s,border-color .15s}
+.tab.active{color:var(--g);border-bottom-color:var(--g);font-weight:500}
+.tab:hover:not(.active){color:var(--tx)}
+.section{display:none}.section.show{display:block}
+
+/* ── Panel ── */
+.panel{background:var(--cd);border:.5px solid var(--bd);border-radius:12px;overflow:hidden;margin-bottom:10px}
+.pt{font-size:10px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--tm);font-family:'DM Mono',monospace;padding:14px 18px 12px;border-bottom:.5px solid var(--bd)}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px}
+.p2{background:var(--cd);border:.5px solid var(--bd);border-radius:12px;padding:16px 18px}
+
+/* ── Zone bars ── */
+.zrow{margin-bottom:11px}
+.zrow:last-child{margin-bottom:0}
+.zmeta{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:5px}
+.zn{font-size:13px;font-weight:500}
+.zr{display:flex;align-items:center;gap:7px}
+.ztag{font-size:10px;font-family:'DM Mono',monospace;border-radius:4px;padding:1px 6px}
+.zp{font-size:13px;font-weight:700;font-family:'DM Mono',monospace}
+.bt{background:#f0f0ec;border-radius:4px;height:5px;overflow:hidden}
+.bf{height:100%;border-radius:4px;transition:width 1.2s cubic-bezier(.4,0,.2,1)}
+
+/* ── GTI ring ── */
+.gti-ring{position:relative;width:90px;height:90px;flex-shrink:0}
+.gti-ring svg{transform:rotate(-90deg)}
+.gti-center{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);text-align:center}
+
+/* ── Map ── */
+.map-tooltip{margin-top:10px;padding:10px 14px;background:#f4f7f4;border-radius:8px;border:.5px solid var(--bd);display:none}
+
+/* ── Leaderboard ── */
+@keyframes slideIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.lrow{display:grid;gap:10px;align-items:center;padding:11px 18px;border-bottom:.5px solid var(--bd);animation:slideIn .4s ease both}
+.lrow:last-child{border-bottom:none}
+.lrow.top1{background:#fffcf0}
+.lrow.top2{background:#fafafa}
+.lrow.top3{background:#f6faf6}
+.drow{display:grid;gap:10px;align-items:center;padding:12px 18px;border-bottom:.5px solid var(--bd);animation:slideIn .4s ease both}
+.drow:last-child{border-bottom:none}
+.drow.top1{background:#fffcf0}
+.drow.top2{background:#fafafa}
+.drow.top3{background:#f6faf6}
+.col-head{display:grid;gap:10px;padding:9px 18px;border-bottom:.5px solid var(--bd)}
+.ch{font-size:10px;font-family:'DM Mono',monospace;text-transform:uppercase;letter-spacing:.07em;color:var(--tm)}
+.rav{width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0}
+.streak-dots{display:flex;gap:2px;justify-content:flex-end}
+.dot{width:6px;height:6px;border-radius:50%}
+
+/* ── Summary strip ── */
+.summary{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--bd);border-top:.5px solid var(--bd)}
+.scard{background:var(--cd);padding:13px 18px}
+.sl{font-size:10px;font-family:'DM Mono',monospace;text-transform:uppercase;letter-spacing:.07em;color:var(--tm);margin-bottom:5px}
+.sv{font-size:21px;font-weight:700;letter-spacing:-1px}
+.sd{font-size:11px;font-family:'DM Mono',monospace;margin-top:3px}
+
+/* ── Feed ── */
+.fi{display:flex;align-items:flex-start;gap:10px;padding:8px 0;border-bottom:.5px solid var(--bd)}
+.fi:last-child{border-bottom:none}
+.fd{width:7px;height:7px;border-radius:50%;background:var(--g);flex-shrink:0;margin-top:4px}
+.ft{font-size:12px;line-height:1.5}
+.ft span{color:var(--tm);font-family:'DM Mono',monospace;font-size:10px;display:block;margin-top:1px}
+
+/* ── Stage bars (GTI panel) ── */
+.sbar-row{display:flex;align-items:center;gap:7px;margin-bottom:5px}
+.sbar-row:last-child{margin-bottom:0}
+
+@media(max-width:640px){
+  .kgrid{grid-template-columns:repeat(2,1fr)}
+  .g2{grid-template-columns:1fr}
+  .topbar{padding:0 1rem}
+  .page{padding:1.25rem 1rem 3rem}
+  .lb-grid{grid-template-columns:1fr !important}
+}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="logo">Play <span>for</span> Earth</div>
+  <div class="meta">Metro City &nbsp;|&nbsp; Varka Consumer Goods &nbsp;|&nbsp; 30-day rolling</div>
+  <div class="lbadge"><div class="pulse"></div>Live</div>
+</div>
+
+<div class="page">
+
+  <div class="hrow">
+    <div class="hl">
+      <h1>Metro City &mdash; territory view</h1>
+      <p>Varka Consumer Goods &nbsp;|&nbsp; EPR compliance &amp; field verification &nbsp;|&nbsp; updated just now</p>
+    </div>
+  </div>
+
+  <!-- KPIs -->
+  <div class="kgrid">
+    <div class="kpi hi"><div class="kl">Active retailers</div><div class="kv" id="k1">0</div><div class="kd">+31 vs last month</div></div>
+    <div class="kpi"><div class="kl">Verified field events</div><div class="kv" id="k2">0</div><div class="kd" style="color:var(--g)">+18% vs last month</div><div class="ks">geo-validated, timestamped</div></div>
+    <div class="kpi"><div class="kl">Distributor coverage</div><div class="kv" id="k3">0%</div><div class="kd" style="color:var(--g)">+4pp vs last month</div><div class="ks">of declared network</div></div>
+    <div class="kpi"><div class="kl">Collection point act.</div><div class="kv" id="k4">0%</div><div class="kd" style="color:var(--g)">+6pp vs last month</div><div class="ks">basket + poster in place</div></div>
+  </div>
+
+  <!-- Tabs -->
+  <div class="tabrow">
+    <button class="tab active" onclick="switchTab('territory',this)">Territory</button>
+    <button class="tab" onclick="switchTab('map',this)">Zone map</button>
+    <button class="tab" onclick="switchTab('leaderboard',this)">Performance</button>
+    <button class="tab" onclick="switchTab('feed',this)">Live feed</button>
+  </div>
+
+  <!-- ══ TERRITORY ══ -->
+  <div id="sec-territory" class="section show">
+    <div class="g2">
+      <div class="p2">
+        <div style="font-size:10px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--tm);font-family:'DM Mono',monospace;margin-bottom:14px">Compliance by zone &mdash; 30-day rolling</div>
+        <div class="zrow"><div class="zmeta"><span class="zn">North District</span><div class="zr"><span class="ztag" style="color:var(--gd);background:var(--gl)">High</span><span class="zp" style="color:var(--tx)">89%</span></div></div><div class="bt"><div class="bf" id="b1" style="width:0%;background:var(--g)"></div></div></div>
+        <div class="zrow"><div class="zmeta"><span class="zn">City Centre</span><div class="zr"><span class="ztag" style="color:var(--gd);background:var(--gl)">High</span><span class="zp" style="color:var(--tx)">81%</span></div></div><div class="bt"><div class="bf" id="b2" style="width:0%;background:var(--g)"></div></div></div>
+        <div class="zrow"><div class="zmeta"><span class="zn">East Zone</span><div class="zr"><span class="ztag" style="color:var(--ad);background:var(--al)">Good</span><span class="zp" style="color:var(--tx)">74%</span></div></div><div class="bt"><div class="bf" id="b3" style="width:0%;background:var(--am)"></div></div></div>
+        <div class="zrow"><div class="zmeta"><span class="zn">South District</span><div class="zr"><span class="ztag" style="color:var(--ad);background:var(--al)">Good</span><span class="zp" style="color:var(--tx)">61%</span></div></div><div class="bt"><div class="bf" id="b4" style="width:0%;background:var(--am)"></div></div></div>
+        <div class="zrow"><div class="zmeta"><span class="zn">West Industrial</span><div class="zr"><span class="ztag" style="color:var(--od);background:var(--ol)">Building</span><span class="zp" style="color:var(--tx)">38%</span></div></div><div class="bt"><div class="bf" id="b5" style="width:0%;background:var(--or)"></div></div></div>
+      </div>
+      <div class="p2" style="display:flex;flex-direction:column">
+        <div style="font-size:10px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--tm);font-family:'DM Mono',monospace;margin-bottom:14px">GTI score &mdash; Metro City</div>
+        <div style="display:flex;gap:18px;align-items:center;flex:1">
+          <div class="gti-ring">
+            <svg width="90" height="90" viewBox="0 0 90 90">
+              <circle cx="45" cy="45" r="38" fill="none" stroke="#f0f0ec" stroke-width="7"/>
+              <circle cx="45" cy="45" r="38" fill="none" stroke="var(--g)" stroke-width="7" stroke-dasharray="239" stroke-dashoffset="239" stroke-linecap="round" id="garc"/>
+            </svg>
+            <div class="gti-center">
+              <div style="font-size:23px;font-weight:700;letter-spacing:-1px" id="gnum">0</div>
+              <div style="font-size:9px;font-family:'DM Mono',monospace;color:var(--tm)">/100</div>
+            </div>
+          </div>
+          <div style="flex:1">
+            <div class="sbar-row"><span style="font-size:11px;color:var(--tm);width:84px">Internalized</span><div class="bt" style="flex:1"><div class="bf" id="s1" style="width:0%;background:#1a7a3a"></div></div><span style="font-size:10px;font-family:'DM Mono',monospace;color:var(--tm);width:28px;text-align:right" id="sp1">0%</span></div>
+            <div class="sbar-row"><span style="font-size:11px;color:var(--tm);width:84px">Embedded</span><div class="bt" style="flex:1"><div class="bf" id="s2" style="width:0%;background:#4caf72"></div></div><span style="font-size:10px;font-family:'DM Mono',monospace;color:var(--tm);width:28px;text-align:right" id="sp2">0%</span></div>
+            <div class="sbar-row"><span style="font-size:11px;color:var(--tm);width:84px">Reinforced</span><div class="bt" style="flex:1"><div class="bf" id="s3" style="width:0%;background:#7fcf98"></div></div><span style="font-size:10px;font-family:'DM Mono',monospace;color:var(--tm);width:28px;text-align:right" id="sp3">0%</span></div>
+            <div class="sbar-row"><span style="font-size:11px;color:var(--tm);width:84px">Declared</span><div class="bt" style="flex:1"><div class="bf" id="s4" style="width:0%;background:#b3e2c4"></div></div><span style="font-size:10px;font-family:'DM Mono',monospace;color:var(--tm);width:28px;text-align:right" id="sp4">0%</span></div>
+            <div class="sbar-row"><span style="font-size:11px;color:var(--tm);width:84px">Inactive</span><div class="bt" style="flex:1"><div class="bf" id="s5" style="width:0%;background:#e0e0dc"></div></div><span style="font-size:10px;font-family:'DM Mono',monospace;color:var(--tm);width:28px;text-align:right" id="sp5">0%</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ MAP ══ -->
+  <div id="sec-map" class="section">
+    <div class="panel">
+      <div class="pt">Zone compliance map &mdash; Metro City</div>
+      <div style="padding:16px 18px">
+        <svg width="100%" viewBox="0 0 680 320" style="display:block">
+          <rect x="10" y="10" width="660" height="300" rx="10" fill="#f4f7f4" stroke="#d0ddd0" stroke-width=".5"/>
+          <g style="cursor:pointer" onclick="selectZone('North District',89,'High')">
+            <path d="M200 55 L300 50 L320 100 L305 148 L235 152 L190 118 Z" fill="#1a7a3a" fill-opacity=".75" stroke="#0d4f24" stroke-width="1"/>
+            <text x="252" y="102" text-anchor="middle" font-size="12" font-family="Syne,sans-serif" font-weight="600" fill="#fff">North District</text>
+            <text x="252" y="118" text-anchor="middle" font-size="11" font-family="DM Mono,monospace" fill="rgba(255,255,255,.85)">89%</text>
+          </g>
+          <g style="cursor:pointer" onclick="selectZone('City Centre',81,'High')">
+            <path d="M305 148 L320 100 L380 96 L398 112 L405 158 L362 168 L322 164 Z" fill="#2d9e55" fill-opacity=".8" stroke="#0d4f24" stroke-width="1"/>
+            <text x="355" y="130" text-anchor="middle" font-size="12" font-family="Syne,sans-serif" font-weight="600" fill="#fff">City Centre</text>
+            <text x="355" y="146" text-anchor="middle" font-size="11" font-family="DM Mono,monospace" fill="rgba(255,255,255,.85)">81%</text>
+          </g>
+          <g style="cursor:pointer" onclick="selectZone('East Zone',74,'Good')">
+            <path d="M320 50 L430 45 L448 88 L438 142 L398 112 L380 96 Z" fill="#e8a730" fill-opacity=".75" stroke="#8a6500" stroke-width="1"/>
+            <text x="382" y="88" text-anchor="middle" font-size="12" font-family="Syne,sans-serif" font-weight="600" fill="#4a3000">East Zone</text>
+            <text x="382" y="104" text-anchor="middle" font-size="11" font-family="DM Mono,monospace" fill="#4a3000">74%</text>
+          </g>
+          <g style="cursor:pointer" onclick="selectZone('South District',61,'Good')">
+            <path d="M190 118 L235 152 L305 148 L322 164 L312 215 L268 232 L196 227 L165 182 Z" fill="#d4a020" fill-opacity=".65" stroke="#8a6500" stroke-width="1"/>
+            <text x="248" y="184" text-anchor="middle" font-size="12" font-family="Syne,sans-serif" font-weight="600" fill="#4a3000">South District</text>
+            <text x="248" y="200" text-anchor="middle" font-size="11" font-family="DM Mono,monospace" fill="#4a3000">61%</text>
+          </g>
+          <g style="cursor:pointer" onclick="selectZone('West Industrial',38,'Building')">
+            <path d="M125 138 L190 118 L165 182 L196 227 L148 242 L112 200 Z" fill="#d9451a" fill-opacity=".55" stroke="#8a3a00" stroke-width="1"/>
+            <text x="155" y="183" text-anchor="middle" font-size="11" font-family="Syne,sans-serif" font-weight="600" fill="#fff">West Ind.</text>
+            <text x="155" y="198" text-anchor="middle" font-size="11" font-family="DM Mono,monospace" fill="rgba(255,255,255,.85)">38%</text>
+          </g>
+          <g style="cursor:pointer" onclick="selectZone('Outer East',52,'Building')">
+            <path d="M448 88 L535 83 L550 148 L520 200 L468 195 L438 142 Z" fill="#c94015" fill-opacity=".55" stroke="#8a3a00" stroke-width="1"/>
+            <text x="496" y="142" text-anchor="middle" font-size="12" font-family="Syne,sans-serif" font-weight="600" fill="#fff">Outer East</text>
+            <text x="496" y="158" text-anchor="middle" font-size="11" font-family="DM Mono,monospace" fill="rgba(255,255,255,.85)">52%</text>
+          </g>
+          <g style="cursor:pointer" onclick="selectZone('Port Zone',67,'Good')">
+            <path d="M438 142 L468 195 L405 200 L362 168 L405 158 Z" fill="#c09020" fill-opacity=".65" stroke="#8a6500" stroke-width="1"/>
+            <text x="415" y="176" text-anchor="middle" font-size="11" font-family="Syne,sans-serif" font-weight="600" fill="#4a3000">Port Zone</text>
+            <text x="415" y="190" text-anchor="middle" font-size="10" font-family="DM Mono,monospace" fill="#4a3000">67%</text>
+          </g>
+          <!-- Legend -->
+          <rect x="455" y="240" width="210" height="52" rx="6" fill="white" fill-opacity=".85" stroke="#d0d0d0" stroke-width=".5"/>
+          <circle cx="471" cy="254" r="6" fill="#1a7a3a" fill-opacity=".75"/><text x="482" y="258" font-size="10" font-family="DM Mono,monospace" fill="#333">High (80%+)</text>
+          <circle cx="471" cy="274" r="6" fill="#d4a020" fill-opacity=".7"/><text x="482" y="278" font-size="10" font-family="DM Mono,monospace" fill="#333">Good (55-79%)</text>
+          <circle cx="560" cy="254" r="6" fill="#d9451a" fill-opacity=".6"/><text x="571" y="258" font-size="10" font-family="DM Mono,monospace" fill="#333">Building (&lt;55%)</text>
+        </svg>
+        <div id="map-tooltip" class="map-tooltip">
+          <div style="display:flex;justify-content:space-between;align-items:center">
+            <span style="font-size:13px;font-weight:600" id="zt-name">-</span>
+            <span style="font-size:12px;font-family:'DM Mono',monospace;font-weight:700" id="zt-pct">-</span>
+          </div>
+          <div style="display:flex;gap:14px;margin-top:6px;flex-wrap:wrap">
+            <span style="font-size:11px;color:var(--tm)">Status: <strong id="zt-status">-</strong></span>
+            <span style="font-size:11px;color:var(--tm)">Active reps: <strong id="zt-reps">-</strong></span>
+            <span style="font-size:11px;color:var(--tm)">Monthly events: <strong id="zt-ev">-</strong></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ PERFORMANCE ══ -->
+  <div id="sec-leaderboard" class="section">
+    <div class="lb-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:10px;align-items:start">
+
+      <!-- Rep leaderboard -->
+      <div class="panel">
+        <div class="pt">Reps &mdash; verified photos</div>
+        <div class="col-head" style="grid-template-columns:24px 1fr 64px 60px">
+          <span class="ch"></span>
+          <span class="ch">Rep / distributor</span>
+          <span class="ch" style="text-align:right">Photos</span>
+          <span class="ch" style="text-align:right">Streak</span>
+        </div>
+        <div id="rep-lb"></div>
+        <div class="summary" style="grid-template-columns:1fr 1fr">
+          <div class="scard"><div class="sl">Total</div><div class="sv" id="tot-rep">0</div><div class="sd" style="color:var(--g)">+18% vs last month</div></div>
+          <div class="scard"><div class="sl">Avg. per rep</div><div class="sv" id="avg-rep">0</div><div class="sd" style="color:var(--tm)">photos / month</div></div>
+        </div>
+      </div>
+
+      <!-- Distributor leaderboard -->
+      <div class="panel">
+        <div class="pt">Distributors &mdash; verified photos</div>
+        <div class="col-head" style="grid-template-columns:24px 1fr 64px 60px">
+          <span class="ch"></span>
+          <span class="ch">Distributor</span>
+          <span class="ch" style="text-align:right">Photos</span>
+          <span class="ch" style="text-align:right">Coverage</span>
+        </div>
+        <div id="dist-lb"></div>
+        <div class="summary" style="grid-template-columns:1fr 1fr">
+          <div class="scard"><div class="sl">Total</div><div class="sv" id="tot-dist">0</div><div class="sd" style="color:var(--g)">across network</div></div>
+          <div class="scard"><div class="sl">Network coverage</div><div class="sv" id="cov-dist">0%</div><div class="sd" style="color:var(--tm)">of declared territory</div></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ══ FEED ══ -->
+  <div id="sec-feed" class="section">
+    <div class="panel">
+      <div class="pt">Live field events &mdash; last 60 minutes</div>
+      <div style="padding:4px 18px 8px" id="feed-list"></div>
+    </div>
+  </div>
+
+</div><!-- /page -->
+
+<script>
+/* ── Tab switching ── */
+function switchTab(t,btn){
+  document.querySelectorAll('.tab').forEach(b=>b.classList.remove('active'));
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('show'));
+  btn.classList.add('active');
+  document.getElementById('sec-'+t).classList.add('show');
+}
+
+/* ── Count-up ── */
+function cu(el,target,sfx,dur){
+  if(!el)return;
+  let v=0,step=target/60,ti=dur/60;
+  let iv=setInterval(()=>{v+=step;if(v>=target){v=target;clearInterval(iv);}el.textContent=Math.round(v)+sfx;},ti);
+}
+
+/* ── KPI animation ── */
+setTimeout(()=>{
+  cu(document.getElementById('k1'),247,'',900);
+  cu(document.getElementById('k2'),1842,'',1100);
+  cu(document.getElementById('k3'),94,'%',900);
+  cu(document.getElementById('k4'),78,'%',900);
+  [['b1',89],['b2',81],['b3',74],['b4',61],['b5',38]].forEach(([id,w],i)=>{
+    setTimeout(()=>{let el=document.getElementById(id);if(el)el.style.width=w+'%'},200+i*110);
+  });
+  let arc=document.getElementById('garc'),gn=document.getElementById('gnum'),gv=0;
+  let gi=setInterval(()=>{gv+=1.5;if(gv>=70){gv=70;clearInterval(gi);}gn.textContent=Math.round(gv);arc.style.strokeDashoffset=239-(239*(gv/100));},18);
+  [[62,.62],[48,.48],[71,.71],[83,.83],[15,.15]].forEach(([p,f],i)=>{
+    setTimeout(()=>{
+      let s=document.getElementById('s'+(i+1)),sp=document.getElementById('sp'+(i+1));
+      if(s)s.style.width=(f*100)+'%';
+      if(sp)sp.textContent=p+'%';
+    },400+i*90);
+  });
+},300);
+
+/* ── Map zone click ── */
+const zoneData={
+  'North District':{reps:8,ev:412},
+  'City Centre':{reps:6,ev:348},
+  'East Zone':{reps:5,ev:289},
+  'South District':{reps:4,ev:221},
+  'West Industrial':{reps:2,ev:98},
+  'Outer East':{reps:3,ev:189},
+  'Port Zone':{reps:4,ev:256},
+};
+function selectZone(name,pct,status){
+  let tt=document.getElementById('map-tooltip');
+  let zd=zoneData[name]||{reps:3,ev:150};
+  document.getElementById('zt-name').textContent=name;
+  document.getElementById('zt-pct').textContent=pct+'% compliance';
+  document.getElementById('zt-status').textContent=status;
+  document.getElementById('zt-reps').textContent=zd.reps;
+  document.getElementById('zt-ev').textContent=zd.ev;
+  tt.style.display='block';
+}
+
+/* ── Rep leaderboard data ── */
+const distColors={
+  'Apex Distribution':'#1a7a3a',
+  'Metro Logistics':'#2d9e55',
+  'CityLink FMCG':'#e8a730',
+  'Southfield Traders':'#d4a020',
+  'Prime Direct':'#5b9cf0',
+};
+const reps=[
+  {name:'Samuel N.',zone:'North District',dist:'Apex Distribution',photos:187,streak:22,color:'#0d4f24'},
+  {name:'James M.',zone:'North District',dist:'Apex Distribution',photos:164,streak:18,color:'#1a7a3a'},
+  {name:'Aisha K.',zone:'City Centre',dist:'Prime Direct',photos:148,streak:15,color:'#2d9e55'},
+  {name:'Peter O.',zone:'East Zone',dist:'Metro Logistics',photos:121,streak:11,color:'#e8a730'},
+  {name:'Grace W.',zone:'South District',dist:'Southfield Traders',photos:98,streak:9,color:'#e8a730'},
+  {name:'David K.',zone:'Outer East',dist:'CityLink FMCG',photos:76,streak:6,color:'#d4a020'},
+  {name:'Faith M.',zone:'West Industrial',dist:'CityLink FMCG',photos:49,streak:3,color:'#d9451a'},
+];
+const medals=['&#127945;','&#127946;','&#127947;'];
+const topClass=['top1','top2','top3','','','',''];
+
+function streakDots(n){
+  let d='';
+  for(let i=0;i<7;i++){
+    let a=i<Math.min(n,7);
+    let c=a?(n>=15?'#1a7a3a':n>=8?'#e8a730':'#d9451a'):'#e8e8e4';
+    d+=`<div class="dot" style="background:${c}"></div>`;
+  }
+  return d;
+}
+
+const rl=document.getElementById('rep-lb');
+reps.forEach((r,i)=>{
+  let dc=distColors[r.dist]||'#888';
+  let row=document.createElement('div');
+  row.className='lrow '+(topClass[i]||'');
+  row.style.cssText=`animation-delay:${i*65}ms;grid-template-columns:24px 1fr 64px 60px`;
+  let initials=r.name.split(' ').map(x=>x[0]).join('');
+  row.innerHTML=`
+    <div style="font-size:14px;text-align:center;line-height:30px">${i<3?medals[i]:`<span style="font-size:11px;font-family:'DM Mono',monospace;color:var(--tm)">${i+1}</span>`}</div>
+    <div style="display:flex;align-items:center;gap:8px;min-width:0">
+      <div class="rav" style="background:${r.color}20;color:${r.color};flex-shrink:0">${initials}</div>
+      <div style="min-width:0">
+        <div style="font-size:12px;font-weight:500;color:var(--tx);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${r.name}</div>
+        <div style="display:flex;align-items:center;gap:3px;margin-top:2px">
+          <div style="width:5px;height:5px;border-radius:50%;background:${dc};flex-shrink:0"></div>
+          <span style="font-size:10px;font-family:'DM Mono',monospace;color:var(--tm);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${r.dist}</span>
+        </div>
+      </div>
+    </div>
+    <div style="text-align:right">
+      <div style="font-size:14px;font-weight:700;font-family:'DM Mono',monospace;color:var(--tx)" id="rp${i}">0</div>
+      <div style="font-size:9px;color:var(--tm);font-family:'DM Mono',monospace">photos</div>
+    </div>
+    <div>
+      <div class="streak-dots">${streakDots(r.streak)}</div>
+      <div style="font-size:9px;font-family:'DM Mono',monospace;color:var(--tm);text-align:right;margin-top:2px">${r.streak}d</div>
+    </div>
+  `;
+  rl.appendChild(row);
+  setTimeout(()=>{
+    let v=0,t=r.photos;
+    let iv=setInterval(()=>{v+=Math.ceil(t/45);if(v>=t){v=t;clearInterval(iv);}document.getElementById('rp'+i).textContent=v;},16);
+  },200+i*60);
+});
+
+const repTotal=reps.reduce((a,r)=>a+r.photos,0);
+const repAvg=Math.round(repTotal/reps.length);
+cu(document.getElementById('tot-rep'),repTotal,'',900);
+cu(document.getElementById('avg-rep'),repAvg,'',800);
+
+/* ── Distributor leaderboard ── */
+const dists=[
+  {name:'Apex Distribution',reps:4,photos:289,coverage:94,color:'#1a7a3a'},
+  {name:'Prime Direct',reps:2,photos:244,coverage:88,color:'#5b9cf0'},
+  {name:'Metro Logistics',reps:3,photos:201,coverage:76,color:'#2d9e55'},
+  {name:'Southfield Traders',reps:2,photos:121,coverage:61,color:'#d4a020'},
+  {name:'CityLink FMCG',reps:3,photos:112,coverage:47,color:'#e8a730'},
+];
+const dl=document.getElementById('dist-lb');
+dists.forEach((d,i)=>{
+  let row=document.createElement('div');
+  row.className='drow '+(topClass[i]||'');
+  row.style.cssText=`animation-delay:${300+i*65}ms;grid-template-columns:24px 1fr 64px 60px`;
+  let initials=d.name.split(' ').map(x=>x[0]).join('');
+  row.innerHTML=`
+    <div style="font-size:14px;text-align:center;line-height:30px">${i<3?medals[i]:`<span style="font-size:11px;font-family:'DM Mono',monospace;color:var(--tm)">${i+1}</span>`}</div>
+    <div style="display:flex;align-items:center;gap:8px;min-width:0">
+      <div class="rav" style="background:${d.color}20;color:${d.color};flex-shrink:0">${initials}</div>
+      <div style="min-width:0">
+        <div style="font-size:12px;font-weight:500;color:var(--tx);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${d.name}</div>
+        <div style="font-size:10px;font-family:'DM Mono',monospace;color:var(--tm);margin-top:1px">${d.reps} reps</div>
+      </div>
+    </div>
+    <div style="text-align:right">
+      <div style="font-size:14px;font-weight:700;font-family:'DM Mono',monospace;color:var(--tx)" id="dp${i}">0</div>
+      <div style="font-size:9px;color:var(--tm);font-family:'DM Mono',monospace">photos</div>
+    </div>
+    <div>
+      <div style="font-size:13px;font-weight:600;font-family:'DM Mono',monospace;text-align:right;color:var(--tx)">${d.coverage}%</div>
+      <div class="bt" style="margin-top:4px"><div class="bf" id="dc${i}" style="width:0%;background:${d.color}"></div></div>
+    </div>
+  `;
+  dl.appendChild(row);
+  setTimeout(()=>{
+    let v=0,t=d.photos;
+    let iv=setInterval(()=>{v+=Math.ceil(t/45);if(v>=t){v=t;clearInterval(iv);}document.getElementById('dp'+i).textContent=v;},16);
+    let el=document.getElementById('dc'+i);
+    if(el)el.style.width=d.coverage+'%';
+  },400+i*65);
+});
+
+const distTotal=dists.reduce((a,d)=>a+d.photos,0);
+cu(document.getElementById('tot-dist'),distTotal,'',900);
+cu(document.getElementById('cov-dist'),76,'%',800);
+
+/* ── Live feed ── */
+const events=[
+  {rep:'Samuel N.',zone:'North District',dist:'Apex Distribution',action:'Recovery basket confirmed',time:'2 min ago'},
+  {rep:'Aisha K.',zone:'City Centre',dist:'Prime Direct',action:'Photo verification complete',time:'7 min ago'},
+  {rep:'Peter O.',zone:'East Zone',dist:'Metro Logistics',action:'New retailer onboarded',time:'14 min ago'},
+  {rep:'Grace W.',zone:'South District',dist:'Southfield Traders',action:'Packaging sort &mdash; 3 SKUs logged',time:'23 min ago'},
+  {rep:'Samuel N.',zone:'North District',dist:'Apex Distribution',action:'EPR data point submitted',time:'38 min ago'},
+  {rep:'Faith M.',zone:'West Industrial',dist:'CityLink FMCG',action:'First verified event this week',time:'44 min ago'},
+  {rep:'David K.',zone:'Outer East',dist:'CityLink FMCG',action:'Retailer reactivated',time:'51 min ago'},
+];
+const fl=document.getElementById('feed-list');
+events.forEach((e,i)=>{
+  setTimeout(()=>{
+    let d=document.createElement('div');
+    d.className='fi';
+    d.innerHTML=`<div class="fd"></div><div class="ft"><strong>${e.rep}</strong> &mdash; ${e.action}<span>${e.zone} &nbsp;|&nbsp; ${e.dist} &nbsp;|&nbsp; ${e.time}</span></div>`;
+    fl.appendChild(d);
+  },i*280);
+});
+</script>
+</body>
+</html>
