@@ -47,10 +47,21 @@ body{font-family:'Syne',sans-serif;background:var(--bg);color:var(--tx);min-heig
 .hi .ks{color:rgba(255,255,255,.55)}
 
 /* ── Tabs ── */
-.tabrow{display:flex;gap:2px;margin-bottom:1.1rem;border-bottom:.5px solid var(--bd)}
-.tab{font-size:12px;font-family:'DM Mono',monospace;padding:8px 16px;cursor:pointer;border:none;border-bottom:2px solid transparent;color:var(--tm);background:none;transition:color .15s,border-color .15s}
-.tab.active{color:var(--g);border-bottom-color:var(--g);font-weight:500}
-.tab:hover:not(.active){color:var(--tx)}
+.tabrow{display:flex;gap:6px;margin-bottom:1.1rem;flex-wrap:wrap}
+.tab{font-size:12px;font-family:'DM Mono',monospace;padding:7px 14px;cursor:pointer;border:1.5px solid transparent;border-radius:20px;color:var(--tm);background:none;transition:all .18s;font-weight:500;display:flex;align-items:center;gap:6px}
+.tab:hover:not(.active){background:#f0f0ec;color:var(--tx)}
+.tab-territory{border-color:#d0e8d8;color:#1a7a3a}
+.tab-territory:hover:not(.active){background:#e8f5ed}
+.tab-territory.active{background:#1a7a3a;border-color:#1a7a3a;color:#fff}
+.tab-map{border-color:#b8d4f0;color:#1a5fa0}
+.tab-map:hover:not(.active){background:#e8f0fb}
+.tab-map.active{background:#1a5fa0;border-color:#1a5fa0;color:#fff}
+.tab-leaderboard{border-color:#f0d8a0;color:#8a6000}
+.tab-leaderboard:hover:not(.active){background:#fff8e0}
+.tab-leaderboard.active{background:#c07820;border-color:#c07820;color:#fff}
+.tab-feed{border-color:#f0c0b0;color:#a03010}
+.tab-feed:hover:not(.active){background:#fff0ea}
+.tab-feed.active{background:#c04020;border-color:#c04020;color:#fff}
 .section{display:none}.section.show{display:block}
 
 /* ── Panel ── */
@@ -150,10 +161,10 @@ body{font-family:'Syne',sans-serif;background:var(--bg);color:var(--tx);min-heig
 
   <!-- Tabs -->
   <div class="tabrow">
-    <button class="tab active" onclick="switchTab('territory',this)">Territory</button>
-    <button class="tab" onclick="switchTab('map',this)">Zone map</button>
-    <button class="tab" onclick="switchTab('leaderboard',this)">Performance</button>
-    <button class="tab" onclick="switchTab('feed',this)">Live feed</button>
+    <button class="tab tab-territory active" onclick="switchTab('territory',this)">&#9632; Territory</button>
+    <button class="tab tab-map" onclick="switchTab('map',this)">&#9673; Zone map</button>
+    <button class="tab tab-leaderboard" onclick="switchTab('leaderboard',this)">&#9733; Performance</button>
+    <button class="tab tab-feed" onclick="switchTab('feed',this)">&#9679; Live feed</button>
   </div>
 
   <!-- ══ TERRITORY ══ -->
