@@ -65,7 +65,6 @@ nav {
 .nav-hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 .mobile-menu { display: flex; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: var(--bg); z-index: 499; padding: 96px 6% 48px; flex-direction: column; transform: translateX(110%); transition: transform 0.35s cubic-bezier(0.4,0,0.2,1); overflow-y: auto; visibility: hidden; }
 .mobile-menu.open { transform: translateX(0); visibility: visible; }
-.mobile-menu.open { transform: translateX(0); }
 .mobile-menu-link { display: flex; align-items: center; justify-content: space-between; padding: 18px 0; font-size: 1.4rem; font-weight: 700; color: var(--ink); text-decoration: none; border-bottom: 1px solid var(--border); }
 .mobile-menu-link .arrow { color: var(--green); opacity: 0.5; }
 .mobile-menu-cta { margin-top: 32px; display: block; background: var(--green); color: white; text-align: center; padding: 18px 28px; border-radius: 40px; font-size: 1rem; font-weight: 700; text-decoration: none; }
@@ -154,6 +153,87 @@ section > * { max-width: 1200px; margin-left: auto; margin-right: auto; }
 #dashboard > * { max-width: 1200px; margin-left: auto; margin-right: auto; }
 #dashboard .section-sub { margin-bottom: 48px; }
 
+/* ===== LIVE PLATFORM EMBED ===== */
+.platform-embed-wrap {
+  max-width: 1200px;
+  margin: 0 auto 48px;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 8px 40px rgba(18,39,26,0.12);
+  border: 1px solid var(--border);
+  background: #fafaf8;
+  position: relative;
+}
+.platform-embed-bar {
+  background: #f5f5f3;
+  border-bottom: 1px solid var(--border);
+  padding: 10px 16px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.embed-dot { width: 10px; height: 10px; border-radius: 50%; }
+.platform-embed-bar .embed-label {
+  font-size: 11px;
+  font-family: 'Familjen Grotesk', monospace;
+  color: rgba(18,39,26,0.4);
+  margin-left: 4px;
+  letter-spacing: 0.04em;
+}
+.platform-embed-bar .embed-live {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--green);
+}
+.embed-pulse {
+  width: 7px; height: 7px; border-radius: 50%;
+  background: var(--green);
+  animation: epulse 1.8s infinite;
+}
+@keyframes epulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.35;transform:scale(.6)} }
+.platform-embed-wrap iframe {
+  display: block;
+  width: 100%;
+  height: 680px;
+  border: none;
+}
+.platform-embed-cta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 24px;
+  background: var(--green-pale);
+  border-top: 1px solid rgba(26,140,63,0.15);
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.platform-embed-cta p {
+  font-size: 0.88rem;
+  color: var(--ink-light);
+  line-height: 1.5;
+}
+.platform-embed-cta p strong { color: var(--ink); }
+.btn-embed-full {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  background: var(--green);
+  color: white;
+  padding: 10px 22px;
+  border-radius: 24px;
+  font-size: 0.86rem;
+  font-weight: 700;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background 0.2s;
+  flex-shrink: 0;
+}
+.btn-embed-full:hover { background: var(--green-dark); }
+
 .kpi-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 20px; }
 .dash-kpi { background: var(--bg); border: 1px solid var(--border); border-radius: 14px; padding: 22px; }
 .dash-kpi.highlight { background: var(--green); border-color: var(--green); }
@@ -180,7 +260,6 @@ section > * { max-width: 1200px; margin-left: auto; margin-right: auto; }
 .bar-fill.amber { background: var(--amber); }
 .bar-fill.red { background: var(--red); }
 
-/* Enhanced compliance cards */
 .comp-card { border-radius: 10px; padding: 12px 14px; margin-bottom: 8px; border-left: 4px solid transparent; }
 .comp-card-green { background: rgba(26,140,63,0.06); border-left-color: var(--green); }
 .comp-card-amber { background: rgba(245,158,11,0.08); border-left-color: var(--amber); }
@@ -215,8 +294,6 @@ section > * { max-width: 1200px; margin-left: auto; margin-right: auto; }
 .gti-stage-fill.amber { background: var(--amber); }
 .gti-stage-fill.red { background: var(--red); }
 .gti-stage-count { font-weight: 700; color: var(--ink); width: 24px; text-align: right; }
-
-
 
 /* TRACTION */
 #traction { background: white; border-top: 1px solid var(--border); }
@@ -294,6 +371,7 @@ section > * { max-width: 1200px; margin-left: auto; margin-right: auto; }
 .price-features li::before { content: '\2713'; color: var(--green); font-weight: 700; flex-shrink: 0; }
 .price-card.featured .price-features li::before { color: var(--green-bright); }
 .price-setup { margin-top: 20px; padding-top: 16px; border-top: 1px solid var(--border-dark); font-size: 0.78rem; color: var(--ink-light); font-weight: 500; }
+
 /* MISSION */
 #mission { background: var(--ink); color: white; padding: 100px 5%; text-align: center; position: relative; overflow: hidden; }
 #mission::before { content: ''; position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); width: 500px; height: 500px; border-radius: 50%; background: radial-gradient(circle, rgba(34,197,94,0.08) 0%, transparent 70%); }
@@ -343,7 +421,6 @@ footer { background: var(--ink); border-top: 1px solid rgba(255,255,255,0.06); p
   .hw-step:nth-child(4), .hw-step:nth-child(5) { border-top: 1px solid rgba(18,39,26,0.07); }
   .hw-step:nth-child(5) { border-right: none; }
   .kpi-grid { grid-template-columns: repeat(2, 1fr); }
-  .map-layout { grid-template-columns: 1fr; }
 }
 @media (max-width: 900px) {
   .nav-links { display: none; }
@@ -380,6 +457,8 @@ footer { background: var(--ink); border-top: 1px solid rgba(255,255,255,0.06); p
   .footer-grid { grid-template-columns: 1fr 1fr; gap: 28px; }
   .footer-grid > div:first-child { grid-column: 1/-1; }
   .footer-bottom { flex-direction: column; align-items: flex-start; gap: 8px; }
+  .platform-embed-wrap iframe { height: 480px; }
+  .platform-embed-cta { flex-direction: column; align-items: flex-start; }
 }
 @media (max-width: 480px) {
   section { padding: 52px 4%; }
@@ -397,6 +476,7 @@ footer { background: var(--ink); border-top: 1px solid rgba(255,255,255,0.06); p
   .footer-grid { grid-template-columns: 1fr; gap: 24px; }
   .section-title { font-size: clamp(1.7rem, 7vw, 2.2rem); }
   .kpi-grid { grid-template-columns: 1fr 1fr; }
+  .platform-embed-wrap iframe { height: 360px; }
 }
 </style>
 </head>
@@ -485,9 +565,34 @@ footer { background: var(--ink); border-top: 1px solid rgba(255,255,255,0.06); p
 <section id="dashboard">
   <div style="max-width:1200px;margin:0 auto;">
     <div class="section-eyebrow">What You Buy</div>
-    <h2 class="section-title">Your territory. Live.</h2>
-    <p class="section-sub">Every sales rep visit generates a verified compliance event. You see which retailers are active, which zones are underperforming, and where behavior is becoming habit.</p>
+    <h2 class="section-title">Your territory. <em>Live.</em></h2>
+    <p class="section-sub" style="margin-bottom:40px;">Every sales rep visit generates a verified compliance event. You see which retailers are active, which zones are underperforming, and where behavior is becoming habit.</p>
+  </div>
 
+  <!-- ── LIVE PLATFORM EMBED ── -->
+  <div class="platform-embed-wrap">
+    <div class="platform-embed-bar">
+      <div class="embed-dot" style="background:#ff5f57"></div>
+      <div class="embed-dot" style="background:#febc2e"></div>
+      <div class="embed-dot" style="background:#28c840"></div>
+      <span class="embed-label">playforearth.org / platform</span>
+      <div class="embed-live"><div class="embed-pulse"></div>Live</div>
+    </div>
+    <iframe
+      src="/demo"
+      title="Play for Earth territory dashboard"
+      scrolling="no"
+      loading="lazy"
+      allow="geolocation"
+    ></iframe>
+    <div class="platform-embed-cta">
+      <p><strong>Interactive demo.</strong> Click the tabs to explore territory data, zone map, performance leaderboards, and live field feed.</p>
+      <a href="/demo" class="btn-embed-full" target="_blank">Open full platform &rarr;</a>
+    </div>
+  </div>
+
+  <!-- ── STATIC KPI FALLBACK (visible on mobile where iframe is limited) ── -->
+  <div style="max-width:1200px;margin:0 auto;">
     <div class="kpi-grid">
       <div class="dash-kpi highlight">
         <div class="dash-kpi-label">Active Retailers</div>
@@ -517,10 +622,9 @@ footer { background: var(--ink); border-top: 1px solid rgba(255,255,255,0.06); p
     <div class="dash-grid">
       <div class="dash-card">
         <div class="dash-card-title">Compliance by Territory &mdash; 30-day rolling</div>
-
         <div class="comp-card comp-card-green">
           <div class="comp-header">
-            <div class="comp-name">Westlands</div>
+            <div class="comp-name">North District</div>
             <div style="display:flex;align-items:center;gap:8px;">
               <span class="comp-badge comp-badge-green">&#8593; High</span>
               <div class="comp-pct">89%</div>
@@ -528,10 +632,9 @@ footer { background: var(--ink); border-top: 1px solid rgba(255,255,255,0.06); p
           </div>
           <div class="bar-track-lg"><div class="bar-fill-lg" style="width:89%;background:var(--green)"></div></div>
         </div>
-
         <div class="comp-card comp-card-green">
           <div class="comp-header">
-            <div class="comp-name">CBD / Nairobi Central</div>
+            <div class="comp-name">City Centre</div>
             <div style="display:flex;align-items:center;gap:8px;">
               <span class="comp-badge comp-badge-green">&#8593; High</span>
               <div class="comp-pct">81%</div>
@@ -539,10 +642,9 @@ footer { background: var(--ink); border-top: 1px solid rgba(255,255,255,0.06); p
           </div>
           <div class="bar-track-lg"><div class="bar-fill-lg" style="width:81%;background:var(--green)"></div></div>
         </div>
-
         <div class="comp-card comp-card-green">
           <div class="comp-header">
-            <div class="comp-name">Kasarani</div>
+            <div class="comp-name">East Zone</div>
             <div style="display:flex;align-items:center;gap:8px;">
               <span class="comp-badge comp-badge-green">&#8593; Good</span>
               <div class="comp-pct">74%</div>
@@ -550,27 +652,25 @@ footer { background: var(--ink); border-top: 1px solid rgba(255,255,255,0.06); p
           </div>
           <div class="bar-track-lg"><div class="bar-fill-lg" style="width:74%;background:var(--green)"></div></div>
         </div>
-
         <div class="comp-card comp-card-amber">
           <div class="comp-header">
-            <div class="comp-name">Kibera / Lang&rsquo;ata</div>
+            <div class="comp-name">South District</div>
             <div style="display:flex;align-items:center;gap:8px;">
               <span class="comp-badge comp-badge-amber">&#9888; Watch</span>
-              <div class="comp-pct amber">58%</div>
+              <div class="comp-pct amber">61%</div>
             </div>
           </div>
-          <div class="bar-track-lg"><div class="bar-fill-lg" style="width:58%;background:var(--amber)"></div></div>
+          <div class="bar-track-lg"><div class="bar-fill-lg" style="width:61%;background:var(--amber)"></div></div>
         </div>
-
         <div class="comp-card comp-card-red">
           <div class="comp-header">
-            <div class="comp-name">Eastleigh</div>
+            <div class="comp-name">West Industrial</div>
             <div style="display:flex;align-items:center;gap:8px;">
               <span class="comp-badge comp-badge-red comp-blink">&#9679; Alert</span>
-              <div class="comp-pct red">41%</div>
+              <div class="comp-pct red">38%</div>
             </div>
           </div>
-          <div class="bar-track-lg"><div class="bar-fill-lg bar-pulse" style="width:41%;background:var(--red)"></div></div>
+          <div class="bar-track-lg"><div class="bar-fill-lg bar-pulse" style="width:38%;background:var(--red)"></div></div>
           <div style="font-size:10px;color:var(--red);margin-top:6px;font-weight:600;">Action required &mdash; below 50% threshold</div>
         </div>
         <div style="margin-top:16px;padding-top:16px;border-top:1px solid var(--border);">
@@ -603,7 +703,7 @@ footer { background: var(--ink); border-top: 1px solid rgba(255,255,255,0.06); p
             </div>
           </div>
           <div class="gti-label">Green Transformation Index</div>
-          <div class="gti-sub">Behavioral compliance score &mdash; Nairobi Metro</div>
+          <div class="gti-sub">Behavioral compliance score &mdash; Metro City</div>
           <div class="gti-stages">
             <div class="gti-stage-row"><div class="gti-stage-name">Internalized</div><div class="gti-stage-bar"><div class="gti-stage-fill" style="width:44%"></div></div><div class="gti-stage-count">44</div></div>
             <div class="gti-stage-row"><div class="gti-stage-name">Embedded</div><div class="gti-stage-bar"><div class="gti-stage-fill" style="width:87%"></div></div><div class="gti-stage-count">87</div></div>
@@ -693,38 +793,23 @@ footer { background: var(--ink); border-top: 1px solid rgba(255,255,255,0.06); p
   <p class="section-sub">No new infrastructure. No new staff. Play for Earth layers onto your existing field operation and makes every visit count.</p>
   <div class="how-steps-full">
     <div class="hw-step">
-      <div class="hw-step-header">
-        <div class="hw-num">01</div>
-        <h4>GPS Check-in</h4>
-      </div>
+      <div class="hw-step-header"><div class="hw-num">01</div><h4>GPS Check-in</h4></div>
       <p>Rep arrives at the outlet. Location confirmed automatically. No manual entry, no ghost visits.</p>
     </div>
     <div class="hw-step">
-      <div class="hw-step-header">
-        <div class="hw-num">02</div>
-        <h4>Photo Verification</h4>
-      </div>
+      <div class="hw-step-header"><div class="hw-num">02</div><h4>Photo Verification</h4></div>
       <p>Rep photographs the collection point. Basket in place, fill level, poster visible. Thirty seconds. Timestamped and geo-tagged.</p>
     </div>
     <div class="hw-step">
-      <div class="hw-step-header">
-        <div class="hw-num">03</div>
-        <h4>Points &amp; Rewards</h4>
-      </div>
+      <div class="hw-step-header"><div class="hw-num">03</div><h4>Points &amp; Rewards</h4></div>
       <p>Action verified instantly. Rep earns points. Streaks multiply them. Hit a milestone, the Lucky Spin triggers.</p>
     </div>
     <div class="hw-step">
-      <div class="hw-step-header">
-        <div class="hw-num">04</div>
-        <h4>Live Dashboard</h4>
-      </div>
+      <div class="hw-step-header"><div class="hw-num">04</div><h4>Live Dashboard</h4></div>
       <p>Recovery rate, territory coverage, GTI score, and Scope 3 data &mdash; updated in real time. EPR export in one click.</p>
     </div>
     <div class="hw-step">
-      <div class="hw-step-header">
-        <div class="hw-num">05</div>
-        <h4>Habit Loop</h4>
-      </div>
+      <div class="hw-step-header"><div class="hw-num">05</div><h4>Habit Loop</h4></div>
       <p>Challenge missions, leaderboards, and streak mechanics turn one-off visits into a verified monthly routine.</p>
     </div>
   </div>
@@ -736,52 +821,16 @@ footer { background: var(--ink); border-top: 1px solid rgba(255,255,255,0.06); p
   <h2 class="section-title">Real data.<br><em>Real markets.</em></h2>
   <div class="traction-grid">
     <div class="traction-numbers">
-      <div class="t-card">
-        <div class="t-num">20K+</div>
-        <div class="t-desc">Field actions logged across pilot operations &mdash; independent verification in progress</div>
-      </div>
-      <div class="t-card">
-        <div class="t-num">TRL 7</div>
-        <div class="t-desc">System prototype demonstrated in an operational environment</div>
-      </div>
-      <div class="t-card">
-        <div class="t-num">2</div>
-        <div class="t-desc">Active markets: Kenya and Vietnam</div>
-      </div>
-      <div class="t-card">
-        <div class="t-num">$0</div>
-        <div class="t-desc">No new headcount. No new infrastructure. Deploys on your existing routes.</div>
-      </div>
+      <div class="t-card"><div class="t-num">20K+</div><div class="t-desc">Field actions logged across pilot operations &mdash; independent verification in progress</div></div>
+      <div class="t-card"><div class="t-num">TRL 7</div><div class="t-desc">System prototype demonstrated in an operational environment</div></div>
+      <div class="t-card"><div class="t-num">2</div><div class="t-desc">Active markets: Kenya and Vietnam</div></div>
+      <div class="t-card"><div class="t-num">$0</div><div class="t-desc">No new headcount. No new infrastructure. Deploys on your existing routes.</div></div>
     </div>
     <div class="proof-list">
-      <div class="proof-item">
-        <div class="proof-trophy">&#127942;</div>
-        <div>
-          <h4>ERIA HITS4KIDS Finalist</h4>
-          <p>Recognized by the Economic Research Institute for ASEAN and East Asia for behavioral innovation in sustainability.</p>
-        </div>
-      </div>
-      <div class="proof-item">
-        <div class="proof-trophy">&#129351;</div>
-        <div>
-          <h4>L&rsquo;Or&eacute;al Big Bang Beauty Tech &mdash; SAPMENA Finalist</h4>
-          <p>Selected among top circular economy innovators across South Asia, Pacific, Middle East and North Africa.</p>
-        </div>
-      </div>
-      <div class="proof-item">
-        <div class="proof-trophy">&#128640;</div>
-        <div>
-          <h4>MDX Nature Positive Accelerator</h4>
-          <p>Selected for the Middlesex University Dubai accelerator programme supporting circular economy ventures.</p>
-        </div>
-      </div>
-      <div class="proof-item">
-        <div class="proof-trophy">&#127758;</div>
-        <div>
-          <h4>African Impact Challenge &mdash; Cohort 6 (2026)</h4>
-          <p>Selected into the 2026 cohort supporting Africa&rsquo;s most impactful early-stage ventures.</p>
-        </div>
-      </div>
+      <div class="proof-item"><div class="proof-trophy">&#127942;</div><div><h4>ERIA HITS4KIDS Finalist</h4><p>Recognized by the Economic Research Institute for ASEAN and East Asia for behavioral innovation in sustainability.</p></div></div>
+      <div class="proof-item"><div class="proof-trophy">&#129351;</div><div><h4>L&rsquo;Or&eacute;al Big Bang Beauty Tech &mdash; SAPMENA Finalist</h4><p>Selected among top circular economy innovators across South Asia, Pacific, Middle East and North Africa.</p></div></div>
+      <div class="proof-item"><div class="proof-trophy">&#128640;</div><div><h4>MDX Nature Positive Accelerator</h4><p>Selected for the Middlesex University Dubai accelerator programme supporting circular economy ventures.</p></div></div>
+      <div class="proof-item"><div class="proof-trophy">&#127758;</div><div><h4>African Impact Challenge &mdash; Cohort 6 (2026)</h4><p>Selected into the 2026 cohort supporting Africa&rsquo;s most impactful early-stage ventures.</p></div></div>
     </div>
   </div>
 </section>
@@ -791,30 +840,10 @@ footer { background: var(--ink); border-top: 1px solid rgba(255,255,255,0.06); p
   <div class="section-eyebrow">Where We Operate</div>
   <h2 class="section-title">Africa and Southeast Asia &mdash;<br><em>where EPR is being built.</em></h2>
   <div class="markets-grid">
-    <div class="market-card">
-      <div class="market-flag"><span class="fi fi-vn"></span></div>
-      <h4>Vietnam</h4>
-      <p>Proof-of-concept market. Field operations active. EPR framework actively developing.</p>
-      <span class="market-status status-active">Active</span>
-    </div>
-    <div class="market-card">
-      <div class="market-flag"><span class="fi fi-ke"></span></div>
-      <h4>Kenya</h4>
-      <p>HQ market. Active pipeline with FMCG partners. KEPRO relationship as data partner.</p>
-      <span class="market-status status-active">Active</span>
-    </div>
-    <div class="market-card">
-      <div class="market-flag"><span class="fi fi-tz"></span></div>
-      <h4>Tanzania</h4>
-      <p>EAC regulatory alignment and shared bottlers make this the natural next step from Kenya.</p>
-      <span class="market-status status-pipeline">Pipeline</span>
-    </div>
-    <div class="market-card">
-      <div class="market-flag"><span class="fi fi-my"></span></div>
-      <h4>Malaysia &amp; Thailand</h4>
-      <p>EPR regulatory signals actively monitored as market entry triggers.</p>
-      <span class="market-status status-pipeline">Pipeline</span>
-    </div>
+    <div class="market-card"><div class="market-flag"><span class="fi fi-vn"></span></div><h4>Vietnam</h4><p>Proof-of-concept market. Field operations active. EPR framework actively developing.</p><span class="market-status status-active">Active</span></div>
+    <div class="market-card"><div class="market-flag"><span class="fi fi-ke"></span></div><h4>Kenya</h4><p>HQ market. Active pipeline with FMCG partners. KEPRO relationship as data partner.</p><span class="market-status status-active">Active</span></div>
+    <div class="market-card"><div class="market-flag"><span class="fi fi-tz"></span></div><h4>Tanzania</h4><p>EAC regulatory alignment and shared bottlers make this the natural next step from Kenya.</p><span class="market-status status-pipeline">Pipeline</span></div>
+    <div class="market-card"><div class="market-flag"><span class="fi fi-my"></span></div><h4>Malaysia &amp; Thailand</h4><p>EPR regulatory signals actively monitored as market entry triggers.</p><span class="market-status status-pipeline">Pipeline</span></div>
   </div>
 </section>
 
@@ -827,10 +856,7 @@ footer { background: var(--ink); border-top: 1px solid rgba(255,255,255,0.06); p
     <div class="price-card">
       <div class="price-tier">Entry</div>
       <div class="price-name">Territory Pilot</div>
-      <div class="price-amount">
-        <span style="font-size:1rem;vertical-align:top;margin-top:6px;display:inline-block;color:var(--ink-light);">$</span><span class="price-main">8K</span>
-        <span class="price-period">per territory / month</span>
-      </div>
+      <div class="price-amount"><span style="font-size:1rem;vertical-align:top;margin-top:6px;display:inline-block;color:var(--ink-light);">$</span><span class="price-main">8K</span><span class="price-period">per territory / month</span></div>
       <p class="price-desc">90-day proof of concept in one defined zone. Up to 300 enrolled retail points.</p>
       <ul class="price-features">
         <li>Up to 300 retail points enrolled</li>
@@ -846,10 +872,7 @@ footer { background: var(--ink); border-top: 1px solid rgba(255,255,255,0.06); p
       <div class="featured-badge">Most Popular</div>
       <div class="price-tier">Standard</div>
       <div class="price-name">Full Territory</div>
-      <div class="price-amount">
-        <span style="font-size:1rem;vertical-align:top;margin-top:6px;display:inline-block;color:rgba(255,255,255,0.45);">$</span><span class="price-main">12K</span>
-        <span class="price-period">per territory / month</span>
-      </div>
+      <div class="price-amount"><span style="font-size:1rem;vertical-align:top;margin-top:6px;display:inline-block;color:rgba(255,255,255,0.45);">$</span><span class="price-main">12K</span><span class="price-period">per territory / month</span></div>
       <p class="price-desc">Complete territory coverage. Unlimited retail points, full distributor network, full compliance package.</p>
       <ul class="price-features">
         <li>Unlimited retail points in territory</li>
@@ -865,10 +888,7 @@ footer { background: var(--ink); border-top: 1px solid rgba(255,255,255,0.06); p
     <div class="price-card">
       <div class="price-tier">Intelligence</div>
       <div class="price-name">Territory + Data</div>
-      <div class="price-amount">
-        <span style="font-size:1rem;vertical-align:top;margin-top:6px;display:inline-block;color:var(--ink-light);">$</span><span class="price-main">15K</span>
-        <span class="price-period">per territory / month</span>
-      </div>
+      <div class="price-amount"><span style="font-size:1rem;vertical-align:top;margin-top:6px;display:inline-block;color:var(--ink-light);">$</span><span class="price-main">15K</span><span class="price-period">per territory / month</span></div>
       <p class="price-desc">Full coverage plus category benchmark intelligence. Know where you stand vs. competitors, month by month.</p>
       <ul class="price-features">
         <li>Everything in Full Territory</li>
@@ -959,41 +979,23 @@ footer { background: var(--ink); border-top: 1px solid rgba(255,255,255,0.06); p
 
 <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
 <script>
-// Nav scroll
 window.addEventListener('scroll', () => {
   document.getElementById('mainNav').style.background =
     window.scrollY > 60 ? 'rgba(240,250,242,0.98)' : 'rgba(240,250,242,0.94)';
 });
 
-// iOS video autoplay fallback
 document.querySelectorAll('video').forEach(v => {
   v.play().catch(() => {
-    v.closest('.hero-video').innerHTML =
-      '<div class="hero-video-placeholder" style="cursor:pointer" onclick="this.closest(\'.hero-video\').querySelector(\'video\')&&this.closest(\'.hero-video\').querySelector(\'video\').play()">' +
-      '<div class="play-btn">&#9654;</div><span>Platform Demo</span></div>';
-    const vid = document.createElement('video');
-    vid.src = '/hero-video.mp4';
-    vid.muted = true;
-    vid.loop = true;
-    vid.playsInline = true;
-    vid.setAttribute('playsinline', '');
-    vid.style.cssText = 'width:100%;height:100%;object-fit:cover;display:block;';
     const wrap = document.querySelector('.hero-video');
-    wrap.innerHTML = '';
-    wrap.appendChild(vid);
-    wrap.addEventListener('click', () => vid.play(), { once: true });
-    wrap.style.cursor = 'pointer';
     const overlay = document.createElement('div');
     overlay.className = 'hero-video-placeholder';
-    overlay.style.cssText = 'position:absolute;inset:0;cursor:pointer;';
-    overlay.innerHTML = '<div class="play-btn">&#9654;</div><span>Tap to play</span>';
+    overlay.innerHTML = '<div class="play-btn">&#9654;</div><span>Platform Demo</span>';
     wrap.style.position = 'relative';
     wrap.appendChild(overlay);
-    overlay.addEventListener('click', () => { vid.play(); overlay.remove(); }, { once: true });
+    overlay.addEventListener('click', () => { v.play(); overlay.remove(); }, { once: true });
   });
 });
 
-// Hamburger
 const hamburger = document.getElementById('hamburger');
 const mobileMenu = document.getElementById('mobileMenu');
 hamburger.addEventListener('click', () => {
@@ -1008,6 +1010,17 @@ mobileMenu.querySelectorAll('a').forEach(a => {
     document.body.style.overflow = '';
   });
 });
+
+// Auto-size iframe to its content height once loaded
+const dashIframe = document.querySelector('.platform-embed-wrap iframe');
+if (dashIframe) {
+  dashIframe.addEventListener('load', () => {
+    try {
+      const h = dashIframe.contentDocument.body.scrollHeight;
+      if (h > 400) dashIframe.style.height = h + 'px';
+    } catch(e) {}
+  });
+}
 </script>
 </body>
 </html>
