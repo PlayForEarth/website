@@ -36,14 +36,8 @@
   --sans: 'Familjen Grotesk', sans-serif;
   --amber: #f59e0b;
   --red: #ef4444;
-  --c1: #ef4444;
-  --c2: #f97316;
-  --c3: #eab308;
-  --c4: #84cc16;
-  --c5: #22c55e;
-  --c7: #1a8c3f;
+  --c1: #ef4444; --c2: #f97316; --c3: #eab308; --c4: #84cc16; --c5: #22c55e; --c7: #1a8c3f;
 }
-
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 html { scroll-behavior: smooth; font-size: 16px; }
 body { font-family: var(--sans); background: var(--bg); color: var(--ink); overflow-x: hidden; }
@@ -76,18 +70,55 @@ nav {
 .mobile-menu-link .arrow { color: var(--green); opacity: 0.5; }
 .mobile-menu-cta { margin-top: 32px; display: block; background: var(--green); color: white; text-align: center; padding: 18px 28px; border-radius: 40px; font-size: 1rem; font-weight: 700; text-decoration: none; }
 
+/* ── NAV DROPDOWN ── */
+.nav-has-dropdown { position: relative; }
+.nav-has-dropdown > a::after {
+  content: ''; display: inline-block; width: 6px; height: 6px;
+  border-right: 1.5px solid currentColor; border-bottom: 1.5px solid currentColor;
+  transform: rotate(45deg) translateY(-2px);
+  margin-left: 5px; opacity: 0.5; vertical-align: middle; transition: transform 0.2s;
+}
+.nav-has-dropdown:hover > a::after { transform: rotate(-135deg) translateY(-2px); opacity: 0.8; }
+.nav-dropdown {
+  position: absolute; top: calc(100% + 14px); left: 50%;
+  transform: translateX(-50%) translateY(6px);
+  background: white; border: 1px solid var(--border); border-radius: 14px;
+  padding: 8px; min-width: 268px;
+  box-shadow: 0 12px 40px rgba(18,39,26,0.13);
+  opacity: 0; pointer-events: none;
+  transition: opacity 0.18s, transform 0.18s; z-index: 600;
+}
+.nav-has-dropdown:hover .nav-dropdown {
+  opacity: 1; pointer-events: auto; transform: translateX(-50%) translateY(0);
+}
+.nav-dropdown::before {
+  content: ''; position: absolute; top: -6px; left: 50%;
+  transform: translateX(-50%) rotate(45deg);
+  width: 10px; height: 10px; background: white;
+  border-left: 1px solid var(--border); border-top: 1px solid var(--border);
+}
+.nav-dropdown-item {
+  display: flex; align-items: center; gap: 12px;
+  padding: 10px 12px; border-radius: 9px; text-decoration: none; transition: background 0.15s;
+}
+.nav-dropdown-item:hover { background: var(--green-pale); }
+.nav-dropdown-icon {
+  font-size: 1.1rem; flex-shrink: 0; width: 34px; height: 34px;
+  background: var(--bg2); border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+}
+.nav-dropdown-label { font-size: 0.65rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--green); margin-bottom: 1px; }
+.nav-dropdown-title { font-size: 0.84rem; font-weight: 700; color: var(--ink); line-height: 1.3; }
+.nav-dropdown-divider { height: 1px; background: var(--border); margin: 4px 8px; }
+/* Mobile sub-links */
+.mobile-menu-sub { display: flex; flex-direction: column; padding: 0 0 8px 12px; }
+.mobile-menu-sub-link { font-size: 1rem; font-weight: 600; color: var(--ink-light); text-decoration: none; padding: 12px 0; border-bottom: 1px solid rgba(26,140,63,0.07); display: flex; align-items: center; gap: 10px; }
+.mobile-menu-sub-link:hover { color: var(--green); }
+.mobile-menu-sub-link:last-child { border-bottom: none; }
+
 /* HERO */
-.hero {
-  min-height: 92vh; padding: 56px 5% 64px;
-  position: relative; display: flex; align-items: center;
-}
-.hero-bg {
-  position: absolute; inset: 0; overflow: hidden;
-  background:
-    radial-gradient(ellipse 70% 60% at 70% 30%, rgba(34,197,94,0.16) 0%, transparent 60%),
-    radial-gradient(ellipse 50% 50% at 15% 75%, rgba(250,204,21,0.12) 0%, transparent 50%),
-    var(--bg);
-}
+.hero { min-height: 92vh; padding: 56px 5% 64px; position: relative; display: flex; align-items: center; }
+.hero-bg { position: absolute; inset: 0; overflow: hidden; background: radial-gradient(ellipse 70% 60% at 70% 30%, rgba(34,197,94,0.16) 0%, transparent 60%), radial-gradient(ellipse 50% 50% at 15% 75%, rgba(250,204,21,0.12) 0%, transparent 50%), var(--bg); }
 .hero-grid { position: absolute; inset: 0; background-image: linear-gradient(rgba(26,140,63,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(26,140,63,0.04) 1px, transparent 1px); background-size: 56px 56px; }
 .hero-inner { position: relative; z-index: 2; width: 100%; max-width: 1200px; margin: 0 auto; display: flex; align-items: center; gap: 56px; }
 .hero-content { flex: 0 0 52%; min-width: 0; display: flex; flex-direction: column; align-items: flex-start; }
@@ -95,7 +126,7 @@ nav {
 .hero h1 { font-size: clamp(2.4rem, 4vw, 3.8rem); font-weight: 900; line-height: 1.07; letter-spacing: -0.03em; margin-bottom: 20px; color: var(--ink); }
 .hero h1 em { font-style: italic; color: var(--green); }
 .hero-sub { font-size: 1.05rem; line-height: 1.75; color: var(--ink-light); max-width: 460px; margin-bottom: 32px; }
-.hero-actions { display: flex; gap: 18px; align-items: center; flex-wrap: wrap; margin-bottom: 40px; margin-top: 24px;}
+.hero-actions { display: flex; gap: 18px; align-items: center; flex-wrap: wrap; margin-bottom: 40px; margin-top: 24px; }
 .btn-primary { background: var(--green); color: white; padding: 14px 32px; border-radius: 32px; font-size: 0.95rem; font-weight: 700; text-decoration: none; transition: all 0.2s; box-shadow: 0 4px 20px rgba(26,140,63,0.3); display: inline-block; }
 .btn-primary:hover { background: var(--green-dark); transform: translateY(-2px); }
 .btn-ghost { color: var(--ink-light); font-size: 0.9rem; font-weight: 600; text-decoration: none; display: flex; align-items: center; gap: 7px; transition: color 0.2s; }
@@ -110,6 +141,16 @@ nav {
 .hero-video-placeholder { width: 100%; height: 100%; min-height: 300px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; background: linear-gradient(135deg, #0d2d0d 0%, #1a5c1a 100%); color: rgba(255,255,255,0.55); font-size: 0.75rem; letter-spacing: 0.08em; text-transform: uppercase; text-decoration: none; cursor: pointer; transition: opacity 0.2s; }
 .hero-video-placeholder:hover { opacity: 0.85; }
 .hero-video-placeholder .play-btn { width: 52px; height: 52px; border-radius: 50%; border: 2px solid rgba(255,255,255,0.35); display: flex; align-items: center; justify-content: center; font-size: 1.3rem; color: rgba(255,255,255,0.7); }
+
+/* HERO CHIPS */
+.hero-chips { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 22px; }
+.hero-chip { font-size: 0.78rem; font-weight: 500; color: var(--ink-light); background: rgba(18,39,26,0.05); border: 1px solid rgba(18,39,26,0.12); padding: 5px 14px; border-radius: 20px; white-space: nowrap; }
+.hero-chip-active { background: #166534; color: white; border-color: #166534; font-weight: 700; box-shadow: 0 6px 20px rgba(22,101,52,0.35); }
+.hero-chip-label { font-size: 0.65rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(18,39,26,0.4); margin-bottom: 6px; }
+.hero-chip-muted { position: relative; opacity: 0.5; margin-left: 4px; }
+.hero-chip-muted::after { content: ""; position: absolute; left: 10%; right: 10%; top: 50%; height: 1.5px; background: rgba(18,39,26,0.35); transform: rotate(-8deg); }
+.btn-snapshot { margin-top: 2px; background: var(--green-pale); color: var(--green); border: 1.5px solid rgba(26,140,63,0.3); padding: 14px 28px; border-radius: 32px; font-size: 0.95rem; font-weight: 700; text-decoration: none; transition: all 0.2s; display: inline-block; white-space: nowrap; }
+.btn-snapshot:hover { background: white; border-color: var(--green); box-shadow: 0 4px 16px rgba(26,140,63,0.15); }
 
 /* LOGOS */
 .logos-strip { background: white; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 28px 5%; }
@@ -139,85 +180,11 @@ section > * { max-width: 1200px; margin-left: auto; margin-right: auto; }
 .who-card ul { list-style: none; display: flex; flex-direction: column; gap: 7px; }
 .who-card ul li { font-size: 0.84rem; color: var(--ink-light); display: flex; gap: 10px; align-items: flex-start; }
 .who-card ul li .li-icon { flex-shrink: 0; font-size: 1rem; line-height: 1.4; }
+/* Vertical page link inside who-card */
+.who-card-link { display: inline-flex; align-items: center; gap: 6px; margin-top: 18px; font-size: 0.82rem; font-weight: 700; color: var(--green); text-decoration: none; border-top: 1px solid rgba(26,140,63,0.12); padding-top: 14px; width: 100%; transition: color 0.2s; }
+.who-card-link:hover { color: var(--green-dark); }
+.who-card-link::after { content: '→'; font-size: 0.9rem; }
 
-  /* HERO CHIPS */
-.hero-chips {
-  display: flex;
-  gap: 8px;
-  flex-wrap: wrap;
-  margin-bottom: 22px;
-}
-.hero-chip {
-  font-size: 0.78rem;
-  font-weight: 500;
-  color: var(--ink-light);
-  background: rgba(18,39,26,0.05);
-  border: 1px solid rgba(18,39,26,0.12);
-  padding: 5px 14px;
-  border-radius: 20px;
-  white-space: nowrap;
-}
-.hero-chip-active {
-  background: #166534; /* vert plus profond */
-  color: white;
-  border-color: #166534;
-  font-weight: 700;
-  box-shadow: 0 6px 20px rgba(22,101,52,0.35);
-}
-  
-.hero-chip-label {
-  font-size: 0.65rem;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: rgba(18,39,26,0.4);
-  margin-bottom: 6px;
-}
-  .hero-chip-muted {
-  position: relative;
-  opacity: 0.5;
-    margin-left: 4px;
-}
-
-/* strike line */
-.hero-chip-muted::after {
-  content: "";
-  position: absolute;
-  left: 10%;
-  right: 10%;
-  top: 50%;
-  height: 1.5px;
-  background: rgba(18,39,26,0.35);
-  transform: rotate(-8deg);
-  
-}
-  
-/* ESG SNAPSHOT BUTTON */
-.btn-snapshot {
-  margin-top: 2px;
-  background: var(--green-pale);
-  color: var(--green);
-  border: 1.5px solid rgba(26,140,63,0.3);
-  padding: 14px 28px;
-  border-radius: 32px;
-  font-size: 0.95rem;
-  font-weight: 700;
-  text-decoration: none;
-  transition: all 0.2s;
-  display: inline-block;
-  white-space: nowrap;
-}
-.btn-snapshot:hover {
-  background: white;
-  border-color: var(--green);
-  box-shadow: 0 4px 16px rgba(26,140,63,0.15);
-}
-@media (max-width: 900px) {
-  .btn-snapshot { text-align: center; }
-  .hero-chips { gap: 6px; }
-  
-}
-  
 /* HOW */
 #how { background: white; border-top: 1px solid var(--border); }
 .how-steps-full { display: grid; grid-template-columns: repeat(5, 1fr); gap: 0; margin-top: 56px; border: 1px solid var(--border-dark); border-radius: 16px; overflow: hidden; background: white; box-shadow: 0 4px 20px rgba(18,39,26,0.06); }
@@ -229,171 +196,23 @@ section > * { max-width: 1200px; margin-left: auto; margin-right: auto; }
 .hw-step h4 { font-size: 0.95rem; font-weight: 700; color: var(--ink); line-height: 1.3; }
 .hw-step p { font-size: 0.82rem; color: var(--ink-light); line-height: 1.65; }
 
-/* ===== DASHBOARD SECTION ===== */
-#dashboard {
-  background: white;
-  border-top: 1px solid var(--border);
-  padding: 96px 5%;
-}
+/* DASHBOARD */
+#dashboard { background: white; border-top: 1px solid var(--border); padding: 96px 5%; }
 #dashboard > * { max-width: 1200px; margin-left: auto; margin-right: auto; }
 #dashboard .section-sub { margin-bottom: 48px; }
-
-/* ===== LIVE PLATFORM EMBED ===== */
-.platform-embed-wrap {
-  max-width: 1200px;
-  margin: 0 auto 48px;
-  border-radius: 16px;
-  overflow: hidden;
-  box-shadow: 0 8px 40px rgba(18,39,26,0.12);
-  border: 1px solid var(--border);
-  background: #fafaf8;
-  position: relative;
-}
-.platform-embed-bar {
-  background: #f5f5f3;
-  border-bottom: 1px solid var(--border);
-  padding: 10px 16px;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
+.platform-embed-wrap { max-width: 1200px; margin: 0 auto 48px; border-radius: 16px; overflow: hidden; box-shadow: 0 8px 40px rgba(18,39,26,0.12); border: 1px solid var(--border); background: #fafaf8; position: relative; }
+.platform-embed-bar { background: #f5f5f3; border-bottom: 1px solid var(--border); padding: 10px 16px; display: flex; align-items: center; gap: 10px; }
 .embed-dot { width: 10px; height: 10px; border-radius: 50%; }
-.platform-embed-bar .embed-label {
-  font-size: 11px;
-  font-family: 'Familjen Grotesk', monospace;
-  color: rgba(18,39,26,0.4);
-  margin-left: 4px;
-  letter-spacing: 0.04em;
-}
-.platform-embed-bar .embed-live {
-  margin-left: auto;
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  font-size: 11px;
-  font-weight: 600;
-  color: var(--green);
-}
-.embed-pulse {
-  width: 7px; height: 7px; border-radius: 50%;
-  background: var(--green);
-  animation: epulse 1.8s infinite;
-}
+.platform-embed-bar .embed-label { font-size: 11px; font-family: 'Familjen Grotesk', monospace; color: rgba(18,39,26,0.4); margin-left: 4px; letter-spacing: 0.04em; }
+.platform-embed-bar .embed-live { margin-left: auto; display: flex; align-items: center; gap: 5px; font-size: 11px; font-weight: 600; color: var(--green); }
+.embed-pulse { width: 7px; height: 7px; border-radius: 50%; background: var(--green); animation: epulse 1.8s infinite; }
 @keyframes epulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.35;transform:scale(.6)} }
-.platform-embed-wrap iframe {
-  display: block;
-  width: 100%;
-  height: 680px;
-  border: none;
-}
-.platform-embed-cta {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 18px 24px;
-  background: var(--green-pale);
-  border-top: 1px solid rgba(26,140,63,0.15);
-  flex-wrap: wrap;
-  gap: 12px;
-}
-.platform-embed-cta p {
-  font-size: 0.88rem;
-  color: var(--ink-light);
-  line-height: 1.5;
-}
+.platform-embed-wrap iframe { display: block; width: 100%; height: 680px; border: none; }
+.platform-embed-cta { display: flex; align-items: center; justify-content: space-between; padding: 18px 24px; background: var(--green-pale); border-top: 1px solid rgba(26,140,63,0.15); flex-wrap: wrap; gap: 12px; }
+.platform-embed-cta p { font-size: 0.88rem; color: var(--ink-light); line-height: 1.5; }
 .platform-embed-cta p strong { color: var(--ink); }
-.btn-embed-full {
-  display: inline-flex;
-  align-items: center;
-  gap: 7px;
-  background: var(--green);
-  color: white;
-  padding: 10px 22px;
-  border-radius: 24px;
-  font-size: 0.86rem;
-  font-weight: 700;
-  text-decoration: none;
-  white-space: nowrap;
-  transition: background 0.2s;
-  flex-shrink: 0;
-}
+.btn-embed-full { display: inline-flex; align-items: center; gap: 7px; background: var(--green); color: white; padding: 10px 22px; border-radius: 24px; font-size: 0.86rem; font-weight: 700; text-decoration: none; white-space: nowrap; transition: background 0.2s; flex-shrink: 0; }
 .btn-embed-full:hover { background: var(--green-dark); }
-
-.kpi-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 20px; }
-.dash-kpi { background: var(--bg); border: 1px solid var(--border); border-radius: 14px; padding: 22px; }
-.dash-kpi.highlight { background: var(--green); border-color: var(--green); }
-.dash-kpi-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.7px; color: var(--ink-light); margin-bottom: 10px; }
-.dash-kpi.highlight .dash-kpi-label { color: rgba(255,255,255,0.7); }
-.dash-kpi-value { font-family: var(--serif); font-size: 38px; color: var(--ink); line-height: 1; margin-bottom: 6px; }
-.dash-kpi.highlight .dash-kpi-value { color: white; }
-.dash-kpi-delta { font-size: 12px; font-weight: 600; color: var(--green); }
-.dash-kpi.highlight .dash-kpi-delta { color: rgba(255,255,255,0.85); }
-.dash-kpi-sub { font-size: 11px; color: var(--ink-light); margin-top: 2px; opacity: 0.6; }
-
-.dash-grid { display: grid; grid-template-columns: 1.4fr 1fr; gap: 16px; }
-.dash-card { background: var(--bg); border: 1px solid var(--border); border-radius: 14px; padding: 24px; }
-.dash-card-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.7px; color: var(--ink-light); opacity: 0.6; margin-bottom: 20px; }
-
-.comp-row { margin-bottom: 8px; }
-.comp-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
-.comp-name { font-size: 13px; font-weight: 600; color: var(--ink); }
-.comp-pct { font-size: 14px; font-weight: 700; color: var(--green); }
-.comp-pct.amber { color: var(--amber); }
-.comp-pct.red { color: var(--red); }
-.bar-track { height: 8px; background: var(--border); border-radius: 4px; overflow: hidden; }
-.bar-fill { height: 100%; background: var(--green); border-radius: 4px; }
-.bar-fill.amber { background: var(--amber); }
-.bar-fill.red { background: var(--red); }
-
-.comp-card { border-radius: 10px; padding: 12px 14px; margin-bottom: 8px; border-left: 4px solid transparent; }
-.comp-card-green { background: rgba(26,140,63,0.06); border-left-color: var(--green); }
-.comp-card-amber { background: rgba(245,158,11,0.08); border-left-color: var(--amber); }
-.comp-card-red { background: rgba(239,68,68,0.08); border-left-color: var(--red); }
-.bar-track-lg { height: 10px; background: rgba(0,0,0,0.07); border-radius: 5px; overflow: hidden; margin-top: 8px; }
-.bar-fill-lg { height: 100%; border-radius: 5px; transition: width 1.2s cubic-bezier(0.4,0,0.2,1); }
-.comp-badge { font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 4px; letter-spacing: 0.04em; }
-.comp-badge-green { background: var(--green-pale); color: var(--green-dark); }
-.comp-badge-amber { background: #fef3c7; color: #92400e; }
-.comp-badge-red { background: #fee2e2; color: #991b1b; }
-@keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.25} }
-.comp-blink { animation: blink 1.2s ease-in-out infinite; }
-@keyframes pulse-bar { 0%,100%{opacity:1} 50%{opacity:0.55} }
-.bar-pulse { animation: pulse-bar 1.5s ease-in-out infinite; }
-
-.verified-row { display: flex; gap: 10px; margin-top: 20px; flex-wrap: wrap; }
-.verified-pill { display: flex; align-items: center; gap: 5px; background: var(--green-pale); border: 1px solid rgba(26,140,63,0.2); border-radius: 20px; padding: 4px 11px; font-size: 11px; font-weight: 600; color: var(--green); }
-
-.gti-wrap { display: flex; flex-direction: column; align-items: center; }
-.score-circle { width: 90px; height: 90px; position: relative; margin-bottom: 16px; }
-.score-circle svg { transform: rotate(-90deg); }
-.score-text { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; }
-.score-number { font-family: var(--serif); font-size: 26px; color: var(--green); line-height: 1; }
-.score-sublabel { font-size: 9px; color: var(--ink-light); font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
-.gti-label { font-size: 12px; font-weight: 700; color: var(--ink); margin-bottom: 4px; text-align: center; }
-.gti-sub { font-size: 11px; color: var(--ink-light); text-align: center; margin-bottom: 16px; }
-.gti-stages { width: 100%; }
-.gti-stage-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; font-size: 11px; }
-.gti-stage-name { color: var(--ink-light); width: 80px; }
-.gti-stage-bar { flex: 1; height: 8px; background: var(--border); border-radius: 4px; margin: 0 8px; overflow: hidden; }
-.gti-stage-fill { height: 100%; background: var(--green); border-radius: 2px; }
-.gti-stage-fill.amber { background: var(--amber); }
-.gti-stage-fill.red { background: var(--red); }
-.gti-stage-count { font-weight: 700; color: var(--ink); width: 24px; text-align: right; }
-
-/* TRACTION */
-#traction { background: white; border-top: 1px solid var(--border); }
-.traction-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 72px; margin-top: 64px; align-items: start; }
-.traction-numbers { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
-.t-card { background: white; border: 1px solid var(--border-dark); border-radius: 14px; padding: 28px 22px; box-shadow: 0 2px 10px rgba(18,39,26,0.04); transition: all 0.2s; }
-.t-card:hover { transform: translateY(-2px); box-shadow: 0 6px 24px rgba(18,39,26,0.08); }
-.t-num { font-size: 2.4rem; font-weight: 900; color: var(--green); line-height: 1; margin-bottom: 5px; }
-.t-desc { font-size: 0.82rem; color: var(--ink-light); line-height: 1.5; }
-.proof-list { display: flex; flex-direction: column; }
-.proof-item { display: flex; gap: 16px; padding: 20px 0; border-bottom: 1px solid rgba(18,39,26,0.07); align-items: flex-start; }
-.proof-item:last-child { border-bottom: none; }
-.proof-trophy { font-size: 1.5rem; flex-shrink: 0; line-height: 1; margin-top: 2px; }
-.proof-item h4 { font-size: 0.9rem; font-weight: 700; margin-bottom: 3px; color: var(--ink); }
-.proof-item p { font-size: 0.82rem; color: var(--ink-light); line-height: 1.6; }
 
 /* GTI */
 #gti { background: var(--bg2); border-top: 1px solid var(--border); }
@@ -417,6 +236,21 @@ section > * { max-width: 1200px; margin-left: auto; margin-right: auto; }
 .stage-badge { font-size: 0.65rem; font-weight: 700; padding: 3px 9px; border-radius: 4px; white-space: nowrap; }
 .badge-now { background: #fff3cd; color: #8a6000; border: 1px solid #f0d060; }
 .badge-target { background: transparent; color: #1a7a1a; border: 1px solid #1a7a1a; }
+
+/* TRACTION */
+#traction { background: white; border-top: 1px solid var(--border); }
+.traction-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 72px; margin-top: 64px; align-items: start; }
+.traction-numbers { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.t-card { background: white; border: 1px solid var(--border-dark); border-radius: 14px; padding: 28px 22px; box-shadow: 0 2px 10px rgba(18,39,26,0.04); transition: all 0.2s; }
+.t-card:hover { transform: translateY(-2px); box-shadow: 0 6px 24px rgba(18,39,26,0.08); }
+.t-num { font-size: 2.4rem; font-weight: 900; color: var(--green); line-height: 1; margin-bottom: 5px; }
+.t-desc { font-size: 0.82rem; color: var(--ink-light); line-height: 1.5; }
+.proof-list { display: flex; flex-direction: column; }
+.proof-item { display: flex; gap: 16px; padding: 20px 0; border-bottom: 1px solid rgba(18,39,26,0.07); align-items: flex-start; }
+.proof-item:last-child { border-bottom: none; }
+.proof-trophy { font-size: 1.5rem; flex-shrink: 0; line-height: 1; margin-top: 2px; }
+.proof-item h4 { font-size: 0.9rem; font-weight: 700; margin-bottom: 3px; color: var(--ink); }
+.proof-item p { font-size: 0.82rem; color: var(--ink-light); line-height: 1.6; }
 
 /* MARKETS */
 #markets { background: white; border-top: 1px solid var(--border); }
@@ -506,7 +340,6 @@ footer { background: var(--ink); border-top: 1px solid rgba(255,255,255,0.06); p
   .hw-step:nth-child(3) { border-right: none; }
   .hw-step:nth-child(4), .hw-step:nth-child(5) { border-top: 1px solid rgba(18,39,26,0.07); }
   .hw-step:nth-child(5) { border-right: none; }
-  .kpi-grid { grid-template-columns: repeat(2, 1fr); }
 }
 @media (max-width: 900px) {
   .nav-links { display: none; }
@@ -522,7 +355,7 @@ footer { background: var(--ink); border-top: 1px solid rgba(255,255,255,0.06); p
   .hero-video { display: block; width: 100%; aspect-ratio: 16/9; border-radius: 12px; flex: none; }
   .hero-proof { grid-template-columns: 1fr; gap: 8px; }
   .hero-actions { flex-direction: column; align-items: stretch; }
-  .btn-primary { text-align: center; }
+  .btn-primary, .btn-snapshot { text-align: center; }
   .btn-ghost { justify-content: center; }
   .who-grid { grid-template-columns: 1fr; gap: 12px; margin-top: 36px; }
   .how-steps-full { grid-template-columns: 1fr 1fr; }
@@ -531,7 +364,6 @@ footer { background: var(--ink); border-top: 1px solid rgba(255,255,255,0.06); p
   .hw-step:nth-child(3) { border-top: 1px solid rgba(18,39,26,0.07); border-right: 1px solid rgba(18,39,26,0.07); }
   .hw-step:nth-child(4) { border-top: 1px solid rgba(18,39,26,0.07); border-right: none; }
   .hw-step:nth-child(5) { grid-column: 1/-1; border-top: 1px solid rgba(18,39,26,0.07); border-right: none; }
-  .dash-grid { grid-template-columns: 1fr; }
   .traction-grid { grid-template-columns: 1fr; gap: 36px; margin-top: 40px; }
   .traction-numbers { grid-template-columns: 1fr 1fr; gap: 10px; }
   .gti-layout { grid-template-columns: 1fr; gap: 28px; margin-top: 40px; }
@@ -561,8 +393,6 @@ footer { background: var(--ink); border-top: 1px solid rgba(255,255,255,0.06); p
   .stage-badge { display: none; }
   .footer-grid { grid-template-columns: 1fr; gap: 24px; }
   .section-title { font-size: clamp(1.7rem, 7vw, 2.2rem); }
-  .kpi-grid { grid-template-columns: 1fr 1fr; }
-  .platform-embed-wrap iframe { height: 360px; }
 }
 </style>
 </head>
@@ -572,7 +402,33 @@ footer { background: var(--ink); border-top: 1px solid rgba(255,255,255,0.06); p
 <nav id="mainNav">
   <a href="/" class="nav-logo">Play for <em>Earth</em></a>
   <ul class="nav-links">
-    <li><a href="#who">Who It's For</a></li>
+    <li class="nav-has-dropdown">
+      <a href="#who">Who It&rsquo;s For</a>
+      <div class="nav-dropdown">
+        <a href="#who" class="nav-dropdown-item">
+          <span class="nav-dropdown-icon">👥</span>
+          <div>
+            <div class="nav-dropdown-label">Overview</div>
+            <div class="nav-dropdown-title">All audiences</div>
+          </div>
+        </a>
+        <div class="nav-dropdown-divider"></div>
+        <a href="/fmcg" class="nav-dropdown-item">
+          <span class="nav-dropdown-icon">🏭</span>
+          <div>
+            <div class="nav-dropdown-label">FMCG &amp; Retail</div>
+            <div class="nav-dropdown-title">Distribution &amp; EPR compliance</div>
+          </div>
+        </a>
+        <a href="/pharmacy" class="nav-dropdown-item">
+          <span class="nav-dropdown-icon">💊</span>
+          <div>
+            <div class="nav-dropdown-label">Pharmacy</div>
+            <div class="nav-dropdown-title">Pharma distribution &amp; compliance</div>
+          </div>
+        </a>
+      </div>
+    </li>
     <li><a href="#dashboard">What You Buy</a></li>
     <li><a href="#how">How It Works</a></li>
     <li><a href="#traction">Traction</a></li>
@@ -588,7 +444,11 @@ footer { background: var(--ink); border-top: 1px solid rgba(255,255,255,0.06); p
 
 <!-- MOBILE MENU -->
 <nav class="mobile-menu" id="mobileMenu">
-  <a href="#who" class="mobile-menu-link">Who It's For <span class="arrow">&rarr;</span></a>
+  <a href="#who" class="mobile-menu-link">Who It&rsquo;s For <span class="arrow">&rarr;</span></a>
+  <div class="mobile-menu-sub">
+    <a href="/fmcg" class="mobile-menu-sub-link">🏭 FMCG &amp; Retail distribution</a>
+    <a href="/pharmacy" class="mobile-menu-sub-link">💊 Pharmacy distribution</a>
+  </div>
   <a href="#how" class="mobile-menu-link">How It Works <span class="arrow">&rarr;</span></a>
   <a href="#traction" class="mobile-menu-link">Traction <span class="arrow">&rarr;</span></a>
   <a href="#gti" class="mobile-menu-link">GTI Framework <span class="arrow">&rarr;</span></a>
@@ -603,70 +463,39 @@ footer { background: var(--ink); border-top: 1px solid rgba(255,255,255,0.06); p
   <div class="hero-grid"></div>
   <div class="hero-inner">
     <div class="hero-content">
-
-
-
-  <!-- EYEBROW -->
-  <div class="hero-eyebrow">
-    Field execution. Measured. Verified.
-  </div>
-
-  <!-- HEADLINE -->
-  <h1>
-    You already pay for every field visit.<br>
-    <em>We make each one count.</em>
-  </h1>
-
-  <!-- SUB -->
-  <p class="hero-sub">
-    Play for Earth turns routine sales visits into real-time territory data, rep performance signals, and verified EPR proof. No new headcount. No new infrastructure.
-  </p>
-
+      <div class="hero-eyebrow">Field execution. Measured. Verified.</div>
+      <h1>You already pay for every field visit.<br><em>We make each one count.</em></h1>
+      <p class="hero-sub">Play for Earth turns routine sales visits into real-time territory data, rep performance signals, and verified EPR proof. No new headcount. No new infrastructure.</p>
       <div class="hero-chip-label">Not another ESG tool</div>
-      
-        <!-- POSITIONING CHIPS -->
-  <div class="hero-chips">
-<span class="hero-chip hero-chip-active">Verified field execution layer</span>
-<span class="hero-chip hero-chip-muted">Reporting tool</span>
-<span class="hero-chip hero-chip-muted">Plastic credit</span>
-<span class="hero-chip hero-chip-muted">Waste collector</span>
-  </div>
-      
-  <!-- CTA -->
-  <div class="hero-actions">
-    <a href="/contact" class="btn-primary btn-large">Start a Pilot</a>
-    <a href="/esg-impact-snapshot" class="btn-snapshot">Get free ESG Snapshot</a>
-    <a href="#how" class="btn-ghost">See how it works &rarr;</a>
-  </div>
-
-  <!-- PROOF CARDS -->
-  <div class="hero-proof">
-    <div class="proof-card">
-      <div class="proof-card-label">&#10003; No new headcount</div>
-      <div class="proof-card-title">Runs on existing field teams</div>
-      <div class="proof-card-desc">
-        Works through your sales reps and distributor visit cycles
+      <div class="hero-chips">
+        <span class="hero-chip hero-chip-active">Verified field execution layer</span>
+        <span class="hero-chip hero-chip-muted">Reporting tool</span>
+        <span class="hero-chip hero-chip-muted">Plastic credit</span>
+        <span class="hero-chip hero-chip-muted">Waste collector</span>
+      </div>
+      <div class="hero-actions">
+        <a href="/contact" class="btn-primary btn-large">Start a Pilot</a>
+        <a href="/esg-impact-snapshot" class="btn-snapshot">Get free ESG Snapshot</a>
+        <a href="#how" class="btn-ghost">See how it works &rarr;</a>
+      </div>
+      <div class="hero-proof">
+        <div class="proof-card">
+          <div class="proof-card-label">&#10003; No new headcount</div>
+          <div class="proof-card-title">Runs on existing field teams</div>
+          <div class="proof-card-desc">Works through your sales reps and distributor visit cycles</div>
+        </div>
+        <div class="proof-card">
+          <div class="proof-card-label">&#10003; Verified execution</div>
+          <div class="proof-card-title">Photo + GPS field actions</div>
+          <div class="proof-card-desc">Every visit becomes a timestamped, geo-tagged data point</div>
+        </div>
+        <div class="proof-card">
+          <div class="proof-card-label">&#10003; Performance layer</div>
+          <div class="proof-card-title">Track what actually happens</div>
+          <div class="proof-card-desc">See rep consistency, outlet activity, and territory gaps in real time</div>
+        </div>
       </div>
     </div>
-
-    <div class="proof-card">
-      <div class="proof-card-label">&#10003; Verified execution</div>
-      <div class="proof-card-title">Photo + GPS field actions</div>
-      <div class="proof-card-desc">
-        Every visit becomes a timestamped, geo-tagged data point
-      </div>
-    </div>
-
-    <div class="proof-card">
-      <div class="proof-card-label">&#10003; Performance layer</div>
-      <div class="proof-card-title">Track what actually happens</div>
-      <div class="proof-card-desc">
-        See rep consistency, outlet activity, and territory gaps in real time
-      </div>
-    </div>
-  </div>
-
-</div>
     <div class="hero-video">
       <video src="/hero-video.mp4" autoplay muted loop playsinline poster="">
         <source src="/hero-video.mp4" type="video/mp4">
@@ -686,6 +515,54 @@ footer { background: var(--ink); border-top: 1px solid rgba(255,255,255,0.06); p
   </div>
 </div>
 
+<!-- WHO IT'S FOR -->
+<section id="who">
+  <div class="section-eyebrow">Who It&rsquo;s For</div>
+  <h2 class="section-title">Built for the teams who <em>actually need EPR proof.</em></h2>
+  <p class="section-sub">Play for Earth serves FMCG companies, bottlers, and distributors who need verified EPR compliance and Scope 3 emissions data from the field.</p>
+  <div class="who-grid">
+    <div class="who-card">
+      <span class="who-icon">🏭</span>
+      <div class="who-role">FMCG Brands &amp; Bottlers</div>
+      <h3>EPR compliance without new infrastructure</h3>
+      <p>You have field teams visiting thousands of outlets. Play for Earth turns those visits into verified compliance records.</p>
+      <ul>
+        <li><span class="li-icon">✓</span>Verified packaging recovery data</li>
+        <li><span class="li-icon">✓</span>Scope 3 Category 11 &amp; 12 evidence</li>
+        <li><span class="li-icon">✓</span>NEMA / KEPRO reporting inputs</li>
+        <li><span class="li-icon">✓</span>Distributor coverage visibility</li>
+      </ul>
+      <a href="/fmcg" class="who-card-link">FMCG field execution details</a>
+    </div>
+    <div class="who-card">
+      <span class="who-icon">🚚</span>
+      <div class="who-role">Distributors</div>
+      <h3>New revenue from existing routes</h3>
+      <p>Your reps already visit every outlet. Now each visit generates verified data that FMCG brands pay for. No new headcount.</p>
+      <ul>
+        <li><span class="li-icon">✓</span>Earn per verified action</li>
+        <li><span class="li-icon">✓</span>Gamified engagement for reps</li>
+        <li><span class="li-icon">✓</span>Coverage quality dashboard</li>
+        <li><span class="li-icon">✓</span>Zero disruption to core operations</li>
+      </ul>
+      <a href="/fmcg" class="who-card-link">FMCG field execution details</a>
+    </div>
+    <div class="who-card">
+      <span class="who-icon">💊</span>
+      <div class="who-role">Pharmacy Distribution</div>
+      <h3>Field execution you can verify</h3>
+      <p>Running pharma distribution? Play for Earth turns every pharmacy rep visit into verified compliance records and packaging recovery data.</p>
+      <ul>
+        <li><span class="li-icon">✓</span>Verified product availability data</li>
+        <li><span class="li-icon">✓</span>Protocol compliance evidence</li>
+        <li><span class="li-icon">✓</span>Device &amp; packaging recovery (EPR)</li>
+        <li><span class="li-icon">✓</span>Territory-level GTI reporting</li>
+      </ul>
+      <a href="/pharmacy" class="who-card-link">Pharmacy distribution details</a>
+    </div>
+  </div>
+</section>
+
 <!-- DASHBOARD -->
 <section id="dashboard">
   <div style="max-width:1200px;margin:0 auto;">
@@ -693,8 +570,6 @@ footer { background: var(--ink); border-top: 1px solid rgba(255,255,255,0.06); p
     <h2 class="section-title">Your territory. <em>Live.</em></h2>
     <p class="section-sub" style="margin-bottom:40px;">Every sales rep visit generates a verified compliance event. You see which retailers are active, which zones are underperforming, and where behavior is becoming habit.</p>
   </div>
-
-  <!-- ── LIVE PLATFORM EMBED ── -->
   <div class="platform-embed-wrap">
     <div class="platform-embed-bar">
       <div class="embed-dot" style="background:#ff5f57"></div>
@@ -703,19 +578,12 @@ footer { background: var(--ink); border-top: 1px solid rgba(255,255,255,0.06); p
       <span class="embed-label">playforearth.org / platform</span>
       <div class="embed-live"><div class="embed-pulse"></div>Live</div>
     </div>
-    <iframe
-      src="/demo"
-      title="Play for Earth territory dashboard"
-      scrolling="no"
-      loading="lazy"
-      allow="geolocation"
-    ></iframe>
+    <iframe src="/demo" title="Play for Earth territory dashboard" scrolling="no" loading="lazy" allow="geolocation"></iframe>
     <div class="platform-embed-cta">
       <p><strong>Interactive demo.</strong> Click the tabs to explore territory data, zone map, performance leaderboards, and live field feed.</p>
       <a href="/demo" class="btn-embed-full" target="_blank">Open full platform &rarr;</a>
     </div>
   </div>
-
 </section>
 
 <!-- GTI -->
@@ -738,46 +606,11 @@ footer { background: var(--ink); border-top: 1px solid rgba(255,255,255,0.06); p
     <div>
       <div style="font-size:0.72rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:#1a5c1a;margin-bottom:18px;">Transformation Stages</div>
       <div class="gti-stages-list">
-        <div class="gti-stage">
-          <div class="stage-num">0</div>
-          <div>
-            <div class="stage-name">Inactive</div>
-            <div class="stage-desc">No circular actions logged. Reps visit outlets but nothing is verified or recorded. The program exists on paper only.</div>
-          </div>
-          <div></div>
-        </div>
-        <div class="gti-stage">
-          <div class="stage-num">1</div>
-          <div>
-            <div class="stage-name">Declared</div>
-            <div class="stage-desc">The brand has committed to a recovery program. Collection points are being set up. But field actions are still inconsistent &mdash; compliance happens only when someone is watching.</div>
-          </div>
-          <div></div>
-        </div>
-        <div class="gti-stage">
-          <div class="stage-num now">2</div>
-          <div>
-            <div class="stage-name">Reinforced</div>
-            <div class="stage-desc">Reps are logging verified actions regularly. Incentive loops are working. Behavior is consistent across most of the territory &mdash; but still driven by points and reminders, not habit.</div>
-          </div>
-          <span class="stage-badge badge-now">Current proof</span>
-        </div>
-        <div class="gti-stage">
-          <div class="stage-num target">3</div>
-          <div>
-            <div class="stage-name">Embedded</div>
-            <div class="stage-desc">Circular actions happen as part of the normal route &mdash; without prompting. Reps do it automatically. Retailers expect it. The behavior survives even when incentives are paused.</div>
-          </div>
-          <span class="stage-badge badge-target">Roadmap</span>
-        </div>
-        <div class="gti-stage">
-          <div class="stage-num">4</div>
-          <div>
-            <div class="stage-name">Internalized</div>
-            <div class="stage-desc">Circular behavior is self-sustaining. Reps onboard new colleagues into the habit. Retailers ask why the basket isn&rsquo;t there if a visit is missed. The system runs itself.</div>
-          </div>
-          <div></div>
-        </div>
+        <div class="gti-stage"><div class="stage-num">0</div><div><div class="stage-name">Inactive</div><div class="stage-desc">No circular actions logged. Reps visit outlets but nothing is verified or recorded. The program exists on paper only.</div></div><div></div></div>
+        <div class="gti-stage"><div class="stage-num">1</div><div><div class="stage-name">Declared</div><div class="stage-desc">The brand has committed to a recovery program. Collection points are being set up. But field actions are still inconsistent &mdash; compliance happens only when someone is watching.</div></div><div></div></div>
+        <div class="gti-stage"><div class="stage-num now">2</div><div><div class="stage-name">Reinforced</div><div class="stage-desc">Reps are logging verified actions regularly. Incentive loops are working. Behavior is consistent across most of the territory &mdash; but still driven by points and reminders, not habit.</div></div><span class="stage-badge badge-now">Current proof</span></div>
+        <div class="gti-stage"><div class="stage-num target">3</div><div><div class="stage-name">Embedded</div><div class="stage-desc">Circular actions happen as part of the normal route &mdash; without prompting. Reps do it automatically. Retailers expect it. The behavior survives even when incentives are paused.</div></div><span class="stage-badge badge-target">Roadmap</span></div>
+        <div class="gti-stage"><div class="stage-num">4</div><div><div class="stage-name">Internalized</div><div class="stage-desc">Circular behavior is self-sustaining. Reps onboard new colleagues into the habit. Retailers ask why the basket isn&rsquo;t there if a visit is missed. The system runs itself.</div></div><div></div></div>
       </div>
       <div style="margin-top:28px;padding:20px 24px;background:var(--green-pale);border:1px solid rgba(26,140,63,0.2);border-radius:10px;">
         <div style="font-size:0.7rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--green);margin-bottom:8px;">In plain English</div>
@@ -793,26 +626,11 @@ footer { background: var(--ink); border-top: 1px solid rgba(255,255,255,0.06); p
   <h2 class="section-title">Three minutes per visit.<br><em>Fully auditable data.</em></h2>
   <p class="section-sub">No new infrastructure. No new staff. Play for Earth layers onto your existing field operation and makes every visit count.</p>
   <div class="how-steps-full">
-    <div class="hw-step">
-      <div class="hw-step-header"><div class="hw-num">01</div><h4>GPS Check-in</h4></div>
-      <p>Rep arrives at the outlet. Location confirmed automatically. No manual entry, no ghost visits.</p>
-    </div>
-    <div class="hw-step">
-      <div class="hw-step-header"><div class="hw-num">02</div><h4>Photo Verification</h4></div>
-      <p>Rep photographs the collection point. Basket in place, fill level, poster visible. Thirty seconds. Timestamped and geo-tagged.</p>
-    </div>
-    <div class="hw-step">
-      <div class="hw-step-header"><div class="hw-num">03</div><h4>Points &amp; Rewards</h4></div>
-      <p>Action verified instantly. Rep earns points. Streaks multiply them. Hit a milestone, the Lucky Spin triggers.</p>
-    </div>
-    <div class="hw-step">
-      <div class="hw-step-header"><div class="hw-num">04</div><h4>Live Dashboard</h4></div>
-      <p>Recovery rate, territory coverage, GTI score, and Scope 3 data &mdash; updated in real time. EPR export in one click.</p>
-    </div>
-    <div class="hw-step">
-      <div class="hw-step-header"><div class="hw-num">05</div><h4>Habit Loop</h4></div>
-      <p>Challenge missions, leaderboards, and streak mechanics turn one-off visits into a verified monthly routine.</p>
-    </div>
+    <div class="hw-step"><div class="hw-step-header"><div class="hw-num">01</div><h4>GPS Check-in</h4></div><p>Rep arrives at the outlet. Location confirmed automatically. No manual entry, no ghost visits.</p></div>
+    <div class="hw-step"><div class="hw-step-header"><div class="hw-num">02</div><h4>Photo Verification</h4></div><p>Rep photographs the collection point. Basket in place, fill level, poster visible. Thirty seconds. Timestamped and geo-tagged.</p></div>
+    <div class="hw-step"><div class="hw-step-header"><div class="hw-num">03</div><h4>Points &amp; Rewards</h4></div><p>Action verified instantly. Rep earns points. Streaks multiply them. Hit a milestone, the Lucky Spin triggers.</p></div>
+    <div class="hw-step"><div class="hw-step-header"><div class="hw-num">04</div><h4>Live Dashboard</h4></div><p>Recovery rate, territory coverage, GTI score, and Scope 3 data &mdash; updated in real time. EPR export in one click.</p></div>
+    <div class="hw-step"><div class="hw-step-header"><div class="hw-num">05</div><h4>Habit Loop</h4></div><p>Challenge missions, leaderboards, and streak mechanics turn one-off visits into a verified monthly routine.</p></div>
   </div>
 </section>
 
@@ -854,15 +672,10 @@ footer { background: var(--ink); border-top: 1px solid rgba(255,255,255,0.06); p
   <h2 class="section-title">Priced by territory.<br><em>Not by headcount.</em></h2>
   <p class="section-sub">Whether your network has 50 reps or 5,000, pricing stays predictable. One flat fee covers the entire territory &mdash; all reps, all outlets, all reporting.</p>
   <div class="pricing-grid">
-
-    <!-- TIER 1: PILOT -->
     <div class="price-card">
       <div class="price-tier">Entry</div>
       <div class="price-name">Territory Pilot</div>
-      <div class="price-amount">
-        <span style="font-size:1rem;vertical-align:top;margin-top:6px;display:inline-block;color:var(--ink-light);">$</span><span class="price-main">15K</span>
-        <span class="price-period">flat &mdash; 90 days</span>
-      </div>
+      <div class="price-amount"><span style="font-size:1rem;vertical-align:top;margin-top:6px;display:inline-block;color:var(--ink-light);">$</span><span class="price-main">15K</span><span class="price-period">flat &mdash; 90 days</span></div>
       <p class="price-desc">One defined zone. Up to 300 enrolled retail points. Full verification from day one. Setup included.</p>
       <ul class="price-features">
         <li>Up to 300 retail points enrolled</li>
@@ -873,21 +686,13 @@ footer { background: var(--ink); border-top: 1px solid rgba(255,255,255,0.06); p
         <li>GTI baseline report</li>
         <li>Setup fee included</li>
       </ul>
-      <div class="price-setup" style="border-color:rgba(26,140,63,0.2);color:var(--green);font-weight:700;">
-        All-in. No hidden fees.
-        <em style="color:var(--ink-light);font-weight:500;">Setup fee waived on conversion to annual plan.</em>
-      </div>
+      <div class="price-setup" style="border-color:rgba(26,140,63,0.2);color:var(--green);font-weight:700;">All-in. No hidden fees.<em style="color:var(--ink-light);font-weight:500;">Setup fee waived on conversion to annual plan.</em></div>
     </div>
-
-    <!-- TIER 2: FULL TERRITORY -->
     <div class="price-card featured">
       <div class="featured-badge">Most Popular</div>
       <div class="price-tier">Standard</div>
       <div class="price-name">Full Territory</div>
-      <div class="price-amount">
-        <span style="font-size:1rem;vertical-align:top;margin-top:6px;display:inline-block;color:rgba(255,255,255,0.45);">$</span><span class="price-main">3.5K</span>
-        <span class="price-period">/ mo &mdash; billed annually ($42K/yr)</span>
-      </div>
+      <div class="price-amount"><span style="font-size:1rem;vertical-align:top;margin-top:6px;display:inline-block;color:rgba(255,255,255,0.45);">$</span><span class="price-main">3.5K</span><span class="price-period">/ mo &mdash; billed annually ($42K/yr)</span></div>
       <p class="price-desc">Complete territory coverage. Unlimited retail points, full distributor network, full compliance package.</p>
       <ul class="price-features">
         <li>Unlimited retail points in territory</li>
@@ -898,20 +703,12 @@ footer { background: var(--ink); border-top: 1px solid rgba(255,255,255,0.06); p
         <li>GTI tracking &amp; benchmarking</li>
         <li>Category recovery benchmark</li>
       </ul>
-      <div class="price-setup" style="color:rgba(255,255,255,0.5);border-color:rgba(255,255,255,0.1);">
-        One-time territory setup: $20K
-        <em style="color:rgba(255,255,255,0.35);">Waived when converting from Territory Pilot.</em>
-      </div>
+      <div class="price-setup" style="color:rgba(255,255,255,0.5);border-color:rgba(255,255,255,0.1);">One-time territory setup: $20K<em style="color:rgba(255,255,255,0.35);">Waived when converting from Territory Pilot.</em></div>
     </div>
-
-    <!-- TIER 3: TERRITORY + DATA -->
     <div class="price-card">
       <div class="price-tier">Intelligence</div>
       <div class="price-name">Territory + Data</div>
-      <div class="price-amount">
-        <span style="font-size:1rem;vertical-align:top;margin-top:6px;display:inline-block;color:var(--ink-light);">$</span><span class="price-main">4.5K</span>
-        <span class="price-period">/ mo &mdash; billed annually ($54K/yr)</span>
-      </div>
+      <div class="price-amount"><span style="font-size:1rem;vertical-align:top;margin-top:6px;display:inline-block;color:var(--ink-light);">$</span><span class="price-main">4.5K</span><span class="price-period">/ mo &mdash; billed annually ($54K/yr)</span></div>
       <p class="price-desc">Full territory coverage plus category benchmark intelligence. Know where you stand, month by month.</p>
       <ul class="price-features">
         <li>Everything in Full Territory</li>
@@ -924,7 +721,6 @@ footer { background: var(--ink); border-top: 1px solid rgba(255,255,255,0.06); p
       </ul>
       <div class="price-setup">One-time territory setup: $20K</div>
     </div>
-
   </div>
 </section>
 
@@ -944,7 +740,7 @@ footer { background: var(--ink); border-top: 1px solid rgba(255,255,255,0.06); p
   <h2 class="section-title">Your field teams are ready.<br><em>The data just isn&rsquo;t captured yet.</em></h2>
   <p class="section-sub">90-day pilot. One territory. The first verified circular dataset your brand has ever had.</p>
   <div class="cta-buttons">
-    <a href="/cdn-cgi/l/email-protection#0169646d6d6e41716d6078676e7364607375692f6e7366" class="btn-primary btn-large">Request a Pilot</a>
+    <a href="mailto:hello@playforearth.org" class="btn-primary btn-large">Request a Pilot</a>
     <a href="https://www.linkedin.com/company/playforearth" target="_blank" class="btn-outline">Connect on LinkedIn</a>
   </div>
 </section>
@@ -958,7 +754,7 @@ footer { background: var(--ink); border-top: 1px solid rgba(255,255,255,0.06); p
       <div class="footer-social">
         <a href="https://www.linkedin.com/company/playforearth" target="_blank" class="social-btn">in</a>
         <a href="https://www.facebook.com/people/Play-For-Earth/61561487265408/" target="_blank" class="social-btn">f</a>
-        <a href="/cdn-cgi/l/email-protection#29414c45454669594548504f465b4c485b5d4107465b4e" class="social-btn">&#9993;</a>
+        <a href="mailto:hello@playforearth.org" class="social-btn">&#9993;</a>
       </div>
     </div>
     <div class="footer-col">
@@ -1001,13 +797,11 @@ footer { background: var(--ink); border-top: 1px solid rgba(255,255,255,0.06); p
   </div>
 </footer>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
 <script>
 window.addEventListener('scroll', () => {
   document.getElementById('mainNav').style.background =
     window.scrollY > 60 ? 'rgba(240,250,242,0.98)' : 'rgba(240,250,242,0.94)';
 });
-
 document.querySelectorAll('video').forEach(v => {
   v.play().catch(() => {
     const wrap = document.querySelector('.hero-video');
@@ -1019,7 +813,6 @@ document.querySelectorAll('video').forEach(v => {
     overlay.addEventListener('click', () => { v.play(); overlay.remove(); }, { once: true });
   });
 });
-
 const hamburger = document.getElementById('hamburger');
 const mobileMenu = document.getElementById('mobileMenu');
 hamburger.addEventListener('click', () => {
@@ -1034,8 +827,6 @@ mobileMenu.querySelectorAll('a').forEach(a => {
     document.body.style.overflow = '';
   });
 });
-
-// Auto-size iframe to its content height once loaded
 const dashIframe = document.querySelector('.platform-embed-wrap iframe');
 if (dashIframe) {
   dashIframe.addEventListener('load', () => {
