@@ -172,6 +172,24 @@ section > * { max-width: 1200px; margin-left: auto; margin-right: auto; }
   color: rgba(18,39,26,0.4);
   margin-bottom: 6px;
 }
+  .hero-chip-muted {
+  position: relative;
+  opacity: 0.5;
+    margin-left: 4px;
+}
+
+/* strike line */
+.hero-chip-muted::after {
+  content: "";
+  position: absolute;
+  left: 10%;
+  right: 10%;
+  top: 50%;
+  height: 1.5px;
+  background: rgba(18,39,26,0.35);
+  transform: rotate(-8deg);
+  
+}
   
 /* ESG SNAPSHOT BUTTON */
 .btn-snapshot {
@@ -195,6 +213,7 @@ section > * { max-width: 1200px; margin-left: auto; margin-right: auto; }
 @media (max-width: 900px) {
   .btn-snapshot { text-align: center; }
   .hero-chips { gap: 6px; }
+  
 }
   
 /* HOW */
@@ -605,10 +624,10 @@ footer { background: var(--ink); border-top: 1px solid rgba(255,255,255,0.06); p
       
         <!-- POSITIONING CHIPS -->
   <div class="hero-chips">
-    <span class="hero-chip hero-chip-active">Verified field execution layer</span>
-    <span class="hero-chip">Reporting tool</span>
-    <span class="hero-chip">Plastic credit</span>
-    <span class="hero-chip">Waste collector</span>
+<span class="hero-chip hero-chip-active">Verified field execution layer</span>
+<span class="hero-chip hero-chip-muted">Reporting tool</span>
+<span class="hero-chip hero-chip-muted">Plastic credit</span>
+<span class="hero-chip hero-chip-muted">Waste collector</span>
   </div>
       
   <!-- CTA -->
