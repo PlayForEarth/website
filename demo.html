@@ -3,548 +3,1211 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Play for Earth &mdash; Territory Dashboard</title>
+<title>Play for Earth — Territory Dashboard</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Syne:wght@400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Familjen+Grotesk:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Playfair+Display:wght@700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-*{box-sizing:border-box;margin:0;padding:0}
-:root{
-  --g:#1a7a3a;--gl:#e8f5ed;--gm:#4caf72;--gd:#0d4f24;
-  --am:#e8a730;--al:#fff7e0;--ad:#8a6500;
-  --or:#d9451a;--ol:#fff0e8;--od:#8a3a00;
-  --bl:#5b9cf0;
-  --tx:#111;--tm:#555;--bd:#e0e0e0;--bg:#fafaf8;--cd:#fff;
+:root {
+  --g:#1a8c3f;--gd:#0d4f24;--gm:#2db55d;--gl:#e6f5ec;--gb:rgba(26,140,63,.18);
+  --am:#d4920e;--al:#fff8e6;--ab:rgba(212,146,14,.2);
+  --or:#c93c1a;--ol:#fff0eb;--ob:rgba(201,60,26,.2);
+  --bl:#1a5fa0;--bll:#e8f1fb;--blb:rgba(26,95,160,.18);
+  --te:#0a7a6a;--tel:#e0f5f2;--teb:rgba(10,122,106,.18);
+  --pu:#6d28d9;--pul:#ede9fe;--pub:rgba(109,40,217,.18);
+  --ink:#0f1c14;--muted:#5a7060;--bg:#f4f7f5;--card:#fff;--bd:rgba(0,0,0,.07);
+  --radius:12px;--radius-lg:16px;
+  --font:'Familjen Grotesk',sans-serif;--mono:'DM Mono',monospace;--serif:'Playfair Display',serif;
 }
-body{font-family:'Syne',sans-serif;background:var(--bg);color:var(--tx);min-height:100vh}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;background:var(--bg);font-family:var(--font);color:var(--ink);font-size:13px}
+.shell{display:flex;flex-direction:column;min-height:100vh}
 
-/* ── Layout ── */
-.topbar{background:var(--cd);border-bottom:.5px solid var(--bd);padding:0 2rem;display:flex;align-items:center;justify-content:space-between;height:52px}
-.logo{font-size:15px;font-weight:700;letter-spacing:-.3px;color:var(--g)}
-.logo span{color:var(--tx)}
-.lbadge{display:flex;align-items:center;gap:6px;font-size:12px;font-family:'DM Mono',monospace;color:var(--gd)}
+/* TOPBAR */
+.topbar{display:flex;align-items:center;justify-content:space-between;padding:0 22px;background:var(--card);border-bottom:1px solid var(--bd);height:50px;flex-shrink:0}
+.logo{font-family:var(--font);font-size:15px;font-weight:700;color:var(--g);letter-spacing:-.3px}
+.logo span{color:var(--ink);font-weight:400}
+.topbar-meta{font-size:11px;font-family:var(--mono);color:var(--muted)}
+.live-badge{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--g);font-weight:600;font-family:var(--mono)}
 .pulse{width:7px;height:7px;border-radius:50%;background:var(--g);animation:pulse 1.8s infinite}
 @keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.7)}}
-.meta{font-size:12px;color:var(--tm);font-family:'DM Mono',monospace}
 
-.page{max-width:960px;margin:0 auto;padding:1.75rem 1.5rem 3rem}
+/* CONTEXT BAR */
+.ctxbar{background:var(--g);padding:7px 22px;display:flex;align-items:center;gap:14px;flex-wrap:wrap;flex-shrink:0}
+.ctx-item{font-size:10px;font-family:var(--mono);color:rgba(255,255,255,.75);display:flex;align-items:center;gap:4px}
+.ctx-item strong{color:#fff;font-weight:600}
+.ctx-sep{color:rgba(255,255,255,.3);font-size:14px}
 
-/* ── Header ── */
-.hrow{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:1.25rem;flex-wrap:wrap;gap:8px}
-.hl h1{font-size:22px;font-weight:700;letter-spacing:-.5px}
-.hl p{font-size:12px;color:var(--tm);margin-top:3px;font-family:'DM Mono',monospace}
+/* TABS */
+.tabbar{padding:0 22px;background:var(--card);border-bottom:1px solid var(--bd);display:flex;gap:4px;flex-shrink:0;overflow-x:auto}
+.tab{padding:12px 16px;font-size:11px;font-weight:600;color:var(--muted);cursor:pointer;border:none;background:none;border-bottom:2.5px solid transparent;transition:all .15s;font-family:var(--font);white-space:nowrap;letter-spacing:.01em}
+.tab:hover{color:var(--ink)}
+.tab.on{color:var(--g);border-bottom-color:var(--g)}
 
-/* ── KPI grid ── */
-.kgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:1.25rem}
-.kpi{background:var(--cd);border:.5px solid var(--bd);border-radius:12px;padding:14px 16px}
-.kpi.hi{background:var(--g);border-color:var(--gd)}
-.kl{font-size:10px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--tm);margin-bottom:6px;font-family:'DM Mono',monospace}
-.hi .kl{color:rgba(255,255,255,.65)}
-.kv{font-size:27px;font-weight:700;line-height:1;letter-spacing:-1px;color:var(--tx)}
-.hi .kv{color:#fff}
-.kd{font-size:11px;color:var(--g);margin-top:4px;font-family:'DM Mono',monospace}
-.hi .kd{color:rgba(255,255,255,.82)}
-.ks{font-size:10px;color:var(--tm);margin-top:2px;font-family:'DM Mono',monospace}
-.hi .ks{color:rgba(255,255,255,.55)}
+/* BODY */
+.body{flex:1;padding:18px 22px 40px;overflow-y:auto}
+.panel{display:none}.panel.on{display:block}
 
-/* ── Tabs ── */
-.tabrow{display:flex;gap:6px;margin-bottom:1.1rem;flex-wrap:wrap}
-.tab{font-size:12px;font-family:'DM Mono',monospace;padding:7px 14px;cursor:pointer;border:1.5px solid transparent;border-radius:20px;color:var(--tm);background:none;transition:all .18s;font-weight:500;display:flex;align-items:center;gap:6px}
-.tab:hover:not(.active){background:#f0f0ec;color:var(--tx)}
-.tab-territory{border-color:#d0e8d8;color:#1a7a3a}
-.tab-territory:hover:not(.active){background:#e8f5ed}
-.tab-territory.active{background:#1a7a3a;border-color:#1a7a3a;color:#fff}
-.tab-map{border-color:#b8d4f0;color:#1a5fa0}
-.tab-map:hover:not(.active){background:#e8f0fb}
-.tab-map.active{background:#1a5fa0;border-color:#1a5fa0;color:#fff}
-.tab-leaderboard{border-color:#f0d8a0;color:#8a6000}
-.tab-leaderboard:hover:not(.active){background:#fff8e0}
-.tab-leaderboard.active{background:#c07820;border-color:#c07820;color:#fff}
-.tab-feed{border-color:#f0c0b0;color:#a03010}
-.tab-feed:hover:not(.active){background:#fff0ea}
-.tab-feed.active{background:#c04020;border-color:#c04020;color:#fff}
-.section{display:none}.section.show{display:block}
+/* GRIDS */
+.g2{display:grid;grid-template-columns:1.55fr 1fr;gap:12px;margin-bottom:12px}
+.g2e{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px}
+.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:12px}
+.g4{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:14px}
 
-/* ── Panel ── */
-.panel{background:var(--cd);border:.5px solid var(--bd);border-radius:12px;overflow:hidden;margin-bottom:10px}
-.pt{font-size:10px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--tm);font-family:'DM Mono',monospace;padding:14px 18px 12px;border-bottom:.5px solid var(--bd)}
-.g2{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px}
-.p2{background:var(--cd);border:.5px solid var(--bd);border-radius:12px;padding:16px 18px}
+/* KPI STRIP */
+.kpi{background:var(--card);border:1px solid var(--bd);border-radius:var(--radius-lg);padding:14px 15px;position:relative;transition:box-shadow .2s}
+.kpi:hover{box-shadow:0 4px 18px rgba(0,0,0,.07)}
+.kpi.hero{background:var(--g);border-color:var(--gd)}
+.kpi.warn{border-color:var(--or);border-width:1.5px}
+.kl{font-size:9px;text-transform:uppercase;letter-spacing:.09em;color:var(--muted);margin-bottom:6px;font-weight:700}
+.kpi.hero .kl{color:rgba(255,255,255,.65)}
+.kv{font-size:28px;font-weight:700;line-height:1;color:var(--ink);font-family:var(--mono)}
+.kpi.hero .kv{color:#fff}
+.kpi.warn .kv{color:var(--or)}
+.kd{font-size:10px;margin-top:5px;font-weight:600}
+.kd.up{color:var(--g)}.kd.dn{color:var(--or)}
+.kpi.hero .kd{color:rgba(255,255,255,.82)}
+.kt{height:3px;background:rgba(0,0,0,.07);border-radius:2px;margin-top:10px;overflow:hidden}
+.kpi.hero .kt{background:rgba(255,255,255,.2)}
+.kf{height:100%;border-radius:2px;background:var(--bl);transition:width 1s cubic-bezier(.4,0,.2,1)}
+.kpi.hero .kf{background:rgba(255,255,255,.85)}
+.kpi-icon{font-size:15px;position:absolute;top:12px;right:12px;opacity:.2}
 
-/* ── Zone bars ── */
+/* CARDS */
+.card{background:var(--card);border:1px solid var(--bd);border-radius:var(--radius-lg);overflow:hidden;margin-bottom:12px;transition:box-shadow .2s}
+.card:last-child{margin-bottom:0}
+.card:hover{box-shadow:0 4px 20px rgba(0,0,0,.06)}
+.ch{display:flex;align-items:center;justify-content:space-between;padding:11px 16px;border-bottom:1px solid var(--bd)}
+.ct{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.09em;color:var(--muted)}
+.cb{padding:14px 16px}
+.badge{font-size:10px;padding:2px 9px;border-radius:10px;font-weight:600}
+.bg{background:var(--gl);color:var(--gd)}
+.bb{background:var(--bll);color:var(--bl)}
+.bt{background:var(--tel);color:var(--te)}
+.ba{background:var(--al);color:var(--am)}
+.br{background:var(--ol);color:var(--or)}
+.bp{background:var(--pul);color:var(--pu)}
+
+/* BARS */
+.bar-row{display:flex;align-items:center;gap:8px;margin-bottom:9px}
+.bar-lbl{font-size:11px;color:var(--muted);flex-shrink:0;line-height:1.3}
+.bar-track{flex:1;height:8px;background:var(--bg);border-radius:4px;overflow:hidden}
+.bar-fill{height:100%;border-radius:4px;transition:width 1.2s cubic-bezier(.4,0,.2,1)}
+.bar-pct{font-size:11px;font-weight:700;color:var(--ink);width:30px;text-align:right;flex-shrink:0;font-family:var(--mono)}
+.bar-d{font-size:9px;font-weight:700;width:30px;text-align:right;flex-shrink:0}
+
+/* ZONE BARS */
 .zrow{margin-bottom:11px}
 .zrow:last-child{margin-bottom:0}
-.zmeta{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:5px}
-.zn{font-size:13px;font-weight:500}
-.zr{display:flex;align-items:center;gap:7px}
-.ztag{font-size:10px;font-family:'DM Mono',monospace;border-radius:4px;padding:1px 6px}
-.zp{font-size:13px;font-weight:700;font-family:'DM Mono',monospace}
-.bt{background:#f0f0ec;border-radius:4px;height:5px;overflow:hidden}
-.bf{height:100%;border-radius:4px;transition:width 1.2s cubic-bezier(.4,0,.2,1)}
+.zmeta{display:flex;justify-content:space-between;align-items:center;margin-bottom:5px}
+.zn{font-size:12px;font-weight:600}
+.zr{display:flex;align-items:center;gap:6px}
+.ztag{font-size:9px;font-family:var(--mono);border-radius:4px;padding:1px 6px;font-weight:600}
+.zp{font-size:13px;font-weight:700;font-family:var(--mono)}
+.bt-track{background:rgba(0,0,0,.07);border-radius:4px;height:5px;overflow:hidden}
+.bt-fill{height:100%;border-radius:4px;transition:width 1.2s cubic-bezier(.4,0,.2,1)}
 
-/* ── GTI ring ── */
-.gti-ring{position:relative;width:90px;height:90px;flex-shrink:0}
+/* GTI RING */
+.gti-ring{position:relative;width:92px;height:92px;flex-shrink:0}
 .gti-ring svg{transform:rotate(-90deg)}
 .gti-center{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);text-align:center}
 
-/* ── Map ── */
-.map-tooltip{margin-top:10px;padding:10px 14px;background:#f4f7f4;border-radius:8px;border:.5px solid var(--bd);display:none}
-
-/* ── Leaderboard ── */
-@keyframes slideIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
-.lrow{display:grid;gap:10px;align-items:center;padding:11px 18px;border-bottom:.5px solid var(--bd);animation:slideIn .4s ease both}
-.lrow:last-child{border-bottom:none}
-.lrow.top1{background:#fffcf0}
-.lrow.top2{background:#fafafa}
-.lrow.top3{background:#f6faf6}
-.drow{display:grid;gap:10px;align-items:center;padding:12px 18px;border-bottom:.5px solid var(--bd);animation:slideIn .4s ease both}
-.drow:last-child{border-bottom:none}
-.drow.top1{background:#fffcf0}
-.drow.top2{background:#fafafa}
-.drow.top3{background:#f6faf6}
-.col-head{display:grid;gap:10px;padding:9px 18px;border-bottom:.5px solid var(--bd)}
-.ch{font-size:10px;font-family:'DM Mono',monospace;text-transform:uppercase;letter-spacing:.07em;color:var(--tm)}
-.rav{width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0}
-.streak-dots{display:flex;gap:2px;justify-content:flex-end}
-.dot{width:6px;height:6px;border-radius:50%}
-
-/* ── Summary strip ── */
-.summary{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--bd);border-top:.5px solid var(--bd)}
-.scard{background:var(--cd);padding:13px 18px}
-.sl{font-size:10px;font-family:'DM Mono',monospace;text-transform:uppercase;letter-spacing:.07em;color:var(--tm);margin-bottom:5px}
-.sv{font-size:21px;font-weight:700;letter-spacing:-1px}
-.sd{font-size:11px;font-family:'DM Mono',monospace;margin-top:3px}
-
-/* ── Feed ── */
-.fi{display:flex;align-items:flex-start;gap:10px;padding:8px 0;border-bottom:.5px solid var(--bd)}
-.fi:last-child{border-bottom:none}
-.fd{width:7px;height:7px;border-radius:50%;background:var(--g);flex-shrink:0;margin-top:4px}
-.ft{font-size:12px;line-height:1.5}
-.ft span{color:var(--tm);font-family:'DM Mono',monospace;font-size:10px;display:block;margin-top:1px}
-
-/* ── Stage bars (GTI panel) ── */
-.sbar-row{display:flex;align-items:center;gap:7px;margin-bottom:5px}
+/* STAGE BARS */
+.sbar-row{display:flex;align-items:center;gap:7px;margin-bottom:6px}
 .sbar-row:last-child{margin-bottom:0}
 
-@media(max-width:640px){
-  .kgrid{grid-template-columns:repeat(2,1fr)}
-  .g2{grid-template-columns:1fr}
-  .topbar{padding:0 1rem}
-  .page{padding:1.25rem 1rem 3rem}
-  .lb-grid{grid-template-columns:1fr !important}
+/* RINGS */
+.ring{position:relative;width:88px;height:88px;margin-bottom:8px;flex-shrink:0}
+.ring svg{transform:rotate(-90deg)}
+.rc{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.rn{font-size:22px;font-weight:700;line-height:1;font-family:var(--mono)}
+.rs{font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;margin-top:2px}
+.ring-col{padding:14px 16px;display:flex;flex-direction:column;align-items:center}
+.ring-col+.ring-col{border-left:1px solid var(--bd)}
+.ring-pair{display:grid;grid-template-columns:1fr 1fr;gap:0}
+
+/* STAT ROWS */
+.srow{display:flex;align-items:center;gap:6px;margin-bottom:6px;font-size:10px}
+.sdot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
+.sname{flex:1;color:var(--muted)}
+.sbar{width:50px;height:4px;background:var(--bg);border-radius:3px;overflow:hidden}
+.sbf{height:100%;border-radius:3px}
+.scnt{font-size:10px;font-weight:700;color:var(--ink);width:28px;text-align:right;font-family:var(--mono)}
+
+/* LEADERBOARD */
+.lrow{display:grid;align-items:center;gap:10px;padding:10px 16px;border-bottom:1px solid var(--bd);animation:slideIn .4s ease both}
+.lrow:last-child{border-bottom:none}
+@keyframes slideIn{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:none}}
+.lrow.top1{background:#fffdf0}
+.lrow.top2{background:#fafafa}
+.lrow.top3{background:#f5fbf7}
+.col-head{display:grid;gap:10px;padding:8px 16px;border-bottom:1px solid var(--bd)}
+.ch-lbl{font-size:9px;font-family:var(--mono);text-transform:uppercase;letter-spacing:.07em;color:var(--muted);font-weight:700}
+.rav{width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0}
+.streak-dots{display:flex;gap:2px;justify-content:flex-end}
+.sdot-small{width:6px;height:6px;border-radius:50%}
+
+/* SUMMARY STRIP */
+.summary{display:grid;gap:1px;background:var(--bd);border-top:1px solid var(--bd)}
+.scard{background:var(--card);padding:12px 16px}
+.sl{font-size:9px;font-family:var(--mono);text-transform:uppercase;letter-spacing:.07em;color:var(--muted);margin-bottom:4px;font-weight:700}
+.sv{font-size:21px;font-weight:700;letter-spacing:-1px;font-family:var(--mono)}
+.sd{font-size:10px;font-family:var(--mono);margin-top:3px}
+
+/* FEED */
+.fi{display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid var(--bd)}
+.fi:last-child{border-bottom:none}
+
+/* MAP */
+.map-tooltip{margin:10px 16px 0;padding:10px 14px;background:var(--gl);border-radius:8px;border:1px solid var(--gb);display:none}
+
+/* STREAM GRID */
+.stream-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border:1px solid var(--bd);border-radius:var(--radius-lg);overflow:hidden;margin-bottom:12px;background:var(--card)}
+.stream-col{padding:16px}
+.stream-col+.stream-col{border-left:1px solid var(--bd)}
+.stream-icon{width:34px;height:34px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:16px;margin-bottom:10px}
+.stream-name{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.09em;color:var(--muted);margin-bottom:8px}
+.stream-big{font-size:34px;font-weight:700;line-height:1;margin-bottom:3px;font-family:var(--mono)}
+.stream-sub{font-size:10px;color:var(--muted);margin-bottom:10px;line-height:1.4}
+.stream-track{height:6px;background:var(--bg);border-radius:3px;overflow:hidden;margin-bottom:4px}
+.stream-fill{height:100%;border-radius:3px}
+.stream-delta{display:flex;justify-content:space-between;font-size:9px;font-weight:600}
+.cohort-row{display:flex;align-items:center;gap:6px;margin-top:7px;font-size:10px}
+.cdot{width:6px;height:6px;border-radius:50%;flex-shrink:0}
+.clbl{width:60px;color:var(--muted);flex-shrink:0;font-size:10px}
+.ctrk{flex:1;height:4px;background:var(--bg);border-radius:3px;overflow:hidden}
+.cfill{height:100%;border-radius:3px}
+.cpct{font-size:10px;font-weight:700;width:28px;text-align:right;flex-shrink:0;font-family:var(--mono)}
+
+/* NS BOXES */
+.ns{padding:11px 13px;border-radius:var(--radius);margin-top:10px}
+.ns.green{background:var(--gl);border:1px solid var(--gb)}
+.ns.blue{background:var(--bll);border:1px solid var(--blb)}
+.ns.teal{background:var(--tel);border:1px solid var(--teb)}
+.ns.amber{background:var(--al);border:1px solid var(--ab)}
+.ns.purple{background:var(--pul);border:1px solid var(--pub)}
+.nsl{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.09em;margin-bottom:4px}
+.ns.green .nsl{color:var(--gd)}.ns.blue .nsl{color:var(--bl)}.ns.teal .nsl{color:var(--te)}.ns.amber .nsl{color:var(--am)}.ns.purple .nsl{color:var(--pu)}
+.nst{font-size:10px;color:var(--ink);line-height:1.65}
+
+/* PILLS */
+.pills{display:flex;flex-wrap:wrap;gap:5px;margin-top:12px;padding-top:12px;border-top:1px solid var(--bd)}
+.pill{font-size:9px;padding:2px 9px;border-radius:10px;font-weight:700;background:var(--gl);color:var(--gd);border:1px solid var(--gb)}
+.pill.b{background:var(--bll);color:var(--bl);border-color:var(--blb)}
+.pill.t{background:var(--tel);color:var(--te);border-color:var(--teb)}
+.pill.a{background:var(--al);color:var(--am);border-color:var(--ab)}
+
+/* DIVIDER LABEL */
+.divlbl{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.09em;color:var(--muted);margin-bottom:8px;padding-bottom:7px;border-bottom:1px solid var(--bd)}
+
+/* STAT GRID */
+.estat{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px}
+.es{background:var(--bg);border-radius:var(--radius);padding:11px 12px}
+.esl{font-size:9px;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);margin-bottom:4px;font-weight:700}
+.esv{font-size:22px;font-weight:700;color:var(--ink);line-height:1;font-family:var(--mono)}
+.esd{font-size:9px;font-weight:700;color:var(--g);margin-top:3px}
+.esb{font-size:9px;color:var(--muted);margin-top:3px}
+
+/* BEFORE/AFTER */
+.ba-grid{display:grid;grid-template-columns:1fr auto 1fr;gap:10px;align-items:center;margin-bottom:12px}
+.ba-col{background:var(--bg);border-radius:var(--radius);padding:11px 12px;text-align:center}
+.ba-lbl{font-size:9px;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);margin-bottom:4px;font-weight:700}
+.ba-val{font-size:24px;font-weight:700;line-height:1;font-family:var(--mono)}
+
+/* TBAR */
+.tbar-wrap{padding:11px;background:var(--bg);border-radius:var(--radius);margin-top:11px}
+.tbar-row{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:5px}
+.tbar-lbl{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.07em;font-weight:700}
+.tbar-val{font-size:11px;font-weight:700;color:var(--ink);font-family:var(--mono)}
+.tbar{height:5px;background:rgba(0,0,0,.07);border-radius:3px;overflow:hidden}
+.tbar-fill{height:100%;border-radius:3px}
+.tbar-sub{font-size:9px;color:var(--muted);margin-top:5px;line-height:1.4}
+
+/* RPT BOXES */
+.rpt{padding:10px 13px;background:var(--bg);border-radius:var(--radius);margin-bottom:7px}
+.rpt-name{font-size:11px;font-weight:700;color:var(--ink);margin-bottom:2px}
+.rpt-sub{font-size:9px;color:var(--muted);line-height:1.4}
+
+/* FRAMEWORK ROWS */
+.fw-row{display:flex;align-items:center;gap:8px;padding:7px 0;border-bottom:1px solid var(--bd);font-size:11px}
+.fw-row:last-child{border-bottom:none}
+.fw-lbl{flex:1;color:var(--ink)}
+.fw-trk{width:58px;height:5px;background:var(--bg);border-radius:3px;overflow:hidden;flex-shrink:0}
+.fw-bar{height:100%;border-radius:3px}
+.fw-pct{font-size:11px;font-weight:700;width:28px;text-align:right;flex-shrink:0;font-family:var(--mono)}
+
+/* CHART WRAP */
+.chart-wrap{position:relative;height:180px;margin-bottom:12px}
+
+/* SCOPE ROWS */
+.scrow{display:flex;align-items:center;gap:8px;margin-bottom:9px}
+.sclbl{font-size:10px;color:var(--muted);width:120px;flex-shrink:0;line-height:1.3}
+.sctrk{flex:1;height:7px;background:var(--bg);border-radius:4px;overflow:hidden}
+.scfill{height:100%;border-radius:4px}
+.scval{font-size:11px;font-weight:700;color:var(--ink);width:30px;text-align:right;flex-shrink:0;font-family:var(--mono)}
+
+/* RISK TABLE */
+.risk-row{display:flex;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid var(--bd)}
+.risk-row:last-child{border-bottom:none}
+.rid{width:44px;color:var(--muted);flex-shrink:0;font-size:10px;font-family:var(--mono)}
+.rinfo{flex:1;line-height:1.3}
+.rname{font-size:11px;color:var(--ink);font-weight:600}
+.rsub2{font-size:9px;color:var(--muted);margin-top:1px}
+.rflag{width:54px;text-align:right;flex-shrink:0}
+.rage{font-size:9px;padding:2px 7px;border-radius:8px;font-weight:600;flex-shrink:0}
+.rpct{font-size:12px;font-weight:700;width:30px;text-align:right;flex-shrink:0;font-family:var(--mono)}
+
+/* RETAILER SCORE */
+.ret-row{display:flex;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid var(--bd);font-size:11px}
+.ret-row:last-child{border-bottom:none}
+.r-rank{width:18px;font-size:10px;color:var(--muted);text-align:center;flex-shrink:0}
+.r-id{width:46px;font-family:var(--mono);font-size:10px;color:var(--muted);flex-shrink:0}
+.r-info{flex:1}
+.r-name{color:var(--ink);font-weight:600}
+.r-sub{font-size:9px;color:var(--muted);margin-top:1px}
+.r-stage{font-size:9px;padding:1px 7px;border-radius:8px;font-weight:600;flex-shrink:0}
+.r-pts{font-size:11px;font-weight:700;flex-shrink:0;font-family:var(--mono);width:40px;text-align:right}
+.r-streak{font-size:11px;font-weight:600;flex-shrink:0;white-space:nowrap;width:40px;text-align:right}
+
+/* IMPACT RING */
+.impact-ring{position:relative;width:96px;height:96px;margin-bottom:10px}
+.impact-ring svg{transform:rotate(-90deg)}
+.irc{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.irn{font-size:26px;font-weight:700;color:var(--g);line-height:1;font-family:var(--mono)}
+.irs{font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;margin-top:2px}
+
+/* SNOTE */
+.snote{font-size:9px;color:var(--muted);margin-top:7px;line-height:1.5}
+
+/* PNOTE */
+.pnote{display:flex;align-items:flex-start;gap:8px;padding:9px 12px;background:var(--gl);border:1px solid var(--gb);border-radius:var(--radius);margin-top:11px}
+.pnote-txt{font-size:10px;color:var(--gd);line-height:1.55}
+
+@media(max-width:680px){
+  .g2,.g3,.g4,.g2e{grid-template-columns:1fr}
+  .stream-grid{grid-template-columns:1fr}
+  .stream-col+.stream-col{border-left:none;border-top:1px solid var(--bd)}
+  .topbar{padding:0 14px}
+  .body,.ctxbar,.tabbar{padding-left:14px;padding-right:14px}
 }
 </style>
 </head>
 <body>
+<div class="shell">
 
+<!-- TOPBAR -->
 <div class="topbar">
-  <div class="logo">Play <span>for</span> Earth</div>
-  <div class="meta">Metro City &nbsp;|&nbsp; Varka Consumer Goods &nbsp;|&nbsp; 30-day rolling</div>
-  <div class="lbadge"><div class="pulse"></div>Live</div>
+  <div style="display:flex;align-items:center;gap:10px">
+    <div class="logo">Play <span>for</span> Earth</div>
+    <div style="font-size:11px;padding:2px 10px;border-radius:20px;background:var(--gl);color:var(--gd);border:1px solid var(--gb);font-weight:700">Beverage Producer · Nairobi Metro · 30-day rolling</div>
+  </div>
+  <div style="display:flex;align-items:center;gap:12px">
+    <div class="live-badge"><div class="pulse"></div>Live</div>
+    <button style="font-size:11px;padding:6px 12px;border-radius:8px;background:var(--card);border:1px solid var(--bd);color:var(--muted);cursor:pointer;font-family:var(--font);font-weight:600;transition:all .15s" onmouseover="this.style.borderColor='var(--g)';this.style.color='var(--g)'" onmouseout="this.style.borderColor='var(--bd)';this.style.color='var(--muted)'" onclick="alert('Generating EPR compliance report package…')">↑ Export report</button>
+  </div>
 </div>
 
-<div class="page">
+<!-- CONTEXT BAR -->
+<div class="ctxbar">
+  <div class="ctx-item">Program <strong>EPR Compliance &amp; Packaging Recovery</strong></div>
+  <div class="ctx-sep">|</div>
+  <div class="ctx-item">Product <strong>PET &amp; Can beverages</strong></div>
+  <div class="ctx-sep">|</div>
+  <div class="ctx-item">Territory <strong>Nairobi Metro — 5 zones</strong></div>
+  <div class="ctx-sep">|</div>
+  <div class="ctx-item">Distributor network <strong>4 active</strong></div>
+  <div class="ctx-sep">|</div>
+  <div class="ctx-item">Reporting <strong>NEMA / Kenya EPR Regulations 2024 / GHG Protocol</strong></div>
+</div>
 
-  <div class="hrow">
-    <div class="hl">
-      <h1>Metro City &mdash; territory view</h1>
-      <p>Varka Consumer Goods &nbsp;|&nbsp; EPR compliance &amp; field verification &nbsp;|&nbsp; updated just now</p>
+<!-- TABS -->
+<div class="tabbar">
+  <button class="tab on"  onclick="sw('overview',this)">Overview</button>
+  <button class="tab"     onclick="sw('territory',this)">Territory &amp; Zones</button>
+  <button class="tab"     onclick="sw('performance',this)">Rep Performance</button>
+  <button class="tab"     onclick="sw('retailers',this)">Retailer GTI</button>
+  <button class="tab"     onclick="sw('capacity',this)">Capacity Building</button>
+  <button class="tab"     onclick="sw('feed',this)">Live Feed</button>
+  <button class="tab"     onclick="sw('epr',this)">EPR / Scope 3</button>
+</div>
+
+<div class="body">
+
+<!-- ══════════════════════════════════════════ OVERVIEW ══ -->
+<div id="panel-overview" class="panel on">
+
+  <div class="g4">
+    <div class="kpi hero"><div class="kpi-icon">🏪</div><div class="kl">Active retailers</div><div class="kv">247</div><div class="kd">+31 vs last month</div><div class="kt"><div class="kf" style="width:82%"></div></div></div>
+    <div class="kpi"><div class="kpi-icon">📸</div><div class="kl">Verified field events</div><div class="kv">1,842</div><div class="kd up">↑ 18% vs last month</div><div class="kt"><div class="kf" style="width:74%"></div></div></div>
+    <div class="kpi"><div class="kl">Distributor coverage</div><div class="kv">94%</div><div class="kd up">↑ 4pp vs last month</div><div class="kt"><div class="kf" style="width:94%"></div></div></div>
+    <div class="kpi warn"><div class="kpi-icon">⚠</div><div class="kl">Retailers below threshold</div><div class="kv">38</div><div class="kd dn">↑ 4 flagged this week</div><div class="kt"><div class="kf" style="width:15%;background:var(--or)"></div></div></div>
+  </div>
+
+  <!-- 3 STREAMS -->
+  <div class="stream-grid">
+    <div class="stream-col">
+      <div class="stream-icon" style="background:var(--gl)">📸</div>
+      <div class="stream-name">Verified field actions</div>
+      <div class="stream-big" style="color:var(--g)">1,842</div>
+      <div class="stream-sub">geo-validated, timestamped field events · this month</div>
+      <div class="stream-track"><div class="stream-fill" style="width:74%;background:var(--g)"></div></div>
+      <div class="stream-delta"><span style="color:var(--muted)">Baseline: 62%</span><span style="color:var(--g)">↑ 18% vs last month</span></div>
+      <div class="cohort-row"><div class="cdot" style="background:var(--g)"></div><div class="clbl">North District</div><div class="ctrk"><div class="cfill" style="width:89%;background:var(--g)"></div></div><div class="cpct">89%</div></div>
+      <div class="cohort-row"><div class="cdot" style="background:var(--gm)"></div><div class="clbl">City Centre</div><div class="ctrk"><div class="cfill" style="width:81%;background:var(--gm)"></div></div><div class="cpct">81%</div></div>
+      <div class="cohort-row"><div class="cdot" style="background:var(--am)"></div><div class="clbl">East Zone</div><div class="ctrk"><div class="cfill" style="width:74%;background:var(--am)"></div></div><div class="cpct">74%</div></div>
+    </div>
+    <div class="stream-col">
+      <div class="stream-icon" style="background:var(--bll)">♻</div>
+      <div class="stream-name">Collection points active</div>
+      <div class="stream-big" style="color:var(--bl)">193</div>
+      <div class="stream-sub">baskets confirmed in place · photo-verified</div>
+      <div class="stream-track"><div class="stream-fill" style="width:78%;background:var(--bl)"></div></div>
+      <div class="stream-delta"><span style="color:var(--muted)">Q1 target: 247</span><span style="color:var(--bl)">78% of target</span></div>
+      <div class="cohort-row"><div class="cdot" style="background:var(--bl)"></div><div class="clbl">PET baskets</div><div class="ctrk"><div class="cfill" style="width:82%;background:var(--bl)"></div></div><div class="cpct">112</div></div>
+      <div class="cohort-row"><div class="cdot" style="background:var(--te)"></div><div class="clbl">Mixed dry</div><div class="ctrk"><div class="cfill" style="width:61%;background:var(--te)"></div></div><div class="cpct">54</div></div>
+      <div class="cohort-row"><div class="cdot" style="background:var(--am)"></div><div class="clbl">Poster up</div><div class="ctrk"><div class="cfill" style="width:24%;background:var(--am)"></div></div><div class="cpct">27</div></div>
+    </div>
+    <div class="stream-col">
+      <div class="stream-icon" style="background:var(--gl)">📊</div>
+      <div class="stream-name">GTI score</div>
+      <div class="stream-big" style="color:var(--gd)">70</div>
+      <div class="stream-sub">Green Transformation Index · territory average</div>
+      <div class="stream-track"><div class="stream-fill" style="width:70%;background:var(--g)"></div></div>
+      <div class="stream-delta"><span style="color:var(--muted)">At enrollment: 41</span><span style="color:var(--g)">↑ 29 pts vs start</span></div>
+      <div class="cohort-row"><div class="cdot" style="background:var(--g)"></div><div class="clbl">Internalized</div><div class="ctrk"><div class="cfill" style="width:62%;background:var(--g)"></div></div><div class="cpct">62%</div></div>
+      <div class="cohort-row"><div class="cdot" style="background:var(--gm)"></div><div class="clbl">Embedded</div><div class="ctrk"><div class="cfill" style="width:48%;background:var(--gm)"></div></div><div class="cpct">48%</div></div>
+      <div class="cohort-row"><div class="cdot" style="background:var(--am)"></div><div class="clbl">Inactive</div><div class="ctrk"><div class="cfill" style="width:15%;background:var(--am)"></div></div><div class="cpct">15%</div></div>
     </div>
   </div>
 
-  <!-- KPIs -->
-  <div class="kgrid">
-    <div class="kpi hi"><div class="kl">Active retailers</div><div class="kv" id="k1">0</div><div class="kd">+31 vs last month</div></div>
-    <div class="kpi"><div class="kl">Verified field events</div><div class="kv" id="k2">0</div><div class="kd" style="color:var(--g)">+18% vs last month</div><div class="ks">geo-validated, timestamped</div></div>
-    <div class="kpi"><div class="kl">Distributor coverage</div><div class="kv" id="k3">0%</div><div class="kd" style="color:var(--g)">+4pp vs last month</div><div class="ks">of declared network</div></div>
-    <div class="kpi"><div class="kl">Collection point act.</div><div class="kv" id="k4">0%</div><div class="kd" style="color:var(--g)">+6pp vs last month</div><div class="ks">basket + poster in place</div></div>
-  </div>
-
-  <!-- Tabs -->
-  <div class="tabrow">
-    <button class="tab tab-territory active" onclick="switchTab('territory',this)">&#9632; Territory</button>
-    <button class="tab tab-map" onclick="switchTab('map',this)">&#9673; Zone map</button>
-    <button class="tab tab-leaderboard" onclick="switchTab('leaderboard',this)">&#9733; Performance</button>
-    <button class="tab tab-feed" onclick="switchTab('feed',this)">&#9679; Live feed</button>
-  </div>
-
-  <!-- ══ TERRITORY ══ -->
-  <div id="sec-territory" class="section show">
-    <div class="g2">
-      <div class="p2">
-        <div style="font-size:10px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--tm);font-family:'DM Mono',monospace;margin-bottom:14px">Compliance by zone &mdash; 30-day rolling</div>
-        <div class="zrow"><div class="zmeta"><span class="zn">North District</span><div class="zr"><span class="ztag" style="color:var(--gd);background:var(--gl)">High</span><span class="zp" style="color:var(--tx)">89%</span></div></div><div class="bt"><div class="bf" id="b1" style="width:0%;background:var(--g)"></div></div></div>
-        <div class="zrow"><div class="zmeta"><span class="zn">City Centre</span><div class="zr"><span class="ztag" style="color:var(--gd);background:var(--gl)">High</span><span class="zp" style="color:var(--tx)">81%</span></div></div><div class="bt"><div class="bf" id="b2" style="width:0%;background:var(--g)"></div></div></div>
-        <div class="zrow"><div class="zmeta"><span class="zn">East Zone</span><div class="zr"><span class="ztag" style="color:var(--ad);background:var(--al)">Good</span><span class="zp" style="color:var(--tx)">74%</span></div></div><div class="bt"><div class="bf" id="b3" style="width:0%;background:var(--am)"></div></div></div>
-        <div class="zrow"><div class="zmeta"><span class="zn">South District</span><div class="zr"><span class="ztag" style="color:var(--ad);background:var(--al)">Good</span><span class="zp" style="color:var(--tx)">61%</span></div></div><div class="bt"><div class="bf" id="b4" style="width:0%;background:var(--am)"></div></div></div>
-        <div class="zrow"><div class="zmeta"><span class="zn">West Industrial</span><div class="zr"><span class="ztag" style="color:var(--od);background:var(--ol)">Building</span><span class="zp" style="color:var(--tx)">38%</span></div></div><div class="bt"><div class="bf" id="b5" style="width:0%;background:var(--or)"></div></div></div>
+  <div class="g2e">
+    <!-- Top streaks -->
+    <div class="card">
+      <div class="ch"><div class="ct">Momentum — top retailer streaks</div><div class="badge bg">Active retailers</div></div>
+      <div class="cb" style="padding:8px 16px">
+        <div style="display:grid;grid-template-columns:18px 46px 1fr 56px 44px 44px;gap:4px;padding-bottom:7px;border-bottom:1px solid var(--bd)">
+          <div style="font-size:9px;color:var(--muted);font-weight:700;text-transform:uppercase;letter-spacing:.07em">#</div>
+          <div style="font-size:9px;color:var(--muted);font-weight:700;text-transform:uppercase;letter-spacing:.07em">ID</div>
+          <div style="font-size:9px;color:var(--muted);font-weight:700;text-transform:uppercase;letter-spacing:.07em">Retailer</div>
+          <div style="font-size:9px;color:var(--muted);font-weight:700;text-transform:uppercase;letter-spacing:.07em">Stage</div>
+          <div style="font-size:9px;color:var(--muted);font-weight:700;text-transform:uppercase;letter-spacing:.07em;text-align:right">GTI</div>
+          <div style="font-size:9px;color:var(--muted);font-weight:700;text-transform:uppercase;letter-spacing:.07em;text-align:right">Streak</div>
+        </div>
+        <div class="ret-row"><div class="r-rank">1</div><div class="r-id">R-0044</div><div class="r-info"><div class="r-name">Mama Wanjiku Kiosk</div><div class="r-sub">North District · Apex Distribution</div></div><div><span class="r-stage" style="background:var(--gl);color:var(--gd)">Internalized</span></div><div class="r-pts" style="color:var(--g)">91</div><div class="r-streak">🔥 31d</div></div>
+        <div class="ret-row"><div class="r-rank">2</div><div class="r-id">R-0112</div><div class="r-info"><div class="r-name">City Fresh Shop</div><div class="r-sub">City Centre · Prime Direct</div></div><div><span class="r-stage" style="background:var(--gl);color:var(--gd)">Internalized</span></div><div class="r-pts" style="color:var(--g)">88</div><div class="r-streak">🔥 24d</div></div>
+        <div class="ret-row"><div class="r-rank">3</div><div class="r-id">R-0078</div><div class="r-info"><div class="r-name">Eastside Duka</div><div class="r-sub">East Zone · Metro Logistics</div></div><div><span class="r-stage" style="background:var(--bll);color:var(--bl)">Embedded</span></div><div class="r-pts" style="color:var(--g)">79</div><div class="r-streak">🔥 19d</div></div>
+        <div class="ret-row"><div class="r-rank">4</div><div class="r-id">R-0201</div><div class="r-info"><div class="r-name">Green Corner Store</div><div class="r-sub">North District · Apex Distribution</div></div><div><span class="r-stage" style="background:var(--bll);color:var(--bl)">Embedded</span></div><div class="r-pts" style="color:var(--g)">74</div><div class="r-streak">🔥 14d</div></div>
+        <div class="ret-row"><div class="r-rank">5</div><div class="r-id">R-0289</div><div class="r-info"><div class="r-name">South Mart</div><div class="r-sub">South District · Southfield Traders</div></div><div><span class="r-stage" style="background:var(--al);color:var(--am)">Reinforced</span></div><div class="r-pts" style="color:var(--am)">61</div><div class="r-streak">🔥 9d</div></div>
+        <div class="snote">GTI = Green Transformation Index (0–100) · streaks reset on missed action window</div>
       </div>
-      <div class="p2" style="display:flex;flex-direction:column">
-        <div style="font-size:10px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--tm);font-family:'DM Mono',monospace;margin-bottom:14px">GTI score &mdash; Metro City</div>
-        <div style="display:flex;gap:18px;align-items:center;flex:1">
-          <div class="gti-ring">
-            <svg width="90" height="90" viewBox="0 0 90 90">
-              <circle cx="45" cy="45" r="38" fill="none" stroke="#f0f0ec" stroke-width="7"/>
-              <circle cx="45" cy="45" r="38" fill="none" stroke="var(--g)" stroke-width="7" stroke-dasharray="239" stroke-dashoffset="239" stroke-linecap="round" id="garc"/>
-            </svg>
-            <div class="gti-center">
-              <div style="font-size:23px;font-weight:700;letter-spacing:-1px" id="gnum">0</div>
-              <div style="font-size:9px;font-family:'DM Mono',monospace;color:var(--tm)">/100</div>
+    </div>
+
+    <!-- At-risk retailers -->
+    <div class="card">
+      <div class="ch"><div class="ct">At-risk retailers — action required</div><div class="badge br">38 retailers</div></div>
+      <div class="cb" style="padding:8px 16px">
+        <div class="risk-row"><div class="rid">R-0183</div><div class="rinfo"><div class="rname">No field event — 9 days</div><div class="rsub2">Previously active · sudden drop · West Industrial</div></div><span class="rage" style="background:var(--ol);color:var(--or)">Critical</span><div class="rpct" style="color:var(--or)">21%</div><div class="rflag"><span class="badge br">Flag</span></div></div>
+        <div class="risk-row"><div class="rid">R-0241</div><div class="rinfo"><div class="rname">Basket removed from floor</div><div class="rsub2">Rep visit confirmed basket missing · South District</div></div><span class="rage" style="background:var(--ol);color:var(--or)">Critical</span><div class="rpct" style="color:var(--or)">28%</div><div class="rflag"><span class="badge br">Flag</span></div></div>
+        <div class="risk-row"><div class="rid">R-0097</div><div class="rinfo"><div class="rname">Skipping every 2–3 actions</div><div class="rsub2">Intermittent compliance · East Zone</div></div><span class="rage" style="background:var(--al);color:var(--am)">High</span><div class="rpct" style="color:var(--am)">44%</div><div class="rflag"><span class="badge ba">Watch</span></div></div>
+        <div class="risk-row"><div class="rid">R-0312</div><div class="rinfo"><div class="rname">Dropped at week 4</div><div class="rsub2">Early lapse pattern · now silent · City Centre</div></div><span class="rage" style="background:var(--al);color:var(--am)">High</span><div class="rpct" style="color:var(--am)">47%</div><div class="rflag"><span class="badge ba">Watch</span></div></div>
+        <div class="risk-row"><div class="rid">R-0158</div><div class="rinfo"><div class="rname">Sporadic — 6 weeks</div><div class="rsub2">Inconsistent basket use · North District</div></div><span class="rage" style="background:var(--al);color:var(--am)">High</span><div class="rpct" style="color:var(--am)">53%</div><div class="rflag"><span class="badge ba">Watch</span></div></div>
+        <div class="snote">Top 5 of 38 · GTI signal fires before compliance data does · rep assigned automatically</div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /overview -->
+
+<!-- ══════════════════════════════════════════ TERRITORY ══ -->
+<div id="panel-territory" class="panel">
+  <div class="g4">
+    <div class="kpi hero"><div class="kl">Territory compliance</div><div class="kv">74%</div><div class="kd">weighted zone average</div><div class="kt"><div class="kf" style="width:74%"></div></div></div>
+    <div class="kpi"><div class="kl">Zones at High (80%+)</div><div class="kv">2 / 5</div><div class="kd up">North + City Centre</div><div class="kt"><div class="kf" style="width:40%"></div></div></div>
+    <div class="kpi"><div class="kl">Collection points active</div><div class="kv">78%</div><div class="kd up">↑ 6pp vs last month</div><div class="kt"><div class="kf" style="width:78%"></div></div></div>
+    <div class="kpi warn"><div class="kl">Zones below 50%</div><div class="kv">1</div><div class="kd dn">West Industrial · 38%</div><div class="kt"><div class="kf" style="width:20%;background:var(--or)"></div></div></div>
+  </div>
+
+  <div class="g2">
+    <!-- Compliance by zone -->
+    <div class="card">
+      <div class="ch"><div class="ct">Compliance by zone — 30-day rolling</div><div class="badge bg">Geo-validated</div></div>
+      <div class="cb">
+        <div class="zrow"><div class="zmeta"><span class="zn">North District</span><div class="zr"><span class="ztag" style="color:var(--gd);background:var(--gl)">High</span><span class="zp" style="color:var(--g)">89%</span></div></div><div class="bt-track"><div class="bt-fill" style="width:89%;background:var(--g)"></div></div></div>
+        <div class="zrow"><div class="zmeta"><span class="zn">City Centre</span><div class="zr"><span class="ztag" style="color:var(--gd);background:var(--gl)">High</span><span class="zp" style="color:var(--g)">81%</span></div></div><div class="bt-track"><div class="bt-fill" style="width:81%;background:var(--gm)"></div></div></div>
+        <div class="zrow"><div class="zmeta"><span class="zn">East Zone</span><div class="zr"><span class="ztag" style="color:var(--am);background:var(--al)">Good</span><span class="zp" style="color:var(--am)">74%</span></div></div><div class="bt-track"><div class="bt-fill" style="width:74%;background:var(--am)"></div></div></div>
+        <div class="zrow"><div class="zmeta"><span class="zn">South District</span><div class="zr"><span class="ztag" style="color:var(--am);background:var(--al)">Good</span><span class="zp" style="color:var(--am)">61%</span></div></div><div class="bt-track"><div class="bt-fill" style="width:61%;background:var(--am)"></div></div></div>
+        <div class="zrow"><div class="zmeta"><span class="zn">West Industrial</span><div class="zr"><span class="ztag" style="color:var(--or);background:var(--ol)">Building</span><span class="zp" style="color:var(--or)">38%</span></div></div><div class="bt-track"><div class="bt-fill" style="width:38%;background:var(--or)"></div></div></div>
+        <!-- Collection points -->
+        <div style="margin-top:16px;padding-top:14px;border-top:1px solid var(--bd)">
+          <div class="divlbl">Collection point activation by zone</div>
+          <div class="bar-row"><div class="bar-lbl" style="width:100px">North District</div><div class="bar-track"><div class="bar-fill" style="width:91%;background:var(--g)"></div></div><div class="bar-pct">91%</div><div class="bar-d" style="color:var(--g)">↑4%</div></div>
+          <div class="bar-row"><div class="bar-lbl" style="width:100px">City Centre</div><div class="bar-track"><div class="bar-fill" style="width:85%;background:var(--g)"></div></div><div class="bar-pct">85%</div><div class="bar-d" style="color:var(--g)">↑2%</div></div>
+          <div class="bar-row"><div class="bar-lbl" style="width:100px">East Zone</div><div class="bar-track"><div class="bar-fill" style="width:76%;background:var(--gm)"></div></div><div class="bar-pct">76%</div><div class="bar-d" style="color:var(--g)">↑7%</div></div>
+          <div class="bar-row"><div class="bar-lbl" style="width:100px">South District</div><div class="bar-track"><div class="bar-fill" style="width:63%;background:var(--am)"></div></div><div class="bar-pct">63%</div><div class="bar-d" style="color:var(--am)">↓1%</div></div>
+          <div class="bar-row" style="margin-bottom:0"><div class="bar-lbl" style="width:100px">West Industrial</div><div class="bar-track"><div class="bar-fill" style="width:41%;background:var(--or)"></div></div><div class="bar-pct">41%</div><div class="bar-d" style="color:var(--or)">↓3%</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- GTI Score panel -->
+    <div>
+      <div class="card" style="margin-bottom:12px">
+        <div class="ch"><div class="ct">GTI score — Nairobi Metro</div><div class="badge bg">Green Transformation Index</div></div>
+        <div class="cb">
+          <div style="display:flex;gap:16px;align-items:center;margin-bottom:16px">
+            <div class="impact-ring">
+              <svg width="96" height="96" viewBox="0 0 96 96"><circle cx="48" cy="48" r="38" fill="none" stroke="rgba(0,0,0,.07)" stroke-width="9"/><circle cx="48" cy="48" r="38" fill="none" stroke="var(--g)" stroke-width="9" stroke-dasharray="238.8" stroke-dashoffset="71.6" stroke-linecap="round"/></svg>
+              <div class="irc"><div class="irn">70</div><div class="irs">/100</div></div>
+            </div>
+            <div style="flex:1">
+              <div style="font-size:13px;font-weight:700;margin-bottom:3px">Embedded</div>
+              <div style="font-size:10px;color:var(--muted);line-height:1.55;margin-bottom:10px">Majority of retailers have moved past Declared. Internalized cohort growing week-on-week.</div>
+              <div class="ba-grid" style="margin-bottom:0">
+                <div class="ba-col"><div class="ba-lbl">At enrollment</div><div class="ba-val" style="color:var(--muted)">41</div></div>
+                <div style="font-size:18px;color:var(--g);font-weight:700;text-align:center">→</div>
+                <div class="ba-col" style="background:var(--gl);border:1px solid var(--gb)"><div class="ba-lbl" style="color:var(--gd)">Today</div><div class="ba-val" style="color:var(--g)">70</div></div>
+              </div>
             </div>
           </div>
-          <div style="flex:1">
-            <div class="sbar-row"><span style="font-size:11px;color:var(--tm);width:84px">Internalized</span><div class="bt" style="flex:1"><div class="bf" id="s1" style="width:0%;background:#1a7a3a"></div></div><span style="font-size:10px;font-family:'DM Mono',monospace;color:var(--tm);width:28px;text-align:right" id="sp1">0%</span></div>
-            <div class="sbar-row"><span style="font-size:11px;color:var(--tm);width:84px">Embedded</span><div class="bt" style="flex:1"><div class="bf" id="s2" style="width:0%;background:#4caf72"></div></div><span style="font-size:10px;font-family:'DM Mono',monospace;color:var(--tm);width:28px;text-align:right" id="sp2">0%</span></div>
-            <div class="sbar-row"><span style="font-size:11px;color:var(--tm);width:84px">Reinforced</span><div class="bt" style="flex:1"><div class="bf" id="s3" style="width:0%;background:#7fcf98"></div></div><span style="font-size:10px;font-family:'DM Mono',monospace;color:var(--tm);width:28px;text-align:right" id="sp3">0%</span></div>
-            <div class="sbar-row"><span style="font-size:11px;color:var(--tm);width:84px">Declared</span><div class="bt" style="flex:1"><div class="bf" id="s4" style="width:0%;background:#b3e2c4"></div></div><span style="font-size:10px;font-family:'DM Mono',monospace;color:var(--tm);width:28px;text-align:right" id="sp4">0%</span></div>
-            <div class="sbar-row"><span style="font-size:11px;color:var(--tm);width:84px">Inactive</span><div class="bt" style="flex:1"><div class="bf" id="s5" style="width:0%;background:#e0e0dc"></div></div><span style="font-size:10px;font-family:'DM Mono',monospace;color:var(--tm);width:28px;text-align:right" id="sp5">0%</span></div>
+          <div class="divlbl">Retailer distribution across GTI stages</div>
+          <div class="sbar-row"><span style="font-size:11px;color:var(--muted);width:88px;flex-shrink:0">Internalized</span><div style="flex:1;height:8px;background:var(--bg);border-radius:4px;overflow:hidden"><div style="height:100%;width:62%;background:#0d4f24;border-radius:4px"></div></div><span style="font-size:10px;font-family:var(--mono);color:var(--muted);width:32px;text-align:right">62%</span></div>
+          <div class="sbar-row"><span style="font-size:11px;color:var(--muted);width:88px;flex-shrink:0">Embedded</span><div style="flex:1;height:8px;background:var(--bg);border-radius:4px;overflow:hidden"><div style="height:100%;width:48%;background:var(--g);border-radius:4px"></div></div><span style="font-size:10px;font-family:var(--mono);color:var(--muted);width:32px;text-align:right">48%</span></div>
+          <div class="sbar-row"><span style="font-size:11px;color:var(--muted);width:88px;flex-shrink:0">Reinforced</span><div style="flex:1;height:8px;background:var(--bg);border-radius:4px;overflow:hidden"><div style="height:100%;width:71%;background:var(--gm);border-radius:4px"></div></div><span style="font-size:10px;font-family:var(--mono);color:var(--muted);width:32px;text-align:right">71%</span></div>
+          <div class="sbar-row"><span style="font-size:11px;color:var(--muted);width:88px;flex-shrink:0">Declared</span><div style="flex:1;height:8px;background:var(--bg);border-radius:4px;overflow:hidden"><div style="height:100%;width:83%;background:#a8d5b8;border-radius:4px"></div></div><span style="font-size:10px;font-family:var(--mono);color:var(--muted);width:32px;text-align:right">83%</span></div>
+          <div class="sbar-row"><span style="font-size:11px;color:var(--muted);width:88px;flex-shrink:0">Inactive</span><div style="flex:1;height:8px;background:var(--bg);border-radius:4px;overflow:hidden"><div style="height:100%;width:15%;background:#e0e0dc;border-radius:4px"></div></div><span style="font-size:10px;font-family:var(--mono);color:var(--muted);width:32px;text-align:right">15%</span></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="ch"><div class="ct">GTI × compliance correlation</div><div class="badge bg">By sessions completed</div></div>
+        <div class="cb">
+          <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:12px">
+            <div style="display:flex;align-items:center;gap:7px;font-size:11px"><div style="width:76px;color:var(--muted);flex-shrink:0">0 actions</div><div style="flex:1;height:8px;background:var(--bg);border-radius:4px;overflow:hidden"><div style="height:100%;width:41%;background:#d1d5db;border-radius:4px"></div></div><div style="font-weight:700;width:28px;text-align:right;font-family:var(--mono)">41%</div><div style="font-size:9px;color:var(--muted);width:32px;text-align:right">n=37</div></div>
+            <div style="display:flex;align-items:center;gap:7px;font-size:11px"><div style="width:76px;color:var(--muted);flex-shrink:0">1–5 actions</div><div style="flex:1;height:8px;background:var(--bg);border-radius:4px;overflow:hidden"><div style="height:100%;width:58%;background:var(--am);border-radius:4px"></div></div><div style="font-weight:700;width:28px;text-align:right;font-family:var(--mono)">58%</div><div style="font-size:9px;color:var(--muted);width:32px;text-align:right">n=62</div></div>
+            <div style="display:flex;align-items:center;gap:7px;font-size:11px"><div style="width:76px;color:var(--muted);flex-shrink:0">6–15 actions</div><div style="flex:1;height:8px;background:var(--bg);border-radius:4px;overflow:hidden"><div style="height:100%;width:74%;background:var(--gm);border-radius:4px"></div></div><div style="font-weight:700;width:28px;text-align:right;font-family:var(--mono)">74%</div><div style="font-size:9px;color:var(--muted);width:32px;text-align:right">n=81</div></div>
+            <div style="display:flex;align-items:center;gap:7px;font-size:11px"><div style="width:76px;color:var(--muted);flex-shrink:0">16+ actions</div><div style="flex:1;height:8px;background:var(--bg);border-radius:4px;overflow:hidden"><div style="height:100%;width:89%;background:var(--g);border-radius:4px"></div></div><div style="font-weight:700;width:28px;text-align:right;font-family:var(--mono)">89%</div><div style="font-size:9px;color:var(--muted);width:32px;text-align:right">n=67</div></div>
+          </div>
+          <div class="ns green">
+            <div class="nsl">Core impact claim</div>
+            <div class="nst">Retailers with 16+ verified actions show 89% compliance — 48 pts above those with none. Action frequency is the strongest predictor of sustained EPR performance in this territory.</div>
           </div>
         </div>
       </div>
     </div>
   </div>
+</div>
 
-  <!-- ══ MAP ══ -->
-  <div id="sec-map" class="section">
-    <div class="panel">
-      <div class="pt">Zone compliance map &mdash; Metro City</div>
-      <div style="padding:16px 18px 0">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css"/>
-        <div id="leaflet-map" style="width:100%;height:420px;border-radius:10px;overflow:hidden;border:.5px solid var(--bd)"></div>
-        <div id="map-tooltip" class="map-tooltip" style="margin-bottom:0">
-          <div style="display:flex;justify-content:space-between;align-items:center">
-            <span style="font-size:13px;font-weight:600" id="zt-name">-</span>
-            <span style="font-size:12px;font-family:'DM Mono',monospace;font-weight:700" id="zt-pct">-</span>
+<!-- ══════════════════════════════════════════ PERFORMANCE ══ -->
+<div id="panel-performance" class="panel">
+  <div class="g4">
+    <div class="kpi hero"><div class="kl">Photos verified</div><div class="kv">1,842</div><div class="kd">this month · all reps</div><div class="kt"><div class="kf" style="width:74%"></div></div></div>
+    <div class="kpi"><div class="kl">Active reps</div><div class="kv">19</div><div class="kd up">↑ 3 vs last month</div><div class="kt"><div class="kf" style="width:79%"></div></div></div>
+    <div class="kpi"><div class="kl">Avg. retailer visits/rep</div><div class="kv">97</div><div class="kd up">↑ 12% vs last month</div><div class="kt"><div class="kf" style="width:68%"></div></div></div>
+    <div class="kpi warn"><div class="kl">Reps below target</div><div class="kv">3</div><div class="kd dn">< 50 visits this month</div><div class="kt"><div class="kf" style="width:16%;background:var(--or)"></div></div></div>
+  </div>
+
+  <div class="g2e">
+    <!-- Rep leaderboard -->
+    <div class="card">
+      <div class="ch"><div class="ct">Reps — verified photos</div><div class="badge bg">Photo-verified</div></div>
+      <div class="col-head" style="grid-template-columns:24px 1fr 64px 60px">
+        <span class="ch-lbl"></span>
+        <span class="ch-lbl">Rep / distributor</span>
+        <span class="ch-lbl" style="text-align:right">Photos</span>
+        <span class="ch-lbl" style="text-align:right">Streak</span>
+      </div>
+      <div id="rep-lb-main"></div>
+      <div class="summary" style="grid-template-columns:1fr 1fr">
+        <div class="scard"><div class="sl">Total photos</div><div class="sv" id="tot-rep2">0</div><div class="sd" style="color:var(--g)">+18% vs last month</div></div>
+        <div class="scard"><div class="sl">Avg. per rep</div><div class="sv" id="avg-rep2">0</div><div class="sd" style="color:var(--muted)">photos / month</div></div>
+      </div>
+    </div>
+
+    <!-- Distributor leaderboard -->
+    <div class="card">
+      <div class="ch"><div class="ct">Distributors — verified photos</div><div class="badge bg">Network coverage</div></div>
+      <div class="col-head" style="grid-template-columns:24px 1fr 64px 60px">
+        <span class="ch-lbl"></span>
+        <span class="ch-lbl">Distributor</span>
+        <span class="ch-lbl" style="text-align:right">Photos</span>
+        <span class="ch-lbl" style="text-align:right">Coverage</span>
+      </div>
+      <div id="dist-lb-main"></div>
+      <div class="summary" style="grid-template-columns:1fr 1fr">
+        <div class="scard"><div class="sl">Total</div><div class="sv" id="tot-dist2">0</div><div class="sd" style="color:var(--g)">across network</div></div>
+        <div class="scard"><div class="sl">Network coverage</div><div class="sv" id="cov-dist2">0%</div><div class="sd" style="color:var(--muted)">of declared territory</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Activity trend -->
+  <div class="card">
+    <div class="ch"><div class="ct">Monthly activity trend</div><div class="badge bg">Verified field events</div></div>
+    <div class="cb">
+      <div class="chart-wrap"><canvas id="actChart"></canvas></div>
+      <div class="ns green">
+        <div class="nsl">What this means for CCBA</div>
+        <div class="nst">Every verified field event is a timestamped, geo-validated data point that feeds directly into NEMA EPR reporting. No manual aggregation. No spreadsheet chains. The trend line is your Scope 3 Category 12 evidence base — growing month-on-month without adding headcount.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════ RETAILERS GTI ══ -->
+<div id="panel-retailers" class="panel">
+  <div class="g4">
+    <div class="kpi hero"><div class="kl">Avg. GTI score</div><div class="kv">70</div><div class="kd">↑ 29 pts vs enrollment</div><div class="kt"><div class="kf" style="width:70%"></div></div></div>
+    <div class="kpi"><div class="kl">Internalized retailers</div><div class="kv">41%</div><div class="kd up">↑ 8pp this month</div><div class="kt"><div class="kf" style="width:41%"></div></div></div>
+    <div class="kpi"><div class="kl">Avg. income uplift</div><div class="kv">KES 840</div><div class="kd up">per retailer/month</div><div class="kt"><div class="kf" style="width:62%"></div></div></div>
+    <div class="kpi warn"><div class="kl">Inactive retailers</div><div class="kv">37</div><div class="kd dn">no action > 14 days</div><div class="kt"><div class="kf" style="width:15%;background:var(--or)"></div></div></div>
+  </div>
+
+  <div class="g2">
+    <!-- Stage breakdown -->
+    <div class="card">
+      <div class="ch"><div class="ct">GTI stage breakdown — all retailers</div><div class="badge bg">247 retailers enrolled</div></div>
+      <div class="cb">
+        <div style="font-size:10px;color:var(--muted);line-height:1.65;margin-bottom:14px">Each retailer is scored across five behavioral stages. The GTI composite score weights higher stages more heavily. A retailer reaches "Internalized" only when collection behavior is self-sustaining with no external prompting needed.</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:14px">
+          <div style="background:var(--bg);border-radius:var(--radius);padding:11px 12px;border-left:3px solid #0d4f24">
+            <div style="font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:.07em;margin-bottom:4px;font-weight:700">Internalized</div>
+            <div style="font-size:22px;font-weight:700;color:#0d4f24;font-family:var(--mono)">41%</div>
+            <div style="font-size:9px;color:var(--muted);margin-top:2px">101 retailers</div>
+            <div style="font-size:9px;font-weight:700;color:var(--g);margin-top:2px">↑ 8pp this month</div>
           </div>
-          <div style="display:flex;gap:14px;margin-top:6px;flex-wrap:wrap">
-            <span style="font-size:11px;color:var(--tm)">Status: <strong id="zt-status">-</strong></span>
-            <span style="font-size:11px;color:var(--tm)">Active reps: <strong id="zt-reps">-</strong></span>
-            <span style="font-size:11px;color:var(--tm)">Monthly events: <strong id="zt-ev">-</strong></span>
+          <div style="background:var(--bg);border-radius:var(--radius);padding:11px 12px;border-left:3px solid var(--g)">
+            <div style="font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:.07em;margin-bottom:4px;font-weight:700">Embedded</div>
+            <div style="font-size:22px;font-weight:700;color:var(--g);font-family:var(--mono)">24%</div>
+            <div style="font-size:9px;color:var(--muted);margin-top:2px">59 retailers</div>
+            <div style="font-size:9px;font-weight:700;color:var(--g);margin-top:2px">↑ 3pp this month</div>
+          </div>
+          <div style="background:var(--bg);border-radius:var(--radius);padding:11px 12px;border-left:3px solid var(--gm)">
+            <div style="font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:.07em;margin-bottom:4px;font-weight:700">Reinforced</div>
+            <div style="font-size:22px;font-weight:700;color:var(--gm);font-family:var(--mono)">18%</div>
+            <div style="font-size:9px;color:var(--muted);margin-top:2px">44 retailers</div>
+            <div style="font-size:9px;font-weight:700;color:var(--g);margin-top:2px">↑ 2pp this month</div>
+          </div>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px">
+          <div style="background:var(--bg);border-radius:var(--radius);padding:11px 12px;border-left:3px solid #a8d5b8">
+            <div style="font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:.07em;margin-bottom:4px;font-weight:700">Declared</div>
+            <div style="font-size:22px;font-weight:700;color:#4a9060;font-family:var(--mono)">17%</div>
+            <div style="font-size:9px;color:var(--muted);margin-top:2px">42 retailers · new onboards</div>
+          </div>
+          <div style="background:var(--ol);border-radius:var(--radius);padding:11px 12px;border-left:3px solid var(--or)">
+            <div style="font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:.07em;margin-bottom:4px;font-weight:700">Inactive</div>
+            <div style="font-size:22px;font-weight:700;color:var(--or);font-family:var(--mono)">15%</div>
+            <div style="font-size:9px;color:var(--muted);margin-top:2px">37 retailers · flagged</div>
+          </div>
+        </div>
+        <div class="tbar-wrap">
+          <div class="tbar-row"><div class="tbar-lbl">Progression rate</div><div class="tbar-val">+2.3 stages avg. vs enrollment</div></div>
+          <div class="tbar"><div class="tbar-fill" style="width:76%;background:var(--g)"></div></div>
+          <div class="tbar-sub">Retailers entering at Declared reach Embedded within 6 weeks on average · Internalized at 14 weeks</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Retailer income + EPR -->
+    <div>
+      <div class="card" style="margin-bottom:12px">
+        <div class="ch"><div class="ct">Retailer income uplift</div><div class="badge bg">New income stream</div></div>
+        <div class="cb">
+          <div class="estat">
+            <div class="es"><div class="esl">Avg. monthly uplift</div><div class="esv">KES 840</div><div class="esd">↑ 12% vs Q4 2025</div></div>
+            <div class="es"><div class="esl">Top retailer earns</div><div class="esv">KES 2,100</div><div class="esb">Internalized · North District</div></div>
+            <div class="es"><div class="esl">Total paid out</div><div class="esv">KES 208K</div><div class="esd">↑ 38% vs last month</div></div>
+            <div class="es"><div class="esl">Payout regularity</div><div class="esv">96%</div><div class="esb">on-time · M-Pesa direct</div></div>
+          </div>
+          <div class="ns green">
+            <div class="nsl">Why retailers stay active</div>
+            <div class="nst">Income from verified collection actions is the primary retention mechanism. Retailers at "Internalized" stage earn 2.5× more than those at "Declared" — the GTI stage directly predicts monthly payout. This is the behavioral loop that makes the system self-sustaining without field coaching.</div>
+          </div>
+          <div class="pills">
+            <div class="pill">✓ M-Pesa direct payout</div>
+            <div class="pill">✓ Photo-triggered</div>
+            <div class="pill t">✓ Per verified action</div>
           </div>
         </div>
       </div>
-      <!-- Legend -->
-      <div style="display:flex;align-items:center;gap:16px;padding:12px 18px;border-top:.5px solid var(--bd);margin-top:12px;flex-wrap:wrap">
-        <span style="font-size:10px;font-family:'DM Mono',monospace;color:var(--tm);text-transform:uppercase;letter-spacing:.06em">Compliance</span>
-        <div style="display:flex;align-items:center;gap:5px"><div style="width:12px;height:12px;border-radius:2px;background:#1a7a3a;opacity:.75"></div><span style="font-size:11px;font-family:'DM Mono',monospace;color:var(--tm)">High (80%+)</span></div>
-        <div style="display:flex;align-items:center;gap:5px"><div style="width:12px;height:12px;border-radius:2px;background:#d4a020;opacity:.75"></div><span style="font-size:11px;font-family:'DM Mono',monospace;color:var(--tm)">Good (55–79%)</span></div>
-        <div style="display:flex;align-items:center;gap:5px"><div style="width:12px;height:12px;border-radius:2px;background:#d9451a;opacity:.65"></div><span style="font-size:11px;font-family:'DM Mono',monospace;color:var(--tm)">Building (&lt;55%)</span></div>
-        <span style="font-size:10px;font-family:'DM Mono',monospace;color:var(--tm);margin-left:auto">Click a zone to inspect</span>
+      <div class="card">
+        <div class="ch"><div class="ct">Sorted material quality</div><div class="badge bg">By stage</div></div>
+        <div class="cb">
+          <div style="font-size:10px;color:var(--muted);margin-bottom:12px;line-height:1.55">Higher-stage retailers produce better-sorted materials, reducing downstream processing costs for informal collectors.</div>
+          <div class="bar-row"><div class="bar-lbl" style="width:90px">Internalized</div><div class="bar-track"><div class="bar-fill" style="width:94%;background:#0d4f24"></div></div><div class="bar-pct">94%</div><div class="bar-d" style="color:var(--g)">purity</div></div>
+          <div class="bar-row"><div class="bar-lbl" style="width:90px">Embedded</div><div class="bar-track"><div class="bar-fill" style="width:84%;background:var(--g)"></div></div><div class="bar-pct">84%</div><div class="bar-d" style="color:var(--g)">purity</div></div>
+          <div class="bar-row"><div class="bar-lbl" style="width:90px">Reinforced</div><div class="bar-track"><div class="bar-fill" style="width:72%;background:var(--gm)"></div></div><div class="bar-pct">72%</div><div class="bar-d" style="color:var(--am)">purity</div></div>
+          <div class="bar-row"><div class="bar-lbl" style="width:90px">Declared</div><div class="bar-track"><div class="bar-fill" style="width:54%;background:var(--am)"></div></div><div class="bar-pct">54%</div><div class="bar-d" style="color:var(--am)">purity</div></div>
+          <div class="bar-row" style="margin-bottom:0"><div class="bar-lbl" style="width:90px">Inactive</div><div class="bar-track"><div class="bar-fill" style="width:31%;background:var(--or)"></div></div><div class="bar-pct">31%</div><div class="bar-d" style="color:var(--or)">purity</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════ CAPACITY BUILDING ══ -->
+<div id="panel-capacity" class="panel">
+
+  <div class="g4">
+    <div class="kpi hero"><div class="kpi-icon">🎯</div><div class="kl">Rep knowledge index</div><div class="kv">68</div><div class="kd">avg. across 19 reps · /100</div><div class="kt"><div class="kf" style="width:68%"></div></div></div>
+    <div class="kpi"><div class="kl">Placement compliance</div><div class="kv">71%</div><div class="kd up">↑ 9pp vs last month</div><div class="kt"><div class="kf" style="width:71%"></div></div></div>
+    <div class="kpi warn"><div class="kl">Reps below threshold</div><div class="kv">4</div><div class="kd dn">score &lt; 50 · retraining due</div><div class="kt"><div class="kf" style="width:21%;background:var(--or)"></div></div></div>
+    <div class="kpi"><div class="kl">Stock visibility logged</div><div class="kv">84%</div><div class="kd up">of visits · shelf check done</div><div class="kt"><div class="kf" style="width:84%"></div></div></div>
+  </div>
+
+  <div class="g2">
+
+    <!-- Knowledge score by dimension -->
+    <div class="card">
+      <div class="ch"><div class="ct">Rep knowledge score by dimension</div><div class="badge bg">Manager spot-check · self-report</div></div>
+      <div class="cb">
+        <div style="font-size:10px;color:var(--muted);margin-bottom:14px;line-height:1.65">Scores are currently based on rep self-assessment + manager spot-check during field visits. Photo-of-shelf verification is the planned upgrade — scores will be auto-generated from image at that point.</div>
+
+        <!-- Dim 1 -->
+        <div style="margin-bottom:14px;padding-bottom:14px;border-bottom:1px solid var(--bd)">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
+            <div style="display:flex;align-items:center;gap:8px">
+              <div style="width:28px;height:28px;border-radius:7px;background:var(--gl);display:flex;align-items:center;justify-content:center;font-size:13px">👁</div>
+              <div>
+                <div style="font-size:11px;font-weight:700;color:var(--ink)">Eye-level placement rules</div>
+                <div style="font-size:9px;color:var(--muted);margin-top:2px;font-style:italic">"Which SKUs must sit at eye level? What is the facing rule?"</div>
+              </div>
+            </div>
+            <div style="text-align:right"><div style="font-size:20px;font-weight:700;font-family:var(--mono);color:var(--g)">74%</div><div style="font-size:9px;font-weight:700;color:var(--g)">↑ 18 pts</div></div>
+          </div>
+          <div style="height:8px;background:var(--bg);border-radius:4px;overflow:hidden;margin-bottom:5px"><div style="height:100%;width:74%;background:var(--g);border-radius:4px"></div></div>
+          <div style="display:flex;gap:12px;flex-wrap:wrap">
+            <div style="font-size:9px;color:var(--muted);display:flex;align-items:center;gap:3px"><div style="width:6px;height:6px;border-radius:50%;background:#0d4f24"></div>North District 81%</div>
+            <div style="font-size:9px;color:var(--muted);display:flex;align-items:center;gap:3px"><div style="width:6px;height:6px;border-radius:50%;background:var(--g)"></div>City Centre 76%</div>
+            <div style="font-size:9px;color:var(--muted);display:flex;align-items:center;gap:3px"><div style="width:6px;height:6px;border-radius:50%;background:var(--am)"></div>West Industrial 51%</div>
+          </div>
+        </div>
+
+        <!-- Dim 2 -->
+        <div style="margin-bottom:14px;padding-bottom:14px;border-bottom:1px solid var(--bd)">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
+            <div style="display:flex;align-items:center;gap:8px">
+              <div style="width:28px;height:28px;border-radius:7px;background:var(--bll);display:flex;align-items:center;justify-content:center;font-size:13px">📦</div>
+              <div>
+                <div style="font-size:11px;font-weight:700;color:var(--ink)">SKU range & pack mix</div>
+                <div style="font-size:9px;color:var(--muted);margin-top:2px;font-style:italic">"Which pack sizes must always be in stock? What is the minimum facing count?"</div>
+              </div>
+            </div>
+            <div style="text-align:right"><div style="font-size:20px;font-weight:700;font-family:var(--mono);color:var(--bl)">69%</div><div style="font-size:9px;font-weight:700;color:var(--g)">↑ 12 pts</div></div>
+          </div>
+          <div style="height:8px;background:var(--bg);border-radius:4px;overflow:hidden;margin-bottom:5px"><div style="height:100%;width:69%;background:var(--bl);border-radius:4px"></div></div>
+          <div style="display:flex;gap:12px;flex-wrap:wrap">
+            <div style="font-size:9px;color:var(--muted);display:flex;align-items:center;gap:3px"><div style="width:6px;height:6px;border-radius:50%;background:#0d4f24"></div>North District 77%</div>
+            <div style="font-size:9px;color:var(--muted);display:flex;align-items:center;gap:3px"><div style="width:6px;height:6px;border-radius:50%;background:var(--bl)"></div>East Zone 68%</div>
+            <div style="font-size:9px;color:var(--muted);display:flex;align-items:center;gap:3px"><div style="width:6px;height:6px;border-radius:50%;background:var(--or)"></div>West Industrial 44%</div>
+          </div>
+        </div>
+
+        <!-- Dim 3 -->
+        <div style="margin-bottom:14px;padding-bottom:14px;border-bottom:1px solid var(--bd)">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
+            <div style="display:flex;align-items:center;gap:8px">
+              <div style="width:28px;height:28px;border-radius:7px;background:var(--tel);display:flex;align-items:center;justify-content:center;font-size:13px">❄</div>
+              <div>
+                <div style="font-size:11px;font-weight:700;color:var(--ink)">Cold chain & chiller rules</div>
+                <div style="font-size:9px;color:var(--muted);margin-top:2px;font-style:italic">"What must go in the chiller? What is the correct chiller temperature?"</div>
+              </div>
+            </div>
+            <div style="text-align:right"><div style="font-size:20px;font-weight:700;font-family:var(--mono);color:var(--te)">61%</div><div style="font-size:9px;font-weight:700;color:var(--g)">↑ 8 pts</div></div>
+          </div>
+          <div style="height:8px;background:var(--bg);border-radius:4px;overflow:hidden;margin-bottom:5px"><div style="height:100%;width:61%;background:var(--te);border-radius:4px"></div></div>
+          <div style="display:flex;gap:12px;flex-wrap:wrap">
+            <div style="font-size:9px;color:var(--muted);display:flex;align-items:center;gap:3px"><div style="width:6px;height:6px;border-radius:50%;background:var(--g)"></div>City Centre 71%</div>
+            <div style="font-size:9px;color:var(--muted);display:flex;align-items:center;gap:3px"><div style="width:6px;height:6px;border-radius:50%;background:var(--am)"></div>South District 57%</div>
+            <div style="font-size:9px;color:var(--muted);display:flex;align-items:center;gap:3px"><div style="width:6px;height:6px;border-radius:50%;background:var(--or)"></div>West Industrial 38%</div>
+          </div>
+        </div>
+
+        <!-- Dim 4 -->
+        <div style="margin-bottom:14px;padding-bottom:14px;border-bottom:1px solid var(--bd)">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
+            <div style="display:flex;align-items:center;gap:8px">
+              <div style="width:28px;height:28px;border-radius:7px;background:var(--al);display:flex;align-items:center;justify-content:center;font-size:13px">🏷</div>
+              <div>
+                <div style="font-size:11px;font-weight:700;color:var(--ink)">Active promotions & pricing</div>
+                <div style="font-size:9px;color:var(--muted);margin-top:2px;font-style:italic">"What is the current promo? Is the correct price visible at shelf?"</div>
+              </div>
+            </div>
+            <div style="text-align:right"><div style="font-size:20px;font-weight:700;font-family:var(--mono);color:var(--am)">58%</div><div style="font-size:9px;font-weight:700;color:var(--g)">↑ 14 pts</div></div>
+          </div>
+          <div style="height:8px;background:var(--bg);border-radius:4px;overflow:hidden;margin-bottom:5px"><div style="height:100%;width:58%;background:var(--am);border-radius:4px"></div></div>
+          <div style="display:flex;gap:12px;flex-wrap:wrap">
+            <div style="font-size:9px;color:var(--muted);display:flex;align-items:center;gap:3px"><div style="width:6px;height:6px;border-radius:50%;background:#0d4f24"></div>North District 71%</div>
+            <div style="font-size:9px;color:var(--muted);display:flex;align-items:center;gap:3px"><div style="width:6px;height:6px;border-radius:50%;background:var(--am)"></div>East Zone 55%</div>
+            <div style="font-size:9px;color:var(--muted);display:flex;align-items:center;gap:3px"><div style="width:6px;height:6px;border-radius:50%;background:var(--or)"></div>West Industrial 33%</div>
+          </div>
+        </div>
+
+        <!-- Dim 5 -->
+        <div>
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
+            <div style="display:flex;align-items:center;gap:8px">
+              <div style="width:28px;height:28px;border-radius:7px;background:var(--pul);display:flex;align-items:center;justify-content:center;font-size:13px">♻</div>
+              <div>
+                <div style="font-size:11px;font-weight:700;color:var(--ink)">EPR & collection point setup</div>
+                <div style="font-size:9px;color:var(--muted);margin-top:2px;font-style:italic">"Where does the basket go? What do you tell the retailer about sorting?"</div>
+              </div>
+            </div>
+            <div style="text-align:right"><div style="font-size:20px;font-weight:700;font-family:var(--mono);color:var(--pu)">79%</div><div style="font-size:9px;font-weight:700;color:var(--g)">↑ 22 pts</div></div>
+          </div>
+          <div style="height:8px;background:var(--bg);border-radius:4px;overflow:hidden;margin-bottom:5px"><div style="height:100%;width:79%;background:var(--pu);border-radius:4px"></div></div>
+          <div style="display:flex;gap:12px;flex-wrap:wrap">
+            <div style="font-size:9px;color:var(--muted);display:flex;align-items:center;gap:3px"><div style="width:6px;height:6px;border-radius:50%;background:#0d4f24"></div>North District 88%</div>
+            <div style="font-size:9px;color:var(--muted);display:flex;align-items:center;gap:3px"><div style="width:6px;height:6px;border-radius:50%;background:var(--g)"></div>City Centre 82%</div>
+            <div style="font-size:9px;color:var(--muted);display:flex;align-items:center;gap:3px"><div style="width:6px;height:6px;border-radius:50%;background:var(--am)"></div>West Industrial 58%</div>
+          </div>
+        </div>
+
+        <div class="pills" style="margin-top:14px;padding-top:14px">
+          <div class="pill">✓ Manager spot-check scored</div>
+          <div class="pill">✓ Rep self-report</div>
+          <div class="pill b">→ Photo-of-shelf planned</div>
+        </div>
+      </div>
+    </div>
+
+    <div style="display:flex;flex-direction:column;gap:12px">
+
+      <!-- Knowledge index ring -->
+      <div class="card">
+        <div class="ch"><div class="ct">Rep knowledge index</div><div class="badge bg">5 dimensions</div></div>
+        <div class="cb" style="display:flex;flex-direction:column;align-items:center">
+          <div class="impact-ring">
+            <svg width="96" height="96" viewBox="0 0 96 96"><circle cx="48" cy="48" r="38" fill="none" stroke="rgba(0,0,0,.07)" stroke-width="9"/><circle cx="48" cy="48" r="38" fill="none" stroke="var(--g)" stroke-width="9" stroke-dasharray="238.8" stroke-dashoffset="76.4" stroke-linecap="round"/></svg>
+            <div class="irc"><div class="irn">68</div><div class="irs">/100</div></div>
+          </div>
+          <div style="font-size:12px;font-weight:700;margin-bottom:4px">Developing</div>
+          <div style="font-size:10px;color:var(--muted);text-align:center;line-height:1.5;margin-bottom:12px">Cold chain (61%) and promotions (58%) are the two weakest dimensions — next training session should lead with these.</div>
+          <div style="width:100%">
+            <div class="srow"><div class="sdot" style="background:var(--pu)"></div><div class="sname">EPR setup</div><div class="sbar"><div class="sbf" style="width:79%;background:var(--pu)"></div></div><div class="scnt">79%</div></div>
+            <div class="srow"><div class="sdot" style="background:var(--g)"></div><div class="sname">Eye-level rules</div><div class="sbar"><div class="sbf" style="width:74%;background:var(--g)"></div></div><div class="scnt">74%</div></div>
+            <div class="srow"><div class="sdot" style="background:var(--bl)"></div><div class="sname">SKU range</div><div class="sbar"><div class="sbf" style="width:69%;background:var(--bl)"></div></div><div class="scnt">69%</div></div>
+            <div class="srow"><div class="sdot" style="background:var(--te)"></div><div class="sname">Cold chain</div><div class="sbar"><div class="sbf" style="width:61%;background:var(--te)"></div></div><div class="scnt">61%</div></div>
+            <div class="srow"><div class="sdot" style="background:var(--am)"></div><div class="sname">Promotions</div><div class="sbar"><div class="sbf" style="width:58%;background:var(--am)"></div></div><div class="scnt">58%</div></div>
+          </div>
+          <div class="ns green" style="width:100%">
+            <div class="nsl">Next training — recommended focus</div>
+            <div class="nst">Lead with cold chain rules + active promotions. Both are below 62% and directly affect sell-through at the shelf. EPR setup is the strongest dimension — reps know it.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Stock visibility -->
+      <div class="card">
+        <div class="ch"><div class="ct">Stock visibility — shelf check</div><div class="badge ba">Rep-logged per visit</div></div>
+        <div class="cb">
+          <div style="font-size:10px;color:var(--muted);margin-bottom:12px;line-height:1.55">Rep logs which category is present / absent at shelf during each visit. This is a proxy for stock level — not a warehouse system — but it creates a territory-wide out-of-stock signal.</div>
+          <div class="divlbl">Category presence rate — last 30 days</div>
+          <div class="bar-row"><div class="bar-lbl" style="width:100px">Cola category</div><div class="bar-track"><div class="bar-fill" style="width:91%;background:var(--g)"></div></div><div class="bar-pct">91%</div><div class="bar-d" style="color:var(--g)">in stock</div></div>
+          <div class="bar-row"><div class="bar-lbl" style="width:100px">Water category</div><div class="bar-track"><div class="bar-fill" style="width:84%;background:var(--g)"></div></div><div class="bar-pct">84%</div><div class="bar-d" style="color:var(--g)">in stock</div></div>
+          <div class="bar-row"><div class="bar-lbl" style="width:100px">Energy category</div><div class="bar-track"><div class="bar-fill" style="width:72%;background:var(--gm)"></div></div><div class="bar-pct">72%</div><div class="bar-d" style="color:var(--am)">in stock</div></div>
+          <div class="bar-row"><div class="bar-lbl" style="width:100px">Juice category</div><div class="bar-track"><div class="bar-fill" style="width:61%;background:var(--am)"></div></div><div class="bar-pct">61%</div><div class="bar-d" style="color:var(--am)">in stock</div></div>
+          <div class="bar-row" style="margin-bottom:0"><div class="bar-lbl" style="width:100px">Zero / diet</div><div class="bar-track"><div class="bar-fill" style="width:44%;background:var(--or)"></div></div><div class="bar-pct">44%</div><div class="bar-d" style="color:var(--or)">in stock</div></div>
+          <div class="ns amber" style="margin-top:12px">
+            <div class="nsl">Out-of-stock signal</div>
+            <div class="nst">Zero / diet category present in only 44% of visited outlets. This is the category most dependent on eye-level placement when it is in stock — a double gap that reps need to address.</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Rep knowledge leaderboard -->
+  <div class="card">
+    <div class="ch"><div class="ct">Rep knowledge scores — by dimension</div><div class="badge bg">Manager-assessed · current month</div></div>
+    <div class="cb" style="padding:8px 16px">
+      <div style="display:grid;grid-template-columns:24px 1fr 52px 52px 52px 52px 52px 56px;gap:4px;padding-bottom:7px;border-bottom:1px solid var(--bd);align-items:center">
+        <div style="font-size:9px;color:var(--muted);font-weight:700;text-transform:uppercase;letter-spacing:.07em">#</div>
+        <div style="font-size:9px;color:var(--muted);font-weight:700;text-transform:uppercase;letter-spacing:.07em">Rep</div>
+        <div style="font-size:9px;color:var(--muted);font-weight:700;text-transform:uppercase;letter-spacing:.07em;text-align:center">👁 Place</div>
+        <div style="font-size:9px;color:var(--muted);font-weight:700;text-transform:uppercase;letter-spacing:.07em;text-align:center">📦 SKU</div>
+        <div style="font-size:9px;color:var(--muted);font-weight:700;text-transform:uppercase;letter-spacing:.07em;text-align:center">❄ Cold</div>
+        <div style="font-size:9px;color:var(--muted);font-weight:700;text-transform:uppercase;letter-spacing:.07em;text-align:center">🏷 Promo</div>
+        <div style="font-size:9px;color:var(--muted);font-weight:700;text-transform:uppercase;letter-spacing:.07em;text-align:center">♻ EPR</div>
+        <div style="font-size:9px;color:var(--muted);font-weight:700;text-transform:uppercase;letter-spacing:.07em;text-align:right">Index</div>
+      </div>
+      <div id="cap-rep-table"></div>
+      <div class="snote" style="margin-top:6px">Index = weighted avg. · EPR weighted 1.2× (program priority) · scores below 50 trigger retraining assignment</div>
+    </div>
+  </div>
+
+</div><!-- /capacity -->
+
+<!-- ══════════════════════════════════════════ LIVE FEED ══ -->
+<div id="panel-feed" class="panel">
+  <div class="g4">
+    <div class="kpi hero"><div class="kl">Events · last 60 min</div><div class="kv">34</div><div class="kd">↑ 4 vs same window yesterday</div><div class="kt"><div class="kf" style="width:68%"></div></div></div>
+    <div class="kpi"><div class="kl">Unique reps active</div><div class="kv">11</div><div class="kd up">across 4 distributors</div><div class="kt"><div class="kf" style="width:58%"></div></div></div>
+    <div class="kpi"><div class="kl">New retailers onboarded</div><div class="kv">3</div><div class="kd up">today so far</div><div class="kt"><div class="kf" style="width:30%"></div></div></div>
+    <div class="kpi"><div class="kl">EPR data points</div><div class="kv">187</div><div class="kd up">submitted today</div><div class="kt"><div class="kf" style="width:74%"></div></div></div>
+  </div>
+
+  <div class="g2">
+    <div class="card">
+      <div class="ch"><div class="ct">Live field events — last 60 minutes</div><div class="badge bg">Real-time</div></div>
+      <div style="padding:4px 16px 10px" id="feed-main"></div>
+    </div>
+    <div>
+      <div class="card" style="margin-bottom:12px">
+        <div class="ch"><div class="ct">Action type breakdown</div><div class="badge bg">Last 60 min</div></div>
+        <div class="cb">
+          <div class="bar-row"><div class="bar-lbl" style="width:140px">Recovery basket confirmed</div><div class="bar-track"><div class="bar-fill" style="width:71%;background:var(--g)"></div></div><div class="bar-pct">12</div></div>
+          <div class="bar-row"><div class="bar-lbl" style="width:140px">Photo verification</div><div class="bar-track"><div class="bar-fill" style="width:53%;background:var(--gm)"></div></div><div class="bar-pct">9</div></div>
+          <div class="bar-row"><div class="bar-lbl" style="width:140px">Packaging sort logged</div><div class="bar-track"><div class="bar-fill" style="width:35%;background:var(--am)"></div></div><div class="bar-pct">6</div></div>
+          <div class="bar-row"><div class="bar-lbl" style="width:140px">New retailer onboarded</div><div class="bar-track"><div class="bar-fill" style="width:18%;background:var(--bl)"></div></div><div class="bar-pct">3</div></div>
+          <div class="bar-row" style="margin-bottom:0"><div class="bar-lbl" style="width:140px">EPR data submitted</div><div class="bar-track"><div class="bar-fill" style="width:24%;background:var(--te)"></div></div><div class="bar-pct">4</div></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="ch"><div class="ct">Top zones — last 60 min</div><div class="badge bg">Event density</div></div>
+        <div class="cb">
+          <div class="bar-row"><div class="bar-lbl" style="width:100px">North District</div><div class="bar-track"><div class="bar-fill" style="width:79%;background:var(--g)"></div></div><div class="bar-pct">14</div></div>
+          <div class="bar-row"><div class="bar-lbl" style="width:100px">City Centre</div><div class="bar-track"><div class="bar-fill" style="width:53%;background:var(--gm)"></div></div><div class="bar-pct">9</div></div>
+          <div class="bar-row"><div class="bar-lbl" style="width:100px">East Zone</div><div class="bar-track"><div class="bar-fill" style="width:41%;background:var(--am)"></div></div><div class="bar-pct">7</div></div>
+          <div class="bar-row"><div class="bar-lbl" style="width:100px">South District</div><div class="bar-track"><div class="bar-fill" style="width:24%;background:var(--am)"></div></div><div class="bar-pct">4</div></div>
+          <div class="bar-row" style="margin-bottom:0"><div class="bar-lbl" style="width:100px">West Industrial</div><div class="bar-track"><div class="bar-fill" style="width:0%;background:var(--or)"></div></div><div class="bar-pct">0</div></div>
+          <div class="snote">West Industrial: 0 events this hour · rep visit scheduled 14:30 today</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════ EPR / SCOPE 3 ══ -->
+<div id="panel-epr" class="panel">
+  <div class="g4">
+    <div class="kpi hero" style="background:var(--te);border-color:var(--te)"><div class="kpi-icon">♻</div><div class="kl">Collection points active</div><div class="kv">193</div><div class="kd">baskets confirmed in place</div><div class="kt"><div class="kf" style="width:78%"></div></div></div>
+    <div class="kpi"><div class="kl">Verified field actions</div><div class="kv">1,842</div><div class="kd up">↑ 18% vs last month</div><div class="kt"><div class="kf" style="width:74%"></div></div></div>
+    <div class="kpi"><div class="kl">Active retailers</div><div class="kv">247</div><div class="kd up">↑ 31 vs last month</div><div class="kt"><div class="kf" style="width:82%"></div></div></div>
+    <div class="kpi"><div class="kl">NEMA compliance score</div><div class="kv">84%</div><div class="kd up">↑ 7pp vs Q4 2025</div><div class="kt"><div class="kf" style="width:84%"></div></div></div>
+  </div>
+
+  <div class="g3">
+    <!-- Scope 3 -->
+    <div class="card">
+      <div class="ch"><div class="ct">Scope 3 coverage</div><div class="badge bt">Cat. 11 &amp; 12</div></div>
+      <div class="cb">
+        <div class="scrow"><div class="sclbl">PET collection points</div><div class="sctrk"><div class="scfill" style="width:81%;background:var(--bl)"></div></div><div class="scval">81%</div></div>
+        <div class="scrow"><div class="sclbl">Mixed dry points</div><div class="sctrk"><div class="scfill" style="width:74%;background:var(--te)"></div></div><div class="scval">74%</div></div>
+        <div class="scrow"><div class="sclbl">Poster compliance</div><div class="sctrk"><div class="scfill" style="width:61%;background:var(--gm)"></div></div><div class="scval">61%</div></div>
+        <div class="scrow"><div class="sclbl">Sorting verified</div><div class="sctrk"><div class="scfill" style="width:48%;background:var(--am)"></div></div><div class="scval">48%</div></div>
+        <div style="padding-top:12px;border-top:1px solid var(--bd);margin-top:4px">
+          <div class="divlbl">Compliance frameworks</div>
+          <div class="fw-row"><div class="fw-lbl">Kenya EPR Regs. 2024</div><div class="fw-trk"><div class="fw-bar" style="width:84%;background:var(--te)"></div></div><div class="fw-pct" style="color:var(--te)">84%</div></div>
+          <div class="fw-row"><div class="fw-lbl">NEMA enforcement</div><div class="fw-trk"><div class="fw-bar" style="width:78%;background:var(--g)"></div></div><div class="fw-pct" style="color:var(--g)">78%</div></div>
+          <div class="fw-row"><div class="fw-lbl">GHG Protocol Cat. 12</div><div class="fw-trk"><div class="fw-bar" style="width:71%;background:var(--bl)"></div></div><div class="fw-pct" style="color:var(--bl)">71%</div></div>
+          <div class="fw-row"><div class="fw-lbl">IFRS S2 Disclosure</div><div class="fw-trk"><div class="fw-bar" style="width:58%;background:var(--am)"></div></div><div class="fw-pct" style="color:var(--am)">58%</div></div>
+          <div class="fw-row"><div class="fw-lbl">PAKPRO program</div><div class="fw-trk"><div class="fw-bar" style="width:82%;background:var(--te)"></div></div><div class="fw-pct" style="color:var(--te)">82%</div></div>
+        </div>
+        <div class="pills">
+          <div class="pill">✓ ISAE 3000</div>
+          <div class="pill t">✓ Audit trail</div>
+          <div class="pill b">✓ GHG Protocol</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ESG CSO view -->
+    <div class="card">
+      <div class="ch"><div class="ct">ESG impact — CSO view</div><div class="badge ba">Q1 2026</div></div>
+      <div class="cb">
+        <div class="estat">
+          <div class="es"><div class="esl">Collection points</div><div class="esv">193</div><div class="esd">baskets confirmed active</div></div>
+          <div class="es"><div class="esl">Verified actions</div><div class="esv">1,842</div><div class="esb">photo · geo · timestamp</div></div>
+          <div class="es"><div class="esl">Active retailers</div><div class="esv">247</div><div class="esd">↑ 31 this month</div></div>
+          <div class="es"><div class="esl">GTI avg. score</div><div class="esv">70</div><div class="esd">↑ 29 pts vs enrollment</div></div>
+          <div class="es"><div class="esl">Distributor coverage</div><div class="esv">94%</div><div class="esb">of declared network</div></div>
+          <div class="es"><div class="esl">NEMA compliance</div><div class="esv">84%</div><div class="esd">↑ 7pp vs Q4 2025</div></div>
+        </div>
+        <div class="ns teal">
+          <div class="nsl">What makes this defensible</div>
+          <div class="nst">Every data point is photo-captured by the rep at the retailer location, timestamped, and GPS-tagged. CCBA receives a verified chain of evidence across field compliance, behavioral scores, and distributor coverage — without adding headcount or new infrastructure.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Report package -->
+    <div class="card">
+      <div class="ch"><div class="ct">Compliance report package</div><div class="badge bg">Ready to export</div></div>
+      <div class="cb">
+        <div class="rpt" style="border-left:3px solid var(--g)"><div class="rpt-name">Verified recovery report</div><div class="rpt-sub">Per-zone · material type split · photo evidence · NEMA format</div></div>
+        <div class="rpt" style="border-left:3px solid var(--bl)"><div class="rpt-name">Territory compliance dashboard</div><div class="rpt-sub">Zone scores · GTI distribution · collection point activation</div></div>
+        <div class="rpt" style="border-left:3px solid var(--gm)"><div class="rpt-name">Rep &amp; distributor performance</div><div class="rpt-sub">Verified photos · streaks · coverage by network</div></div>
+        <div class="rpt" style="border-left:3px solid var(--te)"><div class="rpt-name">EPR waste manifest</div><div class="rpt-sub">Material type · weight · photo · PAKPRO / KEPRO format</div></div>
+        <div class="rpt" style="border-left:3px solid var(--pu)"><div class="rpt-name">Retailer GTI report</div><div class="rpt-sub">Stage distribution · income uplift · behavioral progression</div></div>
+        <div class="rpt" style="border-left:3px solid var(--am)"><div class="rpt-name">Scope 3 data pack</div><div class="rpt-sub">Cat. 11 &amp; 12 · GHG Protocol · IFRS S2 · material breakdown</div></div>
+        <div class="rpt" style="border-left:3px solid var(--te)"><div class="rpt-name">CSO ESG summary</div><div class="rpt-sub">tCO2e avoided · recovery rate · program reach · one page</div></div>
+        <button style="width:100%;margin-top:11px;padding:10px;font-size:12px;border-radius:var(--radius);font-weight:700;cursor:pointer;background:var(--g);color:#fff;border:none;font-family:var(--font);transition:opacity .15s" onmouseover="this.style.opacity='.88'" onmouseout="this.style.opacity='1'" onclick="alert('Generating Q1 2026 EPR compliance report package…')">↑ Generate Q1 2026 full report package</button>
       </div>
     </div>
   </div>
 
-  <!-- ══ PERFORMANCE ══ -->
-  <div id="sec-leaderboard" class="section">
-    <div class="lb-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:10px;align-items:start">
-
-      <!-- Rep leaderboard -->
-      <div class="panel">
-        <div class="pt">Reps &mdash; verified photos</div>
-        <div class="col-head" style="grid-template-columns:24px 1fr 64px 60px">
-          <span class="ch"></span>
-          <span class="ch">Rep / distributor</span>
-          <span class="ch" style="text-align:right">Photos</span>
-          <span class="ch" style="text-align:right">Streak</span>
-        </div>
-        <div id="rep-lb"></div>
-        <div class="summary" style="grid-template-columns:1fr 1fr">
-          <div class="scard"><div class="sl">Total</div><div class="sv" id="tot-rep">0</div><div class="sd" style="color:var(--g)">+18% vs last month</div></div>
-          <div class="scard"><div class="sl">Avg. per rep</div><div class="sv" id="avg-rep">0</div><div class="sd" style="color:var(--tm)">photos / month</div></div>
-        </div>
+  <!-- Recovery trend chart -->
+  <div class="card">
+    <div class="ch"><div class="ct">Monthly field action trend</div><div class="badge bt">verified collection point actions</div></div>
+    <div class="cb">
+      <div class="chart-wrap" style="height:200px"><canvas id="recovChart"></canvas></div>
+      <div style="display:flex;gap:16px;font-size:10px;margin-bottom:12px">
+        <span style="display:flex;align-items:center;gap:4px"><span style="width:10px;height:10px;border-radius:2px;background:var(--g);display:inline-block"></span>Verified actions</span>
+        <span style="display:flex;align-items:center;gap:4px"><span style="width:10px;height:10px;border-radius:2px;background:rgba(0,0,0,.1);display:inline-block"></span>Target</span>
       </div>
-
-      <!-- Distributor leaderboard -->
-      <div class="panel">
-        <div class="pt">Distributors &mdash; verified photos</div>
-        <div class="col-head" style="grid-template-columns:24px 1fr 64px 60px">
-          <span class="ch"></span>
-          <span class="ch">Distributor</span>
-          <span class="ch" style="text-align:right">Photos</span>
-          <span class="ch" style="text-align:right">Coverage</span>
-        </div>
-        <div id="dist-lb"></div>
-        <div class="summary" style="grid-template-columns:1fr 1fr">
-          <div class="scard"><div class="sl">Total</div><div class="sv" id="tot-dist">0</div><div class="sd" style="color:var(--g)">across network</div></div>
-          <div class="scard"><div class="sl">Network coverage</div><div class="sv" id="cov-dist">0%</div><div class="sd" style="color:var(--tm)">of declared territory</div></div>
-        </div>
-      </div>
-
     </div>
   </div>
+</div>
 
-  <!-- ══ FEED ══ -->
-  <div id="sec-feed" class="section">
-    <div class="panel">
-      <div class="pt">Live field events &mdash; last 60 minutes</div>
-      <div style="padding:4px 18px 8px" id="feed-list"></div>
-    </div>
-  </div>
+</div><!-- /body -->
+</div><!-- /shell -->
 
-</div><!-- /page -->
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
 <script>
+/* ── Constants (declared first to avoid TDZ errors) ── */
+const var_g = '#1a8c3f';
+let actChartDone = false;
+let recovChartDone = false;
+
 /* ── Tab switching ── */
-function switchTab(t,btn){
-  document.querySelectorAll('.tab').forEach(b=>b.classList.remove('active'));
-  document.querySelectorAll('.section').forEach(s=>s.classList.remove('show'));
-  btn.classList.add('active');
-  document.getElementById('sec-'+t).classList.add('show');
-  if(t==='map')setTimeout(initMap,50);
+function sw(id, btn) {
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('on'));
+  document.querySelectorAll('.tab').forEach(b => b.classList.remove('on'));
+  document.getElementById('panel-' + id).classList.add('on');
+  btn.classList.add('on');
+  if (id === 'performance') { initActChart(); buildRepLB(); }
+  if (id === 'epr') initRecovChart();
+  if (id === 'capacity') buildCapTable();
 }
 
-/* ── Count-up ── */
-function cu(el,target,sfx,dur){
-  if(!el)return;
-  let v=0,step=target/60,ti=dur/60;
-  let iv=setInterval(()=>{v+=step;if(v>=target){v=target;clearInterval(iv);}el.textContent=Math.round(v)+sfx;},ti);
-}
-
-/* ── KPI animation ── */
-setTimeout(()=>{
-  cu(document.getElementById('k1'),247,'',900);
-  cu(document.getElementById('k2'),1842,'',1100);
-  cu(document.getElementById('k3'),94,'%',900);
-  cu(document.getElementById('k4'),78,'%',900);
-  [['b1',89],['b2',81],['b3',74],['b4',61],['b5',38]].forEach(([id,w],i)=>{
-    setTimeout(()=>{let el=document.getElementById(id);if(el)el.style.width=w+'%'},200+i*110);
-  });
-  let arc=document.getElementById('garc'),gn=document.getElementById('gnum'),gv=0;
-  let gi=setInterval(()=>{gv+=1.5;if(gv>=70){gv=70;clearInterval(gi);}gn.textContent=Math.round(gv);arc.style.strokeDashoffset=239-(239*(gv/100));},18);
-  [[62,.62],[48,.48],[71,.71],[83,.83],[15,.15]].forEach(([p,f],i)=>{
-    setTimeout(()=>{
-      let s=document.getElementById('s'+(i+1)),sp=document.getElementById('sp'+(i+1));
-      if(s)s.style.width=(f*100)+'%';
-      if(sp)sp.textContent=p+'%';
-    },400+i*90);
-  });
-},300);
-
-/* ── Map zone click ── */
-const zoneData={
-  'North District':{reps:8,ev:412},
-  'City Centre':{reps:6,ev:348},
-  'East Zone':{reps:5,ev:289},
-  'South District':{reps:4,ev:221},
-  'West Industrial':{reps:2,ev:98},
-  'Outer East':{reps:3,ev:189},
-  'Port Zone':{reps:4,ev:256},
-};
-function selectZone(name,pct,status){
-  let tt=document.getElementById('map-tooltip');
-  let zd=zoneData[name]||{reps:3,ev:150};
-  document.getElementById('zt-name').textContent=name;
-  document.getElementById('zt-pct').textContent=pct+'% compliance';
-  document.getElementById('zt-status').textContent=status;
-  document.getElementById('zt-reps').textContent=zd.reps;
-  document.getElementById('zt-ev').textContent=zd.ev;
-  tt.style.display='block';
+/* ── Count-up utility ── */
+function cu(el, target, sfx, dur) {
+  if (!el) return;
+  let v = 0, step = target / 60, ti = dur / 60;
+  let iv = setInterval(() => { v += step; if (v >= target) { v = target; clearInterval(iv); } el.textContent = Math.round(v) + sfx; }, ti);
 }
 
 /* ── Rep leaderboard data ── */
-const distColors={
-  'Apex Distribution':'#1a7a3a',
-  'Metro Logistics':'#2d9e55',
-  'CityLink FMCG':'#e8a730',
-  'Southfield Traders':'#d4a020',
-  'Prime Direct':'#5b9cf0',
+const distColors = {
+  'Apex Distribution': '#0d4f24',
+  'Metro Logistics': '#2db55d',
+  'CityLink FMCG': '#d4920e',
+  'Southfield Traders': '#c08010',
+  'Prime Direct': '#1a5fa0',
 };
-const reps=[
+const reps = [
   {name:'Samuel N.',zone:'North District',dist:'Apex Distribution',photos:187,streak:22,color:'#0d4f24'},
-  {name:'James M.',zone:'North District',dist:'Apex Distribution',photos:164,streak:18,color:'#1a7a3a'},
-  {name:'Aisha K.',zone:'City Centre',dist:'Prime Direct',photos:148,streak:15,color:'#2d9e55'},
-  {name:'Peter O.',zone:'East Zone',dist:'Metro Logistics',photos:121,streak:11,color:'#e8a730'},
-  {name:'Grace W.',zone:'South District',dist:'Southfield Traders',photos:98,streak:9,color:'#e8a730'},
+  {name:'James M.',zone:'North District',dist:'Apex Distribution',photos:164,streak:18,color:'#1a8c3f'},
+  {name:'Aisha K.',zone:'City Centre',dist:'Prime Direct',photos:148,streak:15,color:'#2db55d'},
+  {name:'Peter O.',zone:'East Zone',dist:'Metro Logistics',photos:121,streak:11,color:'#d4920e'},
+  {name:'Grace W.',zone:'South District',dist:'Southfield Traders',photos:98,streak:9,color:'#d4920e'},
 ];
-const medals=['&#127945;','&#127946;','&#127947;'];
-const topClass=['top1','top2','top3','','','',''];
+const medals = ['🥇','🥈','🥉'];
+const topClass = ['top1','top2','top3','','',''];
 
-function streakDots(n){
-  let d='';
-  for(let i=0;i<7;i++){
-    let a=i<Math.min(n,7);
-    let c=a?(n>=15?'#1a7a3a':n>=8?'#e8a730':'#d9451a'):'#e8e8e4';
-    d+=`<div class="dot" style="background:${c}"></div>`;
+function streakDots(n) {
+  let d = '';
+  for (let i = 0; i < 7; i++) {
+    let a = i < Math.min(n, 7);
+    let c = a ? (n >= 15 ? '#1a8c3f' : n >= 8 ? '#d4920e' : '#c93c1a') : '#e0e0da';
+    d += `<div class="sdot-small" style="background:${c}"></div>`;
   }
   return d;
 }
 
-const rl=document.getElementById('rep-lb');
-reps.forEach((r,i)=>{
-  let dc=distColors[r.dist]||'#888';
-  let row=document.createElement('div');
-  row.className='lrow '+(topClass[i]||'');
-  row.style.cssText=`animation-delay:${i*65}ms;grid-template-columns:24px 1fr 64px 60px`;
-  let initials=r.name.split(' ').map(x=>x[0]).join('');
-  row.innerHTML=`
-    <div style="font-size:14px;text-align:center;line-height:30px">${i<3?medals[i]:`<span style="font-size:11px;font-family:'DM Mono',monospace;color:var(--tm)">${i+1}</span>`}</div>
-    <div style="display:flex;align-items:center;gap:8px;min-width:0">
-      <div class="rav" style="background:${r.color}20;color:${r.color};flex-shrink:0">${initials}</div>
-      <div style="min-width:0">
-        <div style="font-size:12px;font-weight:500;color:var(--tx);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${r.name}</div>
-        <div style="display:flex;align-items:center;gap:3px;margin-top:2px">
-          <div style="width:5px;height:5px;border-radius:50%;background:${dc};flex-shrink:0"></div>
-          <span style="font-size:10px;font-family:'DM Mono',monospace;color:var(--tm);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${r.dist}</span>
+function buildRepLB() {
+  const rl = document.getElementById('rep-lb-main');
+  if (!rl || rl.childElementCount > 0) return;
+  reps.forEach((r, i) => {
+    let dc = distColors[r.dist] || '#888';
+    let row = document.createElement('div');
+    row.className = 'lrow ' + (topClass[i] || '');
+    row.style.cssText = `animation-delay:${i*65}ms;grid-template-columns:24px 1fr 64px 60px`;
+    let initials = r.name.split(' ').map(x => x[0]).join('');
+    row.innerHTML = `
+      <div style="font-size:14px;text-align:center;line-height:30px">${i<3?medals[i]:`<span style="font-size:11px;font-family:var(--mono);color:var(--muted)">${i+1}</span>`}</div>
+      <div style="display:flex;align-items:center;gap:8px;min-width:0">
+        <div class="rav" style="background:${r.color}20;color:${r.color}">${initials}</div>
+        <div style="min-width:0">
+          <div style="font-size:12px;font-weight:600;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${r.name}</div>
+          <div style="display:flex;align-items:center;gap:3px;margin-top:2px">
+            <div style="width:5px;height:5px;border-radius:50%;background:${dc};flex-shrink:0"></div>
+            <span style="font-size:10px;font-family:var(--mono);color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${r.dist}</span>
+          </div>
         </div>
       </div>
-    </div>
-    <div style="text-align:right">
-      <div style="font-size:14px;font-weight:700;font-family:'DM Mono',monospace;color:var(--tx)" id="rp${i}">0</div>
-      <div style="font-size:9px;color:var(--tm);font-family:'DM Mono',monospace">photos</div>
-    </div>
-    <div>
-      <div class="streak-dots">${streakDots(r.streak)}</div>
-      <div style="font-size:9px;font-family:'DM Mono',monospace;color:var(--tm);text-align:right;margin-top:2px">${r.streak}d</div>
-    </div>
-  `;
-  rl.appendChild(row);
-  setTimeout(()=>{
-    let v=0,t=r.photos;
-    let iv=setInterval(()=>{v+=Math.ceil(t/45);if(v>=t){v=t;clearInterval(iv);}document.getElementById('rp'+i).textContent=v;},16);
-  },200+i*60);
-});
-
-const repTotal=reps.reduce((a,r)=>a+r.photos,0);
-const repAvg=Math.round(repTotal/reps.length);
-cu(document.getElementById('tot-rep'),repTotal,'',900);
-cu(document.getElementById('avg-rep'),repAvg,'',800);
-
-/* ── Distributor leaderboard ── */
-const dists=[
-  {name:'Apex Distribution',reps:4,photos:289,coverage:94,color:'#1a7a3a'},
-  {name:'Prime Direct',reps:2,photos:244,coverage:88,color:'#5b9cf0'},
-  {name:'Metro Logistics',reps:3,photos:201,coverage:76,color:'#2d9e55'},
-  {name:'Southfield Traders',reps:2,photos:121,coverage:61,color:'#d4a020'},
-];
-const dl=document.getElementById('dist-lb');
-dists.forEach((d,i)=>{
-  let row=document.createElement('div');
-  row.className='drow '+(topClass[i]||'');
-  row.style.cssText=`animation-delay:${300+i*65}ms;grid-template-columns:24px 1fr 64px 60px`;
-  let initials=d.name.split(' ').map(x=>x[0]).join('');
-  row.innerHTML=`
-    <div style="font-size:14px;text-align:center;line-height:30px">${i<3?medals[i]:`<span style="font-size:11px;font-family:'DM Mono',monospace;color:var(--tm)">${i+1}</span>`}</div>
-    <div style="display:flex;align-items:center;gap:8px;min-width:0">
-      <div class="rav" style="background:${d.color}20;color:${d.color};flex-shrink:0">${initials}</div>
-      <div style="min-width:0">
-        <div style="font-size:12px;font-weight:500;color:var(--tx);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${d.name}</div>
-        <div style="font-size:10px;font-family:'DM Mono',monospace;color:var(--tm);margin-top:1px">${d.reps} reps</div>
+      <div style="text-align:right">
+        <div style="font-size:14px;font-weight:700;font-family:var(--mono);color:var(--ink)" id="rp2-${i}">0</div>
+        <div style="font-size:9px;color:var(--muted);font-family:var(--mono)">photos</div>
       </div>
-    </div>
-    <div style="text-align:right">
-      <div style="font-size:14px;font-weight:700;font-family:'DM Mono',monospace;color:var(--tx)" id="dp${i}">0</div>
-      <div style="font-size:9px;color:var(--tm);font-family:'DM Mono',monospace">photos</div>
-    </div>
-    <div>
-      <div style="font-size:13px;font-weight:600;font-family:'DM Mono',monospace;text-align:right;color:var(--tx)">${d.coverage}%</div>
-      <div class="bt" style="margin-top:4px"><div class="bf" id="dc${i}" style="width:0%;background:${d.color}"></div></div>
-    </div>
-  `;
-  dl.appendChild(row);
-  setTimeout(()=>{
-    let v=0,t=d.photos;
-    let iv=setInterval(()=>{v+=Math.ceil(t/45);if(v>=t){v=t;clearInterval(iv);}document.getElementById('dp'+i).textContent=v;},16);
-    let el=document.getElementById('dc'+i);
-    if(el)el.style.width=d.coverage+'%';
-  },400+i*65);
-});
+      <div>
+        <div class="streak-dots">${streakDots(r.streak)}</div>
+        <div style="font-size:9px;font-family:var(--mono);color:var(--muted);text-align:right;margin-top:2px">${r.streak}d</div>
+      </div>
+    `;
+    rl.appendChild(row);
+    setTimeout(() => {
+      let v = 0, t = r.photos;
+      let iv = setInterval(() => { v += Math.ceil(t/45); if (v >= t) { v = t; clearInterval(iv); } document.getElementById('rp2-'+i).textContent = v; }, 16);
+    }, 200 + i * 60);
+  });
 
-const distTotal=dists.reduce((a,d)=>a+d.photos,0);
-cu(document.getElementById('tot-dist'),distTotal,'',900);
-cu(document.getElementById('cov-dist'),76,'%',800);
+  const repTotal = reps.reduce((a, r) => a + r.photos, 0);
+  cu(document.getElementById('tot-rep2'), repTotal, '', 900);
+  cu(document.getElementById('avg-rep2'), Math.round(repTotal/reps.length), '', 800);
 
-/* ── Live feed photo thumbnails — real field retail (Wikimedia Commons, CC licensed) ── */
-const thumbs=[
-  'https://upload.wikimedia.org/wikipedia/commons/thumb/1/10/Small_kiosks_along_the_shops_in_the_market_%286915215707%29.jpg/120px-Small_kiosks_along_the_shops_in_the_market_%286915215707%29.jpg',
-  'https://upload.wikimedia.org/wikipedia/commons/thumb/9/9d/Grocery_Shop_in_a_small_Town_in_South_India_%281%29.JPG/120px-Grocery_Shop_in_a_small_Town_in_South_India_%281%29.JPG',
-  'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c6/Village_kiosk_-_Ben_Sutherland.jpg/120px-Village_kiosk_-_Ben_Sutherland.jpg',
-  'https://upload.wikimedia.org/wikipedia/commons/thumb/1/1c/Kiosk_%2813842309713%29.jpg/120px-Kiosk_%2813842309713%29.jpg',
-  'https://upload.wikimedia.org/wikipedia/commons/thumb/4/40/Amber%2C_India_%2823611383725%29.jpg/120px-Amber%2C_India_%2823611383725%29.jpg',
-];
-/* ── Live feed ── */
-const events=[
-  {rep:'Samuel N.',zone:'North District',dist:'Apex Distribution',action:'Recovery basket confirmed',time:'2 min ago',thumb:0},
-  {rep:'Aisha K.',zone:'City Centre',dist:'Prime Direct',action:'Photo verification complete',time:'7 min ago',thumb:1},
-  {rep:'Peter O.',zone:'East Zone',dist:'Metro Logistics',action:'New retailer onboarded',time:'14 min ago',thumb:3},
-  {rep:'Grace W.',zone:'South District',dist:'Southfield Traders',action:'Packaging sort &mdash; 3 SKUs logged',time:'23 min ago',thumb:2},
-  {rep:'Samuel N.',zone:'North District',dist:'Apex Distribution',action:'EPR data point submitted',time:'38 min ago',thumb:4},
-];
-const fl=document.getElementById('feed-list');
-events.forEach((e,i)=>{
-  setTimeout(()=>{
-    let d=document.createElement('div');
-    d.className='fi';
-    d.style.cssText='display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:.5px solid var(--bd)';
-    let thumb=document.createElement('div');
-    thumb.style.cssText='flex-shrink:0;width:52px;height:52px;border-radius:6px;overflow:hidden;border:.5px solid var(--bd)';
-    thumb.innerHTML=`<img src="${thumbs[e.thumb]}" width="52" height="52" style="object-fit:cover;display:block;width:52px;height:52px" crossorigin="anonymous"/>`;
-    let body=document.createElement('div');
-    body.style.cssText='flex:1;min-width:0';
-    body.innerHTML=`<div style="font-size:12px;font-weight:500;color:var(--tx)"><strong>${e.rep}</strong> &mdash; ${e.action}</div><div style="font-size:10px;color:var(--tm);font-family:'DM Mono',monospace;margin-top:3px">${e.zone} &nbsp;|&nbsp; ${e.dist} &nbsp;|&nbsp; ${e.time}</div>`;
-    let badge=document.createElement('div');
-    badge.style.cssText='flex-shrink:0;background:#e8f5ed;border-radius:6px;padding:3px 8px;font-size:10px;font-family:DM Mono,monospace;color:#0d4f24';
-    badge.textContent='verified';
-    d.appendChild(thumb);d.appendChild(body);d.appendChild(badge);
-    fl.appendChild(d);
-  },i*280);
-});
-/* ── Leaflet map (lazy-init when tab is shown) ── */
-let mapInit=false;
-function initMap(){
-  if(mapInit)return;
-  mapInit=true;
-  const L=window.L;
-  if(!L){setTimeout(initMap,200);return;}
-
-  const map=L.map('leaflet-map',{zoomControl:true,scrollWheelZoom:false}).setView([13.75,100.52],13);
-  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{
-    attribution:'&copy; OpenStreetMap contributors',
-    maxZoom:18,
-  }).addTo(map);
-
-  const zones=[
-    {name:'North District',pct:89,status:'High',reps:8,ev:412,color:'#1a7a3a',coords:[[13.785,100.49],[13.790,100.515],[13.778,100.535],[13.768,100.525],[13.762,100.505]]},
-    {name:'City Centre',pct:81,status:'High',reps:6,ev:348,color:'#2d9e55',coords:[[13.762,100.505],[13.768,100.525],[13.758,100.545],[13.748,100.540],[13.745,100.515],[13.752,100.500]]},
-    {name:'East Zone',pct:74,status:'Good',reps:5,ev:289,color:'#d4a020',coords:[[13.778,100.535],[13.790,100.515],[13.795,100.545],[13.788,100.568],[13.772,100.560],[13.762,100.548]]},
-    {name:'South District',pct:61,status:'Good',reps:4,ev:221,color:'#c09020',coords:[[13.745,100.515],[13.748,100.540],[13.738,100.545],[13.728,100.535],[13.725,100.510],[13.732,100.495]]},
-    {name:'West Industrial',pct:38,status:'Building',reps:2,ev:98,color:'#d9451a',coords:[[13.752,100.500],[13.745,100.515],[13.732,100.495],[13.735,100.480],[13.748,100.478]]},
-    {name:'Outer East',pct:52,status:'Building',reps:3,ev:189,color:'#c94015',coords:[[13.788,100.568],[13.795,100.545],[13.808,100.555],[13.812,100.578],[13.800,100.590],[13.786,100.582]]},
-    {name:'Port Zone',pct:67,status:'Good',reps:4,ev:256,color:'#b08010',coords:[[13.762,100.548],[13.772,100.560],[13.762,100.572],[13.748,100.568],[13.742,100.552],[13.748,100.540]]},
+  // Distributor LB
+  const dists = [
+    {name:'Apex Distribution',reps:4,photos:289,coverage:94,color:'#0d4f24'},
+    {name:'Prime Direct',reps:2,photos:244,coverage:88,color:'#1a5fa0'},
+    {name:'Metro Logistics',reps:3,photos:201,coverage:76,color:'#2db55d'},
+    {name:'Southfield Traders',reps:2,photos:121,coverage:61,color:'#c08010'},
   ];
+  const dl = document.getElementById('dist-lb-main');
+  if (!dl || dl.childElementCount > 0) return;
+  dists.forEach((d, i) => {
+    let row = document.createElement('div');
+    row.className = 'lrow ' + (topClass[i] || '');
+    row.style.cssText = `animation-delay:${300+i*65}ms;grid-template-columns:24px 1fr 64px 60px`;
+    let initials = d.name.split(' ').map(x => x[0]).join('');
+    row.innerHTML = `
+      <div style="font-size:14px;text-align:center;line-height:30px">${i<3?medals[i]:`<span style="font-size:11px;font-family:var(--mono);color:var(--muted)">${i+1}</span>`}</div>
+      <div style="display:flex;align-items:center;gap:8px;min-width:0">
+        <div class="rav" style="background:${d.color}20;color:${d.color}">${initials}</div>
+        <div style="min-width:0">
+          <div style="font-size:12px;font-weight:600;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${d.name}</div>
+          <div style="font-size:10px;font-family:var(--mono);color:var(--muted);margin-top:1px">${d.reps} reps</div>
+        </div>
+      </div>
+      <div style="text-align:right">
+        <div style="font-size:14px;font-weight:700;font-family:var(--mono);color:var(--ink)" id="dp2-${i}">0</div>
+        <div style="font-size:9px;color:var(--muted);font-family:var(--mono)">photos</div>
+      </div>
+      <div>
+        <div style="font-size:13px;font-weight:700;font-family:var(--mono);text-align:right;color:var(--ink)">${d.coverage}%</div>
+        <div class="bt-track" style="margin-top:4px"><div class="bt-fill" id="dc2-${i}" style="width:0%;background:${d.color}"></div></div>
+      </div>
+    `;
+    dl.appendChild(row);
+    setTimeout(() => {
+      let v = 0, t = d.photos;
+      let iv = setInterval(() => { v += Math.ceil(t/45); if (v >= t) { v = t; clearInterval(iv); } document.getElementById('dp2-'+i).textContent = v; }, 16);
+      let el = document.getElementById('dc2-'+i);
+      if (el) el.style.width = d.coverage + '%';
+    }, 400 + i * 65);
+  });
+  const distTotal = dists.reduce((a, d) => a + d.photos, 0);
+  cu(document.getElementById('tot-dist2'), distTotal, '', 900);
+  cu(document.getElementById('cov-dist2'), 76, '%', 800);
+}
 
-  zones.forEach(z=>{
-    const poly=L.polygon(z.coords,{
-      color:z.color,weight:2,opacity:.9,
-      fillColor:z.color,fillOpacity:.35,
-    }).addTo(map);
+/* ── Live feed ── */
+const feedEvents = [
+  {rep:'Samuel N.',zone:'North District',dist:'Apex Distribution',action:'Recovery basket confirmed',time:'2 min ago',type:'basket'},
+  {rep:'Aisha K.',zone:'City Centre',dist:'Prime Direct',action:'Photo verification complete',time:'7 min ago',type:'photo'},
+  {rep:'Peter O.',zone:'East Zone',dist:'Metro Logistics',action:'New retailer onboarded',time:'14 min ago',type:'onboard'},
+  {rep:'Grace W.',zone:'South District',dist:'Southfield Traders',action:'Packaging sort — 3 SKUs logged',time:'23 min ago',type:'sort'},
+  {rep:'Samuel N.',zone:'North District',dist:'Apex Distribution',action:'EPR data point submitted',time:'38 min ago',type:'epr'},
+  {rep:'James M.',zone:'North District',dist:'Apex Distribution',action:'Recovery basket confirmed',time:'41 min ago',type:'basket'},
+  {rep:'Aisha K.',zone:'City Centre',dist:'Prime Direct',action:'2.4 kg PET recovered · photo verified',time:'49 min ago',type:'recovery'},
+];
+const typeColor = {basket:'#1a8c3f',photo:'#2db55d',onboard:'#1a5fa0',sort:'#d4920e',epr:'#0a7a6a',recovery:'#0d4f24'};
+const fl = document.getElementById('feed-main');
+feedEvents.forEach((e, i) => {
+  setTimeout(() => {
+    let d = document.createElement('div');
+    d.className = 'fi';
+    let col = {basket:'#1a8c3f',photo:'#2db55d',onboard:'#1a5fa0',sort:'#d4920e',epr:'#0a7a6a',recovery:'#0d4f24'}[e.type] || '#1a8c3f';
+    d.innerHTML = `
+      <div style="width:7px;height:7px;border-radius:50%;background:${col};flex-shrink:0;margin-top:4px"></div>
+      <div style="flex:1;min-width:0">
+        <div style="font-size:12px;font-weight:600;color:var(--ink)"><strong>${e.rep}</strong> — ${e.action}</div>
+        <div style="font-size:10px;color:var(--muted);font-family:var(--mono);margin-top:2px">${e.zone} | ${e.dist} | ${e.time}</div>
+      </div>
+      <div style="flex-shrink:0;background:var(--gl);border-radius:6px;padding:2px 8px;font-size:10px;font-family:var(--mono);color:var(--gd);font-weight:600">verified</div>
+    `;
+    fl.appendChild(d);
+  }, i * 260);
+});
 
-    const labelHtml=`<div style="background:${z.color};color:#fff;font-family:Syne,sans-serif;font-size:11px;font-weight:600;padding:3px 8px;border-radius:4px;white-space:nowrap;box-shadow:0 1px 4px rgba(0,0,0,.2)">${z.name}<br><span style="font-family:DM Mono,monospace;font-size:10px;opacity:.9">${z.pct}%</span></div>`;
-    const center=poly.getBounds().getCenter();
-    L.marker(center,{
-      icon:L.divIcon({className:'',html:labelHtml,iconAnchor:[40,20]}),
-      interactive:false,
-    }).addTo(map);
-
-    poly.on('click',()=>{
-      const tt=document.getElementById('map-tooltip');
-      document.getElementById('zt-name').textContent=z.name;
-      document.getElementById('zt-pct').textContent=z.pct+'% compliance';
-      document.getElementById('zt-status').textContent=z.status;
-      document.getElementById('zt-reps').textContent=z.reps;
-      document.getElementById('zt-ev').textContent=z.ev;
-      tt.style.display='block';
-    });
-    poly.on('mouseover',()=>poly.setStyle({fillOpacity:.55}));
-    poly.on('mouseout',()=>poly.setStyle({fillOpacity:.35}));
+/* ── Charts ── */
+function initActChart() {
+  if (actChartDone) return;
+  actChartDone = true;
+  new Chart(document.getElementById('actChart'), {
+    type: 'bar',
+    data: {
+      labels: ['Oct', 'Nov', 'Dec', 'Jan', 'Feb', 'Mar'],
+      datasets: [
+        {label:'Field events', data:[648, 812, 1020, 1248, 1562, 1842], backgroundColor:'#1a8c3f', borderRadius:5, borderSkipped:false},
+        {label:'Target',       data:[800, 900, 1100, 1300, 1600, 2000], backgroundColor:'rgba(0,0,0,0.06)', borderRadius:5, borderSkipped:false}
+      ]
+    },
+    options: {
+      responsive:true, maintainAspectRatio:false,
+      plugins:{legend:{display:false}},
+      scales:{
+        x:{grid:{display:false}, ticks:{font:{size:11,family:"'DM Mono'"}}},
+        y:{grid:{color:'rgba(0,0,0,0.04)'}, ticks:{font:{size:11,family:"'DM Mono'"}}, beginAtZero:true}
+      }
+    }
   });
 }
 
-/* load Leaflet JS then init */
-(function(){
-  const s=document.createElement('script');
-  s.src='https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js';
-  s.onload=()=>{if(document.getElementById('sec-map').classList.contains('show'))initMap();};
-  document.head.appendChild(s);
-})();
+function initRecovChart() {
+  if (recovChartDone) return;
+  recovChartDone = true;
+  new Chart(document.getElementById('recovChart'), {
+    type: 'bar',
+    data: {
+      labels: ['Oct', 'Nov', 'Dec', 'Jan', 'Feb', 'Mar'],
+      datasets: [
+        {label:'Verified actions', data:[648, 812, 1020, 1248, 1562, 1842], backgroundColor:'#1a8c3f', borderRadius:5, borderSkipped:false},
+        {label:'Target',           data:[800, 900, 1100, 1300, 1600, 2000], backgroundColor:'rgba(0,0,0,0.06)', borderRadius:5, borderSkipped:false}
+      ]
+    },
+    options: {
+      responsive:true, maintainAspectRatio:false,
+      plugins:{legend:{display:false}},
+      scales:{
+        x:{grid:{display:false}, ticks:{font:{size:11,family:"'DM Mono'"}}},
+        y:{grid:{color:'rgba(0,0,0,0.04)'}, ticks:{font:{size:11,family:"'DM Mono'"}}, beginAtZero:true}
+      }
+    }
+  });
+}
+
+/* ── Capacity building table ── */
+function buildCapTable() {
+  const el = document.getElementById('cap-rep-table');
+  if (!el || el.childElementCount > 0) return;
+  const rows = [
+    {rank:1,name:'Samuel N.',dist:'Apex',scores:[88,84,79,76,91],idx:84},
+    {rank:2,name:'James M.',dist:'Apex',scores:[82,79,74,71,88],idx:79},
+    {rank:3,name:'Aisha K.',dist:'Prime',scores:[78,72,68,64,84],idx:73},
+    {rank:4,name:'Peter O.',dist:'Metro',scores:[71,66,59,54,76],idx:65},
+    {rank:5,name:'Grace W.',dist:'Southfield',scores:[64,61,52,48,71],idx:59},
+    {rank:6,name:'David M.',dist:'CityLink',scores:[58,54,44,41,64],idx:52},
+    {rank:7,name:'Fatuma A.',dist:'Metro',scores:[49,46,38,34,57],idx:45},
+  ];
+  rows.forEach((r,i) => {
+    const idxColor = r.idx >= 70 ? '#0d4f24' : r.idx >= 55 ? '#d4920e' : '#c93c1a';
+    const idxBg   = r.idx >= 70 ? '#e6f5ec'  : r.idx >= 55 ? '#fff8e6' : '#fff0eb';
+    const scoreColor = s => s >= 70 ? '#1a8c3f' : s >= 55 ? '#d4920e' : '#c93c1a';
+    const row = document.createElement('div');
+    row.style.cssText = `display:grid;grid-template-columns:24px 1fr 52px 52px 52px 52px 52px 56px;gap:4px;align-items:center;padding:9px 0;border-bottom:1px solid rgba(0,0,0,.07);animation:slideIn .4s ease ${i*60}ms both`;
+    row.innerHTML = `
+      <div style="font-size:11px;text-align:center;color:#5a7060;font-family:'DM Mono',monospace">${r.rank}</div>
+      <div>
+        <div style="font-size:12px;font-weight:600;color:#0f1c14">${r.name}</div>
+        <div style="font-size:9px;color:#5a7060;font-family:'DM Mono',monospace">${r.dist}</div>
+      </div>
+      ${r.scores.map(s=>`<div style="text-align:center;font-size:11px;font-weight:700;font-family:'DM Mono',monospace;color:${scoreColor(s)}">${s}</div>`).join('')}
+      <div style="text-align:right"><span style="font-size:11px;font-weight:700;padding:2px 8px;border-radius:8px;background:${idxBg};color:${idxColor};font-family:'DM Mono',monospace">${r.idx}</span></div>
+    `;
+    el.appendChild(row);
+  });
+}
 </script>
 </body>
 </html>
