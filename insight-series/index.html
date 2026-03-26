@@ -393,33 +393,29 @@ footer { background: var(--ink); border-top: 1px solid rgba(255,255,255,0.06); p
         <span class="badge-new">New — Free with Email</span>
         <span class="card-num">03</span>
       </div>
-      <h3>The GTI: Measuring Behavior Change, Not Intent</h3>
-      <p>The Green Transformation Index is a composite scoring system that tracks five stages of behavioral change — from Inactive to Internalized — across every retailer in your network. Learn how to turn subjective "adoption" into a quantified, auditable metric.</p>
+      <h3>From Awareness to Action: Designing Behavioral Sustainability Systems</h3>
+      <p>Campaigns create intention. Systems create habits. This framework maps how to build a behavioral system that turns one-off field actions into internalized routines — and why the GTI distinguishes compliance from internalization in ways that matter for EPR and ESG auditors.</p>
 
       <!-- EMAIL GATE WIDGET -->
       <div class="gate-wrap" id="gate03">
-
-        <!-- Step 1: CTA button -->
-        <button class="gate-btn-trigger" id="gate03-trigger" onclick="showGateForm()">
+        <!-- Step 1: CTA button (shown to non-subscribers) -->
+        <button class="gate-btn-trigger" id="gate03-trigger" onclick="showGateForm('03')">
           Get Fiche 03 →
         </button>
-
-        <!-- Step 2: Inline form -->
+        <!-- Step 2: Inline form (non-subscribers) -->
         <div class="gate-form-wrap" id="gate03-form">
-          <span class="gate-form-label">Enter your work email to download instantly</span>
+          <span class="gate-form-label">Enter your work email — get this fiche + early access to all upcoming ones</span>
           <div class="gate-form-row">
             <input type="email" class="gate-form-input" id="gate03-email" placeholder="you@company.com" required>
-            <button class="gate-submit" id="gate03-submit" onclick="submitGate()">Send me the PDF</button>
+            <button class="gate-submit" id="gate03-submit" onclick="submitGate('03')">Send me the PDF</button>
           </div>
-          <span style="font-size:0.7rem;color:var(--ink-light);">No spam. Added to the Insight Series mailing list.</span>
+          <span style="font-size:0.7rem;color:var(--ink-light);">No spam. Unsubscribe anytime.</span>
         </div>
-
-        <!-- Step 3: Success + download -->
+        <!-- Step 3: Download (shown after submit OR returning subscriber) -->
         <div class="gate-success" id="gate03-success">
-          <p class="gate-success-msg">✓ You're in. <span>Download starts below.</span></p>
-          <a href="/fiches/PFE_Fiche_03.pdf" class="btn-download-gated" target="_blank" id="gate03-dl">Download Fiche 03 PDF →</a>
+          <p class="gate-success-msg" id="gate03-msg">✓ You're in. <span>Download starts below.</span></p>
+          <a href="/fiches/PFE_Fiche_03.pdf" class="btn-download-gated" target="_blank">Download Fiche 03 PDF →</a>
         </div>
-
       </div>
     </div>
 
@@ -430,37 +426,37 @@ footer { background: var(--ink); border-top: 1px solid rgba(255,255,255,0.06); p
   <div class="teaser-grid reveal">
     <div class="teaser">
       <div class="teaser-num">04</div>
-      <div class="teaser-title">Photo Verification as EPR Evidence</div>
+      <div class="teaser-title">Gamification for Sustainability: Turning Good Habits into Engagement</div>
       <div class="lock-icon">🔒 Subscribers only</div>
     </div>
     <div class="teaser">
       <div class="teaser-num">05</div>
-      <div class="teaser-title">Incentive Design for Informal Collectors</div>
+      <div class="teaser-title">The Retail Activation Model for Circular Economy</div>
       <div class="lock-icon">🔒 Subscribers only</div>
     </div>
     <div class="teaser">
       <div class="teaser-num">06</div>
-      <div class="teaser-title">Territory Pricing vs. Seat Pricing in FMCG SaaS</div>
+      <div class="teaser-title">Building Verifiable ESG Data Systems</div>
       <div class="lock-icon">🔒 Subscribers only</div>
     </div>
     <div class="teaser">
       <div class="teaser-num">07</div>
-      <div class="teaser-title">One Field Op, Multiple FMCG Clients</div>
+      <div class="teaser-title">Healthcare Without Waste: Linking Patient Care and Sustainability</div>
       <div class="lock-icon">🔒 Subscribers only</div>
     </div>
     <div class="teaser">
       <div class="teaser-num">08</div>
-      <div class="teaser-title">From Compliance to Internalized Behavior</div>
+      <div class="teaser-title">Behavior-Based Patient Support Programs</div>
       <div class="lock-icon">🔒 Subscribers only</div>
     </div>
     <div class="teaser">
       <div class="teaser-num">09</div>
-      <div class="teaser-title">Scaling Without New Logistics Infrastructure</div>
+      <div class="teaser-title">Activating Supply Chains for ESG Impact</div>
       <div class="lock-icon">🔒 Subscribers only</div>
     </div>
     <div class="teaser">
       <div class="teaser-num">10</div>
-      <div class="teaser-title">Building the Circular Data Flywheel</div>
+      <div class="teaser-title">Designing Systems That Change Behavior at Scale</div>
       <div class="lock-icon">🔒 Subscribers only</div>
     </div>
   </div>
@@ -560,16 +556,50 @@ const observer = new IntersectionObserver(entries => {
 }, { threshold: 0.08 });
 document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
-// ── EMAIL GATE: Fiche 03 ──
-function showGateForm() {
-  document.getElementById('gate03-trigger').style.display = 'none';
-  document.getElementById('gate03-form').classList.add('visible');
-  document.getElementById('gate03-email').focus();
+// ── SUBSCRIBER STATE ──
+// Once someone submits the gate form, we store a flag in localStorage.
+// On every page load, if the flag exists, all gated fiches show their
+// download buttons immediately — no form required.
+
+const SUBSCRIBER_KEY = 'pfe_subscriber';
+
+function isSubscriber() {
+  try { return !!localStorage.getItem(SUBSCRIBER_KEY); } catch(e) { return false; }
 }
 
-async function submitGate() {
-  const emailInput = document.getElementById('gate03-email');
-  const submitBtn = document.getElementById('gate03-submit');
+function markSubscriber() {
+  try { localStorage.setItem(SUBSCRIBER_KEY, '1'); } catch(e) {}
+}
+
+// Called on page load — reveals download buttons for all live gated fiches
+// if the visitor is already subscribed.
+function initGates() {
+  if (!isSubscriber()) return;
+  // For each gated fiche that is live, skip the gate entirely
+  document.querySelectorAll('.gate-wrap').forEach(wrap => {
+    const id = wrap.id; // e.g. "gate03"
+    const trigger = document.getElementById(id + '-trigger');
+    const form    = document.getElementById(id + '-form');
+    const success = document.getElementById(id + '-success');
+    const msg     = document.getElementById(id + '-msg');
+    if (trigger) trigger.style.display = 'none';
+    if (form)    form.classList.remove('visible');
+    if (success) success.classList.add('visible');
+    if (msg)     msg.innerHTML = '✓ Subscriber access. <span>Download below.</span>';
+  });
+}
+
+// ── EMAIL GATE: show form ──
+function showGateForm(num) {
+  document.getElementById('gate' + num + '-trigger').style.display = 'none';
+  document.getElementById('gate' + num + '-form').classList.add('visible');
+  document.getElementById('gate' + num + '-email').focus();
+}
+
+// ── EMAIL GATE: submit ──
+async function submitGate(num) {
+  const emailInput = document.getElementById('gate' + num + '-email');
+  const submitBtn  = document.getElementById('gate' + num + '-submit');
   const email = emailInput.value.trim();
 
   if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
@@ -587,18 +617,21 @@ async function submitGate() {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         email,
-        source: 'fiche-03-gate',
-        fiche: 'PFE_Fiche_03',
-        message: 'Fiche 03 download gate'
+        source: 'fiche-' + num + '-gate',
+        fiche: 'PFE_Fiche_0' + num,
+        message: 'Fiche ' + num + ' download gate — Insight Series'
       })
     });
 
     if (res.ok) {
-      // Hide form, show success + download link
-      document.getElementById('gate03-form').classList.remove('visible');
-      document.getElementById('gate03-success').classList.add('visible');
-      // Auto-trigger download
-      window.open('/fiches/PFE_Fiche_03.pdf', '_blank');
+      markSubscriber();
+      // Hide form, show success for THIS fiche
+      document.getElementById('gate' + num + '-form').classList.remove('visible');
+      document.getElementById('gate' + num + '-success').classList.add('visible');
+      // Auto-open PDF
+      window.open('/fiches/PFE_Fiche_0' + num + '.pdf', '_blank');
+      // Unlock all other live gated fiches on the page immediately
+      initGates();
     } else {
       submitBtn.textContent = 'Error — try again';
       submitBtn.disabled = false;
@@ -609,10 +642,19 @@ async function submitGate() {
   }
 }
 
-// Allow Enter key in email field
-document.getElementById('gate03-email').addEventListener('keydown', function(e) {
-  if (e.key === 'Enter') { e.preventDefault(); submitGate(); }
+// Wire Enter key for all gate email inputs
+document.querySelectorAll('.gate-form-input').forEach(input => {
+  input.addEventListener('keydown', function(e) {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      const num = this.id.replace('gate', '').replace('-email', '');
+      submitGate(num);
+    }
+  });
 });
+
+// Run on load
+initGates();
 
 // Newsletter
 async function subscribeNewsletter(e) {
@@ -628,6 +670,7 @@ async function subscribeNewsletter(e) {
       body: JSON.stringify({ email, source: 'insight-series-newsletter', message: 'Newsletter subscription' })
     });
     if (res.ok) {
+      markSubscriber();
       btn.textContent = '✓ You\'re in!';
       document.getElementById('newsletter-email').value = '';
     } else {
