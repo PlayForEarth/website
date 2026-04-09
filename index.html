@@ -256,6 +256,280 @@ section { padding: 96px var(--gutter); }
 .price-setup { margin-top: 20px; padding-top: 16px; border-top: 1px solid var(--border-dark); font-size: 0.78rem; color: var(--ink-light); font-weight: 500; }
 .price-setup em { display: block; font-style: normal; font-size: 0.74rem; margin-top: 4px; opacity: 0.75; }
 
+
+<style>
+#business-case {
+  background: white;
+  border-top: 1px solid var(--border);
+  padding: 96px var(--gutter);
+}
+#business-case .bc-inner {
+  max-width: var(--max-w);
+  margin: 0 auto;
+}
+#business-case .bc-legend {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 16px;
+}
+#business-case .bc-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--ink-light);
+}
+#business-case .bc-legend-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+#business-case .roi-wrap {
+  border: 1px solid rgba(18,39,26,0.1);
+  border-radius: 16px;
+  overflow: hidden;
+  margin-bottom: 32px;
+}
+#business-case table.roi {
+  width: 100%;
+  border-collapse: collapse;
+}
+#business-case table.roi thead tr {
+  background: var(--ink);
+}
+#business-case table.roi th {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.6);
+  padding: 14px 16px;
+  text-align: left;
+}
+#business-case table.roi th:first-child {
+  color: rgba(255,255,255,0.4);
+  width: 22%;
+}
+#business-case table.roi th.th-bad  { color: #fca5a5; }
+#business-case table.roi th.th-good { color: #86efac; }
+#business-case table.roi tbody tr {
+  border-bottom: 1px solid rgba(18,39,26,0.06);
+}
+#business-case table.roi tbody tr:last-child { border-bottom: none; }
+#business-case table.roi tbody tr:nth-child(even) { background: #fafcfa; }
+#business-case table.roi td {
+  padding: 12px 16px;
+  font-size: 0.85rem;
+  vertical-align: middle;
+  line-height: 1.4;
+}
+#business-case table.roi td:first-child {
+  font-weight: 700;
+  color: var(--ink);
+  font-size: 0.82rem;
+}
+#business-case table.roi tr.section-row td {
+  background: #f0faf2;
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--green);
+  padding: 8px 16px;
+  border-bottom: 1px solid rgba(26,140,63,0.12);
+}
+#business-case .cell-bad {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: #fef2f2;
+  color: #991b1b;
+  font-size: 0.79rem;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 6px;
+}
+#business-case .cell-bad::before {
+  content: '✕';
+  color: #dc2626;
+  font-size: 0.7rem;
+  font-weight: 900;
+}
+#business-case .cell-warn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: #fffbeb;
+  color: #92400e;
+  font-size: 0.79rem;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 6px;
+}
+#business-case .cell-warn::before {
+  content: '~';
+  color: #d97706;
+  font-weight: 900;
+}
+#business-case .cell-good {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: #f0fdf4;
+  color: #14532d;
+  font-size: 0.79rem;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 6px;
+}
+#business-case .cell-good::before {
+  content: '✓';
+  color: #16a34a;
+  font-size: 0.7rem;
+  font-weight: 900;
+}
+#business-case .bc-pilot {
+  background: var(--ink);
+  border-radius: 18px;
+  padding: 36px 40px;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 32px;
+  align-items: center;
+}
+#business-case .bc-pilot-title {
+  font-size: 1.1rem;
+  font-weight: 900;
+  color: white;
+  margin-bottom: 6px;
+  letter-spacing: -0.02em;
+}
+#business-case .bc-pilot-meta {
+  font-size: 0.83rem;
+  color: rgba(255,255,255,0.5);
+  line-height: 1.75;
+}
+#business-case .bc-pilot-meta strong { color: rgba(255,255,255,0.8); }
+#business-case .bc-pilot-right {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: flex-end;
+  flex-shrink: 0;
+}
+#business-case .bc-pilot-price {
+  font-size: 2.4rem;
+  font-weight: 900;
+  color: var(--green-bright);
+  line-height: 1;
+}
+#business-case .bc-pilot-label {
+  font-size: 0.7rem;
+  color: rgba(255,255,255,0.4);
+  text-align: right;
+}
+@media (max-width: 700px) {
+  #business-case { padding: 64px var(--gutter); }
+  #business-case .bc-pilot { grid-template-columns: 1fr; }
+  #business-case .bc-pilot-right { align-items: flex-start; }
+  #business-case .bc-pilot-label { text-align: left; }
+  #business-case table.roi th,
+  #business-case table.roi td { padding: 10px 10px; font-size: 0.78rem; }
+}
+</style>
+
+<!-- BUSINESS CASE -->
+<section id="business-case">
+  <div class="bc-inner">
+    <div class="section-eyebrow">The Business Case</div>
+    <h2 class="section-title">Why it pays.<br><em>From day one.</em></h2>
+    <p class="section-sub">One visit. Two ROI streams &mdash; commercial execution and EPR compliance. No extra headcount, no trade-off.</p>
+
+    <div class="bc-legend">
+      <div class="bc-legend-item"><div class="bc-legend-dot" style="background:#dc2626"></div>Gap / risk</div>
+      <div class="bc-legend-item"><div class="bc-legend-dot" style="background:#d97706"></div>Partial</div>
+      <div class="bc-legend-item"><div class="bc-legend-dot" style="background:#16a34a"></div>Solved</div>
+    </div>
+
+    <div class="roi-wrap">
+      <table class="roi">
+        <thead>
+          <tr>
+            <th></th>
+            <th class="th-bad">Without Play for Earth</th>
+            <th class="th-good">With Play for Earth</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="section-row"><td colspan="3">Commercial execution</td></tr>
+          <tr>
+            <td>Call data quality</td>
+            <td><span class="cell-bad">Self-reported, unverified</span></td>
+            <td><span class="cell-good">GPS check-in + photo proof</span></td>
+          </tr>
+          <tr>
+            <td>Coverage visibility</td>
+            <td><span class="cell-warn">Monthly distributor summary</span></td>
+            <td><span class="cell-good">Live zone dashboard</span></td>
+          </tr>
+          <tr>
+            <td>Territory gaps</td>
+            <td><span class="cell-bad">Invisible until sell-out drops</span></td>
+            <td><span class="cell-good">Flagged in real time</span></td>
+          </tr>
+          <tr>
+            <td>Budget allocation</td>
+            <td><span class="cell-warn">Based on historical routes</span></td>
+            <td><span class="cell-good">Based on verified field data</span></td>
+          </tr>
+
+          <tr class="section-row"><td colspan="3">EPR &amp; Scope 3 compliance</td></tr>
+          <tr>
+            <td>EPR fee exposure</td>
+            <td><span class="cell-bad">Full declared tonnage, no offset</span></td>
+            <td><span class="cell-good">Recovery data offsets fee</span></td>
+          </tr>
+          <tr>
+            <td>Audit readiness</td>
+            <td><span class="cell-bad">Manual estimates, audit risk</span></td>
+            <td><span class="cell-good">Photo-verified, geo-tagged</span></td>
+          </tr>
+          <tr>
+            <td>Scope 3 data</td>
+            <td><span class="cell-warn">Estimated or absent</span></td>
+            <td><span class="cell-good">Verified per territory</span></td>
+          </tr>
+          <tr>
+            <td>Recovery infra</td>
+            <td><span class="cell-bad">New headcount required</span></td>
+            <td><span class="cell-good">Zero &mdash; runs on your reps</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="bc-pilot">
+      <div>
+        <div class="bc-pilot-title">90-day pilot. One territory. Two datasets.</div>
+        <p class="bc-pilot-meta">
+          <strong>What you get:</strong> verified recovery volume &middot; EPR-ready dataset &middot; territory dashboard &middot; GTI baseline<br>
+          <strong>What you commit:</strong> one zone &middot; your existing reps &middot; 90 days
+        </p>
+      </div>
+      <div class="bc-pilot-right">
+        <div>
+          <div class="bc-pilot-price">$15K</div>
+          <div class="bc-pilot-label">flat &middot; all-in &middot; no hidden fees</div>
+        </div>
+        <a href="/contact" class="btn-primary">Start a Pilot &rarr;</a>
+      </div>
+    </div>
+
+  </div>
+</section>
+  
 /* MISSION */
 #mission { background: var(--ink); color: white; padding: 100px var(--gutter); text-align: center; position: relative; overflow: hidden; }
 #mission::before { content: ''; position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); width: 500px; height: 500px; border-radius: 50%; background: radial-gradient(circle, rgba(34,197,94,0.08) 0%, transparent 70%); }
