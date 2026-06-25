@@ -131,14 +131,15 @@ nav {
 }
 
 /* LOGOS */
-.logos-strip { background: var(--bg2); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 28px var(--gutter); }
-.logos-inner { max-width: var(--max-w); margin: 0 auto; display: flex; align-items: center; gap: 40px; flex-wrap: wrap; justify-content: center; }
-.logos-label { font-size: 0.78rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(18,39,26,0.32); }
-.logo-item { font-size: 1.05rem; font-weight: 700; color: rgba(18,39,26,0.5); }
-.logo-item sup { font-size: 0.6rem; font-family: var(--sans); color: var(--green); vertical-align: super; margin-left: 2px; font-weight: 700; }
-.logo-item-link { text-decoration: none; transition: color 0.2s; display: inline-flex; align-items: baseline; gap: 4px; }
-.logo-item-link:hover { color: var(--ink); }
-.logo-item-link:hover sup { color: var(--green-dark); }
+.logos-strip { background: white; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 32px var(--gutter); }
+.logos-inner { max-width: var(--max-w); margin: 0 auto; display: flex; flex-direction: column; align-items: center; gap: 20px; }
+.logos-label { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-light); }
+.logos-items { display: flex; align-items: center; justify-content: center; gap: 0; flex-wrap: wrap; }
+.logo-item { display: flex; flex-direction: column; align-items: center; gap: 3px; text-decoration: none; padding: 4px 32px; transition: transform 0.2s; }
+.logo-item:hover { transform: translateY(-2px); }
+.logo-item-name { font-size: 1.15rem; font-weight: 800; color: var(--ink); letter-spacing: -0.02em; }
+.logo-item-tag { font-size: 0.72rem; font-weight: 600; color: var(--green); letter-spacing: 0.02em; }
+.logo-sep { width: 1px; height: 36px; background: var(--border); flex-shrink: 0; }
 
 /* FEATURED IN */
 .featured-card:hover { transform: translateY(-3px); box-shadow: 0 8px 28px rgba(18,39,26,0.09); border-color: rgba(26,140,63,0.3) !important; }
@@ -439,6 +440,8 @@ footer { background: var(--ink); border-top: 1px solid rgba(255,255,255,0.06); p
   .hero-actions { flex-direction: column; align-items: stretch; }
   .btn-primary, .btn-snapshot { text-align: center; }
   .btn-ghost { justify-content: center; }
+  .logos-items { flex-direction: column; gap: 18px; }
+  .logo-sep { display: none; }
   .hero-trust { flex-direction: column; align-items: stretch; gap: 0; }
   .hero-trust-stat { border-right: none; border-bottom: 1px solid var(--border); padding: 14px 0; }
   .hero-trust-stat:first-child { padding-top: 0; }
@@ -570,10 +573,23 @@ footer { background: var(--ink); border-top: 1px solid rgba(255,255,255,0.06); p
 <!-- LOGOS -->
 <div class="logos-strip">
   <div class="logos-inner">
-    <span class="logos-label">Featured by</span>
-    <a href="#featured-in" class="logo-item logo-item-link"><strong>L&rsquo;Or&eacute;al Big Bang</strong><sup>SAPMENA Top Innovator 2025</sup></a>
-    <a href="#traction" class="logo-item logo-item-link"><strong>ERIA</strong><sup>HITS4KIDS Finalist 2025</sup></a>
-    <a href="#traction" class="logo-item logo-item-link"><strong>MDX</strong><sup>Nature-Positive Accelerator 2026</sup></a>
+    <span class="logos-label">Selected &amp; recognized by</span>
+    <div class="logos-items">
+      <a href="#traction" class="logo-item">
+        <span class="logo-item-name">L&rsquo;Or&eacute;al Big Bang</span>
+        <span class="logo-item-tag">SAPMENA Top Innovator 2025</span>
+      </a>
+      <div class="logo-sep"></div>
+      <a href="#traction" class="logo-item">
+        <span class="logo-item-name">ERIA</span>
+        <span class="logo-item-tag">HITS4KIDS Finalist 2025</span>
+      </a>
+      <div class="logo-sep"></div>
+      <a href="#traction" class="logo-item">
+        <span class="logo-item-name">MDX</span>
+        <span class="logo-item-tag">Nature-Positive Accelerator 2026</span>
+      </a>
+    </div>
   </div>
 </div>
 
