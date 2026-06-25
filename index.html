@@ -98,10 +98,12 @@ nav {
 .btn-primary:hover { background: var(--green-dark); transform: translateY(-2px); }
 .btn-ghost { color: var(--ink-light); font-size: 0.9rem; font-weight: 600; text-decoration: none; display: flex; align-items: center; gap: 7px; transition: color 0.2s; border: 1.5px solid rgba(18,39,26,0.15); padding: 13px 24px; border-radius: 32px; }
 .btn-ghost:hover { color: var(--green); border-color: rgba(26,140,63,0.3); }
-.hero-trust { display: flex; flex-direction: column; gap: 8px; }
-.hero-trust-item { display: flex; align-items: center; gap: 8px; font-size: 0.82rem; color: var(--ink-light); }
-.hero-trust-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--green); flex-shrink: 0; }
-.hero-image-wrap { position: relative; border-radius: 20px; overflow: hidden; box-shadow: 0 24px 64px rgba(18,39,26,0.15); aspect-ratio: 4/5; }
+.hero-trust { display: flex; align-items: center; gap: 0; flex-wrap: wrap; padding: 16px 0; border-top: 1px solid var(--border); }
+.hero-trust-card { font-size: 0.82rem; color: var(--ink-light); padding: 0 16px; border-right: 1px solid var(--border); line-height: 1.4; }
+.hero-trust-card:first-child { padding-left: 0; }
+.hero-trust-card:last-child { border-right: none; }
+.hero-trust-card strong { color: var(--ink); font-weight: 700; display: block; font-size: 0.83rem; margin-bottom: 1px; }
+.hero-image-wrap { position: relative; border-radius: 20px; overflow: hidden; box-shadow: 0 24px 64px rgba(18,39,26,0.15); aspect-ratio: 3/4; max-height: 520px; }
 .hero-image-wrap img { width: 100%; height: 100%; object-fit: cover; display: block; }
 .hero-image-badge { position: absolute; bottom: 24px; left: 24px; right: 24px; background: rgba(18,39,26,0.88); backdrop-filter: blur(12px); border-radius: 12px; padding: 16px 20px; display: flex; align-items: center; gap: 14px; }
 .hero-image-badge-pulse { width: 8px; height: 8px; border-radius: 50%; background: var(--green-bright); flex-shrink: 0; animation: epulse 1.8s infinite; }
@@ -154,18 +156,45 @@ section { padding: 96px var(--gutter); }
 .section-sub { font-size: 1.05rem; color: var(--ink-light); line-height: 1.7; max-width: 540px; }
 
 /* VALUE */
-#value { background: white; border-top: 1px solid var(--border); }
-.value-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 40px; }
-.value-card { background: var(--bg2); border: 1px solid rgba(26,140,63,0.12); border-radius: 18px; padding: 36px 32px; position: relative; overflow: hidden; transition: all 0.25s; }
-.value-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: var(--green); border-radius: 18px 18px 0 0; }
-.value-card:hover { transform: translateY(-3px); box-shadow: 0 8px 28px rgba(18,39,26,0.09); border-color: rgba(26,140,63,0.3); }
-.value-card-tag { display: inline-flex; align-items: center; gap: 8px; background: var(--green-pale); border: 1px solid rgba(34,197,94,0.25); color: var(--green); font-size: 0.68rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; padding: 4px 12px; border-radius: 20px; margin-bottom: 20px; }
-.value-card h3 { font-size: 1.3rem; font-weight: 900; color: var(--ink); line-height: 1.2; margin-bottom: 10px; letter-spacing: -0.02em; }
-.value-card > p { font-size: 0.88rem; color: var(--ink-light); line-height: 1.65; margin-bottom: 22px; }
-.value-list { list-style: none; display: flex; flex-direction: column; gap: 8px; }
-.value-list li { font-size: 0.84rem; color: var(--ink-light); display: flex; gap: 10px; align-items: flex-start; }
-.value-list li::before { content: '✓'; color: var(--green); font-weight: 700; flex-shrink: 0; }
-.value-footer { text-align: center; margin-top: 28px; font-size: 0.8rem; font-weight: 700; color: var(--ink-light); letter-spacing: 0.08em; text-transform: uppercase; }
+#value { background: var(--bg2); border-top: 1px solid var(--border); }
+.value-problems-row { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 40px; }
+.value-problem-card { background: white; border: 1px solid var(--border-dark); border-radius: 18px; padding: 32px 28px; display: flex; flex-direction: column; gap: 14px; position: relative; overflow: hidden; transition: all 0.25s; }
+.value-problem-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; border-radius: 18px 18px 0 0; }
+.value-problem-commercial::before { background: #3b82f6; }
+.value-problem-compliance::before { background: var(--green); }
+.value-problem-card:hover { transform: translateY(-3px); box-shadow: 0 8px 28px rgba(18,39,26,0.09); }
+.value-problem-top { display: flex; align-items: center; gap: 10px; margin-bottom: 4px; }
+.value-problem-icon { font-size: 1.4rem; line-height: 1; }
+.value-problem-label { font-size: 0.68rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--green); }
+.value-problem-card h4 { font-size: 1.05rem; font-weight: 900; color: var(--ink); line-height: 1.25; letter-spacing: -0.01em; }
+.value-problem-card p { font-size: 0.86rem; color: var(--ink-light); font-style: italic; }
+.value-risk-badge { display: inline-flex; align-items: center; gap: 6px; font-size: 0.75rem; font-weight: 700; padding: 5px 12px; border-radius: 6px; width: fit-content; margin-top: auto; }
+.value-risk-commercial, .value-risk-compliance { background: #fef2f2; color: #991b1b; border: 1px solid #fecaca; }
+.value-solution-wrap { background: white; border: 1px solid var(--border-dark); border-radius: 18px; padding: 36px; margin-top: 20px; }
+.value-solution-eyebrow { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px; margin-bottom: 28px; padding-bottom: 20px; border-bottom: 1px solid var(--border); }
+.value-solution-tag { font-size: 0.72rem; font-weight: 700; color: var(--ink-light); letter-spacing: 0.04em; }
+.value-solution-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; align-items: start; }
+.value-solution-steps { display: flex; flex-direction: column; gap: 16px; }
+.value-solution-step { display: flex; gap: 14px; align-items: flex-start; }
+.value-step-num { width: 28px; height: 28px; border-radius: 50%; background: var(--green); color: white; font-size: 0.72rem; font-weight: 900; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px; }
+.value-solution-step div { font-size: 0.86rem; color: var(--ink-light); line-height: 1.55; }
+.value-solution-step strong { color: var(--ink); display: block; margin-bottom: 3px; font-size: 0.9rem; }
+.value-solution-outputs { display: flex; flex-direction: column; gap: 12px; }
+.value-output { background: var(--bg2); border: 1px solid var(--border); border-radius: 12px; padding: 16px 18px; display: flex; gap: 12px; align-items: flex-start; }
+.value-output-commercial { border-left: 3px solid #3b82f6; }
+.value-output-compliance { border-left: 3px solid var(--green); }
+.value-output-icon { font-size: 1.1rem; flex-shrink: 0; line-height: 1; margin-top: 2px; }
+.value-output-label { font-size: 0.8rem; font-weight: 700; color: var(--ink); margin-bottom: 4px; }
+.value-output-items { font-size: 0.78rem; color: var(--ink-light); line-height: 1.55; }
+.value-output-list { list-style: none; margin-top: 6px; display: flex; flex-direction: column; gap: 5px; }
+.value-output-list li { font-size: 0.78rem; color: var(--ink-light); display: flex; gap: 7px; align-items: flex-start; }
+.value-output-list li::before { content: "\2713"; color: var(--green); font-weight: 700; flex-shrink: 0; font-size: 0.72rem; margin-top: 1px; }
+.value-solution-close { margin-top: 20px; padding-top: 20px; border-top: 1px solid var(--border); font-size: 0.82rem; color: var(--ink-light); font-style: italic; font-weight: 600; text-align: center; }
+@media (max-width: 900px) {
+  .value-problems-row { grid-template-columns: 1fr; }
+  .value-solution-grid { grid-template-columns: 1fr; gap: 24px; }
+  .value-solution-wrap { padding: 24px 20px; }
+}
 
 /* BUSINESS CASE */
 #business-case { background: var(--bg2); border-top: 1px solid var(--border); }
@@ -440,14 +469,14 @@ footer { background: var(--ink); border-top: 1px solid rgba(255,255,255,0.06); p
 <nav id="mainNav">
   <a href="/" class="nav-logo">Play for <em>Earth</em></a>
   <ul class="nav-links">
-    <li><a href="/fmcg">FMCG</a></li>
-    <li><a href="/pharmacy">Pharmacy</a></li>
-    <li><a href="#dashboard">What You Buy</a></li>
+    
+    
+    
     <li><a href="#how">How It Works</a></li>
     <li><a href="#traction">Traction</a></li>
     <li><a href="#pricing">Pricing</a></li>
-    <li><a href="/insight-series">Insight Series</a></li>
-    <li><a href="/faq">FAQ</a></li>
+    
+    
     <li><a href="/contact" class="nav-cta">Request Pilot &rarr;</a></li>
   </ul>
   <button class="nav-hamburger" id="hamburger" aria-label="Menu">
@@ -457,13 +486,13 @@ footer { background: var(--ink); border-top: 1px solid rgba(255,255,255,0.06); p
 
 <!-- MOBILE MENU -->
 <nav class="mobile-menu" id="mobileMenu">
-  <a href="/fmcg" class="mobile-menu-link">FMCG <span class="arrow">&rarr;</span></a>
-  <a href="/pharmacy" class="mobile-menu-link">Pharmacy <span class="arrow">&rarr;</span></a>
+  
+  
   <a href="#how" class="mobile-menu-link">How It Works <span class="arrow">&rarr;</span></a>
   <a href="#traction" class="mobile-menu-link">Traction <span class="arrow">&rarr;</span></a>
-  <a href="#scores" class="mobile-menu-link">Scoring Framework <span class="arrow">&rarr;</span></a>
+  
   <a href="#pricing" class="mobile-menu-link">Pricing <span class="arrow">&rarr;</span></a>
-  <a href="/insight-series" class="mobile-menu-link">Insight Series <span class="arrow">&rarr;</span></a>
+  
   <a href="/contact" class="mobile-menu-cta">Request a Pilot &rarr;</a>
 </nav>
 
@@ -479,9 +508,9 @@ footer { background: var(--ink); border-top: 1px solid rgba(255,255,255,0.06); p
         <a href="#how" class="btn-ghost">See how it works &rarr;</a>
       </div>
       <div class="hero-trust">
-        <div class="hero-trust-item"><div class="hero-trust-dot"></div>Runs on your existing sales reps and distributor routes</div>
-        <div class="hero-trust-item"><div class="hero-trust-dot"></div>Shelf data and collection intelligence from the same visit</div>
-        <div class="hero-trust-item"><div class="hero-trust-dot"></div>Photo + GPS verified &middot; under 30 seconds per outlet</div>
+        <div class="hero-trust-card"><strong>No new headcount</strong>Existing reps and routes</div>
+        <div class="hero-trust-card"><strong>Two datasets, one visit</strong>Shelf + collection intelligence</div>
+        <div class="hero-trust-card"><strong>Photo + GPS verified</strong>Under 30 seconds per outlet</div>
       </div>
     </div>
     <div class="hero-image-wrap">
@@ -507,206 +536,110 @@ footer { background: var(--ink); border-top: 1px solid rgba(255,255,255,0.06); p
   </div>
 </div>
 
-<!-- FEATURED IN -->
-<section id="featured-in" style="background:var(--bg2);border-top:1px solid var(--border);padding:72px var(--gutter);">
-  <div class="section-inner">
-    <div class="section-eyebrow">Featured In</div>
-    <h2 class="section-title">Selected by a program that <em>knows this space.</em></h2>
-    <p class="section-sub" style="margin-bottom:40px;">Play for Earth was named among the Top Innovators in L&rsquo;Or&eacute;al&rsquo;s 2025 Big Bang Beauty Tech Innovation Program, one of the most competitive open innovation competitions in the SAPMENA region.</p>
-
-    <a href="https://www.linkedin.com/feed/update/urn:li:activity:7369232804104122368/" target="_blank" rel="noopener" class="featured-card featured-card-hero" style="background:var(--bg2);border:1px solid rgba(26,140,63,0.12);border-radius:20px;padding:0;text-decoration:none;color:inherit;display:grid;grid-template-columns:minmax(320px,44%) 1fr;gap:0;transition:all 0.25s;overflow:hidden;min-height:380px;">
-      <div style="background:#0a0a0a;overflow:hidden;position:relative;">
-        <img src="/images/press/loreal-big-bang-2025.png" alt="L&rsquo;Or&eacute;al Big Bang 2025 featuring Play for Earth" style="width:100%;height:100%;object-fit:cover;display:block;" loading="lazy">
-      </div>
-      <div style="padding:44px 48px;display:flex;flex-direction:column;gap:20px;justify-content:center;">
-        <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
-          <div style="font-size:0.68rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--green);background:var(--green-pale);border:1px solid rgba(34,197,94,0.25);padding:5px 12px;border-radius:20px;">L&rsquo;Or&eacute;al Big Bang 2025</div>
-          <div style="font-size:0.72rem;font-weight:700;color:var(--ink-light);letter-spacing:0.04em;">SAPMENA Top Innovator &middot; #TechforGood</div>
-        </div>
-        <h3 style="font-size:1.5rem;font-weight:900;color:var(--ink);line-height:1.25;letter-spacing:-0.02em;">One of 9 Top Innovators selected across South Asia Pacific, Middle East and North Africa.</h3>
-        <p style="font-size:0.95rem;color:var(--ink-light);line-height:1.65;">The L&rsquo;Or&eacute;al Big Bang Beauty Tech Innovation Program is the group&rsquo;s flagship open innovation competition at SAPMENA scale. Announced to 6M+ followers, the 9 Top Innovators now advance to the SAPMENA Grand Finale in Singapore, with winners piloting with L&rsquo;Or&eacute;al brands across 35 markets.</p>
-        <div style="font-size:0.85rem;font-weight:700;color:var(--green);display:inline-flex;align-items:center;gap:6px;">Read the L&rsquo;Or&eacute;al announcement <span>&rarr;</span></div>
-      </div>
-    </a>
-
-    <p style="font-size:0.78rem;color:var(--ink-light);text-align:center;margin-top:24px;opacity:0.7;">Also selected: ERIA HITS4KIDS Finalist &middot; MDX Nature-Positive Accelerator Training Programme 2026</p>
-  </div>
-</section>
-
 <!-- WHAT YOU GET -->
 <section id="value">
   <div class="section-inner">
-    <div class="section-eyebrow">What you get</div>
-    <h2 class="section-title">One retail network.<br><em>Two critical data gaps closed.</em></h2>
-    <p class="section-sub">The same rep visit that confirms shelf availability also verifies whether a packaging collection basket is active at that outlet. Every retailer in your network becomes a verified drop-off point. Two datasets. Zero extra field operations.</p>
-    <div class="value-cards">
-      <div class="value-card">
-        <div class="value-card-tag">Commercial gap</div>
-        <h3>Territory visibility that pays for itself</h3>
-        <p>After distribution, companies go blind at the retailer level. Play for Earth closes that gap from visits already happening, with no new field team.</p>
-        <ul class="value-list">
-          <li>Outlet coverage and gap detection by territory</li>
-          <li>Priority product availability confirmed per visit</li>
-          <li>Rep performance ranked by verified activity</li>
-        </ul>
+    <div class="section-eyebrow">The problem</div>
+    <h2 class="section-title">After distribution,<br><em>companies go blind.</em></h2>
+    <p class="section-sub">One retail network. Two critical data gaps.</p>
+
+    <div class="value-problems-row">
+      <div class="value-problem-card value-problem-commercial">
+        <div class="value-problem-top">
+          <span class="value-problem-icon">&#128200;</span>
+          <span class="value-problem-label">Commercial gap</span>
+        </div>
+        <h4>Are outlets actually being covered consistently?</h4>
+        <p>Are priority products visible and available?</p>
+        <div class="value-risk-badge value-risk-commercial">&#9888; Lost sales risk</div>
       </div>
-      <div class="value-card">
-        <div class="value-card-tag">Compliance gap</div>
-        <h3>Every retailer becomes a packaging drop-off point</h3>
-        <p>The rep confirms whether a collection basket is in place and active at each outlet. No new sites, no new headcount. The network already exists, it just isn't verified.</p>
-        <ul class="value-list">
-          <li>Collection basket presence and activity confirmed per visit</li>
-          <li>Retailer-level drop-off network mapped automatically</li>
-          <li>Audit-ready EPR and Scope 3 evidence from the same route</li>
-        </ul>
+      <div class="value-problem-card value-problem-compliance">
+        <div class="value-problem-top">
+          <span class="value-problem-icon">&#127807;</span>
+          <span class="value-problem-label">Compliance gap</span>
+        </div>
+        <h4>Are consumers returning used packaging?</h4>
+        <p>Can it be verified for reporting?</p>
+        <div class="value-risk-badge value-risk-compliance">&#9888; Compliance risk</div>
       </div>
     </div>
-    <p class="value-footer">We don't create new behavior. We structure and verify what already happens.</p>
+
+    <div class="value-solution-wrap">
+      <div class="value-solution-eyebrow">
+        <div class="section-eyebrow" style="background:rgba(34,197,94,0.15);color:var(--green-bright);border-color:rgba(34,197,94,0.2);margin-bottom:0;">What you get</div>
+        <span class="value-solution-tag">Geo + time verified &middot; &lt;30 sec per outlet</span>
+      </div>
+      <div class="value-solution-grid">
+        <div class="value-solution-steps">
+          <div class="value-solution-step">
+            <div class="value-step-num">1</div>
+            <div><strong>Shelf photo</strong><br>Confirms product visibility and availability at every outlet</div>
+          </div>
+          <div class="value-solution-step">
+            <div class="value-step-num">2</div>
+            <div><strong>Priority SKU check</strong><br>Flags out-of-stocks and range gaps in real time</div>
+          </div>
+          <div class="value-solution-step">
+            <div class="value-step-num">3</div>
+            <div><strong>Collection-point toggle</strong><br>Verifies packaging drop-off basket is in place and active</div>
+          </div>
+        </div>
+        <div class="value-solution-outputs">
+          <div class="value-output value-output-commercial">
+            <div class="value-output-icon">&#128200;</div>
+            <div>
+              <div class="value-output-label">Commercial visibility</div>
+              <ul class="value-output-list">
+                <li>Verify outlet coverage across your territory</li>
+                <li>Verify if priority SKUs are available on shelf</li>
+                <li>Identify coverage gaps before sell-out drops</li>
+              </ul>
+            </div>
+          </div>
+          <div class="value-output value-output-compliance">
+            <div class="value-output-icon">&#127807;</div>
+            <div>
+              <div class="value-output-label">Collection visibility</div>
+              <ul class="value-output-list">
+                <li>Activate a drop-off point at every retailer</li>
+                <li>Verify collection basket presence and activity</li>
+                <li>Generate reporting evidence from the same route</li>
+              </ul>
+            </div>
+          </div>
+          <p class="value-solution-close">We don't create new behavior. We structure and verify what already happens.</p>
+        </div>
+      </div>
+    </div>
   </div>
 </section>
 
-<!-- BUSINESS CASE -->
-<section id="business-case">
+<!-- HOW IT WORKS -->
+<section id="how">
   <div class="section-inner">
-    <div class="section-eyebrow">The Business Case</div>
-    <h2 class="section-title">Why it pays.<br><em>From day one.</em></h2>
-    <p class="section-sub" style="margin-bottom:48px;">One visit. Two ROI streams. No extra headcount, no trade-off.</p>
-
-    <div class="bc-legend">
-      <div class="bc-legend-item"><div class="bc-legend-dot" style="background:#dc2626"></div>Gap / risk</div>
-      <div class="bc-legend-item"><div class="bc-legend-dot" style="background:#d97706"></div>Partial</div>
-      <div class="bc-legend-item"><div class="bc-legend-dot" style="background:#16a34a"></div>Solved</div>
-    </div>
-
-    <div class="roi-wrap">
-      <table class="roi">
-        <thead>
-          <tr>
-            <th></th>
-            <th class="th-bad">Without Play for Earth</th>
-            <th class="th-good">With Play for Earth</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr class="section-row"><td colspan="3">Commercial execution</td></tr>
-          <tr>
-            <td>Call data quality</td>
-            <td><span class="cell-bad">Self-reported, unverified</span></td>
-            <td><span class="cell-good">GPS check-in + photo proof</span></td>
-          </tr>
-          <tr>
-            <td>Coverage visibility</td>
-            <td><span class="cell-warn">Monthly distributor summary</span></td>
-            <td><span class="cell-good">Live zone dashboard</span></td>
-          </tr>
-          <tr>
-            <td>Territory gaps</td>
-            <td><span class="cell-bad">Invisible until sell-out drops</span></td>
-            <td><span class="cell-good">Flagged in real time</span></td>
-          </tr>
-          <tr>
-            <td>Budget allocation</td>
-            <td><span class="cell-warn">Based on historical routes</span></td>
-            <td><span class="cell-good">Based on verified field data</span></td>
-          </tr>
-          <tr class="section-row"><td colspan="3">Collection &amp; compliance</td></tr>
-          <tr>
-            <td>Collection visibility</td>
-            <td><span class="cell-bad">Unknown. No field evidence</span></td>
-            <td><span class="cell-good">Photo-verified per outlet, per visit</span></td>
-          </tr>
-          <tr>
-            <td>EPR audit readiness</td>
-            <td><span class="cell-bad">Manual estimates, audit risk</span></td>
-            <td><span class="cell-good">Geo-tagged, timestamped evidence</span></td>
-          </tr>
-          <tr>
-            <td>Scope 3 data</td>
-            <td><span class="cell-warn">Estimated or absent</span></td>
-            <td><span class="cell-good">Verified per territory</span></td>
-          </tr>
-          <tr>
-            <td>Recovery infra</td>
-            <td><span class="cell-bad">New headcount required</span></td>
-            <td><span class="cell-good">Zero. Runs on your reps</span></td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-
-    <!-- ROI WORKED EXAMPLE -->
-    <div class="bc-roi-example">
-      <div class="bc-roi-header">
-        <div class="bc-roi-title">Worked example: 500-outlet territory</div>
-        <div class="bc-roi-sub">Conservative assumptions anchored in published industry benchmarks. Two distinct value drivers.</div>
+    <div class="section-eyebrow">How It Works</div>
+    <h2 class="section-title">30 seconds per visit.<br><em>Two datasets out.</em></h2>
+    <p class="section-sub">No new infrastructure. No new staff. Play for Earth layers onto your existing field operation and makes every visit count.</p>
+    <div class="how-steps-full">
+      <div class="hw-step">
+        <div class="hw-step-header"><div class="hw-num">01</div><h4>The Visit</h4></div>
+        <p>An existing sales rep visits a small shop or kiosk. Same routine, same route. Nothing changes.</p>
       </div>
-      <div class="bc-roi-grid">
-        <div class="bc-roi-driver">
-          <div class="bc-roi-driver-label">Value driver 1</div>
-          <div class="bc-roi-driver-name">Coverage gap recovery</div>
-          <div class="bc-roi-driver-desc">Out-of-stocks cost retailers 4&ndash;8% of annual sales (IHL Group, 2025). Closing verified coverage gaps typically lifts OSA by 3&ndash;5% in territories with weak visit compliance. Each 1% OSA improvement above the 90% baseline drives ~0.8% SKU sales uplift.</div>
-          <div class="bc-roi-calc">Territory revenue &times; 3% &times; 3 months</div>
-        </div>
-        <div class="bc-roi-driver">
-          <div class="bc-roi-driver-label">Value driver 2</div>
-          <div class="bc-roi-driver-name">Field audit displacement</div>
-          <div class="bc-roi-driver-desc">Automated geo-validated verification replaces one field supervisor role (~USD 1,100/month fully loaded) across all outlets in the territory.</div>
-          <div class="bc-roi-calc">USD 3,300 saved over 90 days</div>
-        </div>
+      <div class="hw-step">
+        <div class="hw-step-header"><div class="hw-num">02</div><h4>The Capture</h4></div>
+        <p>1 shelf photo. Priority SKU check. 1 collection-point toggle: is the packaging drop-off basket in place and active? Geo + time verified. 30 seconds total.</p>
       </div>
-      <div class="bc-roi-result">
-        <div class="bc-roi-result-scenario">
-          <div class="bc-roi-scenario-label">At USD 500K monthly territory revenue</div>
-          <div class="bc-roi-items">
-            <div class="bc-roi-item">
-              <span class="bc-roi-item-label">3% OSA uplift &times; USD 500K &times; 3 months</span>
-              <span class="bc-roi-item-value positive">+$45,000</span>
-            </div>
-            <div class="bc-roi-item">
-              <span class="bc-roi-item-label">Field supervisor cost avoided</span>
-              <span class="bc-roi-item-value positive">+$3,300</span>
-            </div>
-            <div class="bc-roi-item">
-              <span class="bc-roi-item-label">Pilot investment</span>
-              <span class="bc-roi-item-value cost">-$15,000</span>
-            </div>
-            <div class="bc-roi-item total">
-              <span class="bc-roi-item-label">Net return over 90 days</span>
-              <span class="bc-roi-item-value total-val">$33,300 &asymp; 2.2&times;</span>
-            </div>
-          </div>
-        </div>
-        <div class="bc-roi-breakeven">
-          <div class="bc-roi-breakeven-label">Breakeven threshold</div>
-          <div class="bc-roi-breakeven-num">$130K</div>
-          <div class="bc-roi-breakeven-desc">monthly territory revenue. Any territory above this line generates a net return from Day 1.</div>
-        </div>
-      </div>
-      <p class="bc-roi-disclaimer">Figures are illustrative. We stress-test against your actual territory revenue, outlet count, and channel mix on the scoping call.</p>
-    </div>
-
-    <div class="bc-pilot">
-      <div>
-        <div class="bc-pilot-title">90-day pilot. One territory. Two datasets.</div>
-        <p class="bc-pilot-meta">
-          <strong>What you get:</strong> verified shelf data &middot; territory coverage dashboard &middot; collection-point verification &middot; RCS and GTI baseline<br>
-          <strong>What you commit:</strong> one zone &middot; your existing reps &middot; 90 days
-        </p>
-      </div>
-      <div class="bc-pilot-right">
-        <div>
-          <div class="bc-pilot-price">$15K</div>
-          <div class="bc-pilot-label">flat &middot; all-in &middot; excl. taxes</div>
-        </div>
-        <a href="/contact" class="btn-primary">Start a Pilot &rarr;</a>
+      <div class="hw-step">
+        <div class="hw-step-header"><div class="hw-num">03</div><h4>The Output</h4></div>
+        <p>Verified shelf data, collection confirmation, RCS and GTI scores updated. Every shop, every visit, on your live dashboard.</p>
       </div>
     </div>
-
+    <p style="text-align:center;margin-top:28px;font-size:0.85rem;font-weight:700;color:var(--ink-light);letter-spacing:0.04em;">The rep does exactly the same job.</p>
   </div>
 </section>
 
 <!-- DASHBOARD -->
-<section id="dashboard">
+<section id="dashboard" style="background:white;border-top:1px solid var(--border);padding:96px var(--gutter);">
   <div class="section-inner">
     <div class="section-eyebrow">What You Buy</div>
     <h2 class="section-title">Your territory. <em>Live.</em></h2>
@@ -728,146 +661,15 @@ footer { background: var(--ink); border-top: 1px solid rgba(255,255,255,0.06); p
   </div>
 </section>
 
-<!-- HOW IT WORKS -->
-<section id="how">
-  <div class="section-inner">
-    <div class="section-eyebrow">How It Works</div>
-    <h2 class="section-title">30 seconds per visit.<br><em>Two datasets out.</em></h2>
-    <p class="section-sub">No new infrastructure. No new staff. Play for Earth layers onto your existing field operation and makes every visit count.</p>
-    <div class="how-steps-full">
-      <div class="hw-step">
-        <div class="hw-step-header"><div class="hw-num">01</div><h4>The Visit</h4></div>
-        <p>An existing sales rep visits a small shop or kiosk. Same routine, same route. Nothing changes.</p>
-      </div>
-      <div class="hw-step">
-        <div class="hw-step-header"><div class="hw-num">02</div><h4>The Capture</h4></div>
-        <p>1 shelf photo. Priority SKU check. 1 collection-point toggle: is the packaging drop-off basket in place and active at this outlet? Geo + time verified. 30 seconds total.</p>
-      </div>
-      <div class="hw-step">
-        <div class="hw-step-header"><div class="hw-num">03</div><h4>The Output</h4></div>
-        <p>Verified shelf data, collection confirmation, RCS and GTI scores updated. Every shop, every visit, on your live dashboard.</p>
-      </div>
-    </div>
-    <p style="text-align:center;margin-top:28px;font-size:0.85rem;font-weight:700;color:var(--ink-light);letter-spacing:0.04em;">The rep does exactly the same job.</p>
-  </div>
-</section>
-
-<!-- SCORING FRAMEWORK -->
-<section id="scores">
-  <div class="section-inner">
-    <div class="section-eyebrow">The Measurement Standard</div>
-    <h2 class="section-title">Every visit builds a retailer intelligence layer<br><em>competitors cannot recreate.</em></h2>
-    <p class="section-sub">Each outlet accumulates two scores from verified visit data. One commercial, one sustainability. Together they form the only verified retailer intelligence dataset of its kind in the market.</p>
-
-    <div class="scores-layout">
-      <div class="score-card">
-        <div class="score-card-header commercial">
-          <div class="score-card-icon">&#128200;</div>
-          <div>
-            <div class="score-card-title">Retailer Commercial Score (RCS)</div>
-            <div class="score-card-sub">Commercial signals &middot; per outlet</div>
-          </div>
-        </div>
-        <div class="score-card-body">
-          <div class="score-pillar">
-            <div>
-              <div class="score-pillar-name">Product Availability</div>
-              <div class="score-pillar-desc">Are priority products available at the outlet?</div>
-            </div>
-            <div class="score-pillar-weight">40%</div>
-          </div>
-          <div class="score-pillar">
-            <div>
-              <div class="score-pillar-name">Shelf Execution</div>
-              <div class="score-pillar-desc">Are products visible and well merchandised?</div>
-            </div>
-            <div class="score-pillar-weight">30%</div>
-          </div>
-          <div class="score-pillar">
-            <div>
-              <div class="score-pillar-name">Assortment Coverage</div>
-              <div class="score-pillar-desc">Is the recommended product range stocked?</div>
-            </div>
-            <div class="score-pillar-weight">30%</div>
-          </div>
-        </div>
-        <div class="score-card-footer">Competitors can copy a workflow. They cannot recreate verified retailer history.</div>
-      </div>
-
-      <div class="score-card">
-        <div class="score-card-header sustainability">
-          <div class="score-card-icon">&#127807;</div>
-          <div>
-            <div class="score-card-title">Green Transformation Index (GTI)</div>
-            <div class="score-card-sub">Verified sustainability indicators &middot; per outlet</div>
-          </div>
-        </div>
-        <div class="score-card-body">
-          <div class="score-pillar">
-            <div>
-              <div class="score-pillar-name">Collection Point Presence</div>
-              <div class="score-pillar-desc">Is a collection point in place at this outlet?</div>
-            </div>
-            <div class="score-pillar-weight">30%</div>
-          </div>
-          <div class="score-pillar">
-            <div>
-              <div class="score-pillar-name">Collection Activity</div>
-              <div class="score-pillar-desc">Is it active and maintained across visits?</div>
-            </div>
-            <div class="score-pillar-weight">40%</div>
-          </div>
-          <div class="score-pillar">
-            <div>
-              <div class="score-pillar-name">Sustainability Adoption</div>
-              <div class="score-pillar-desc">Are sustainable products or programs visible?</div>
-            </div>
-            <div class="score-pillar-weight">30%</div>
-          </div>
-        </div>
-        <div class="score-card-footer">Independently verifiable &middot; Audit-ready &middot; Exportable for EPR reporting</div>
-      </div>
-    </div>
-
-    <div class="scores-bottom">
-      <p>Both scores are built from the same verified visit data. <strong>No separate collection run. No extra headcount. No new infrastructure.</strong> The dataset grows with every rep visit across the territory.</p>
-    </div>
-  </div>
-</section>
-
 <!-- TRACTION -->
 <section id="traction">
   <div class="section-inner">
-    <div class="section-eyebrow">Traction</div>
-    <h2 class="section-title">Gaining traction<br><em>across consumer goods categories.</em></h2>
-    <p class="section-sub" style="margin-bottom:0;">From beauty to beverages to dairy, the same retail intelligence layer applies. One customer proves the model. Others in the category move faster.</p>
-
-    <div class="traction-grid">
-      <div class="traction-numbers">
-        <div class="t-card"><div class="t-num">20K+</div><div class="t-desc">Early field actions across proof-of-concept operations.</div></div>
-        <div class="t-card"><div class="t-num">5</div><div class="t-desc">Active pilot conversations: Coca-Cola, Heineken, Danone, L&rsquo;Or&eacute;al, Syngenta.</div></div>
-        <div class="t-card"><div class="t-num">$15K</div><div class="t-desc">Flat 90-day pilot price. One territory. Full verification from day one.</div></div>
-        <div class="t-card"><div class="t-num">4</div><div class="t-desc">Sectors with active conversations: beauty, beverages, dairy, agribusiness.</div></div>
-      </div>
-      <div class="proof-list">
-        <div class="proof-item"><div class="proof-trophy">&#129351;</div><div><h4>L&rsquo;Or&eacute;al Big Bang 2025, SAPMENA Top Innovator</h4><p>Named among 9 Top Innovators across South Asia Pacific, Middle East and North Africa in L&rsquo;Or&eacute;al&rsquo;s flagship Beauty Tech innovation program.</p></div></div>
-        <div class="proof-item"><div class="proof-trophy">&#127942;</div><div><h4>ERIA HITS4KIDS, Startup Pitching Finalist</h4><p>Selected among finalists from ASEAN Member States and India by the Economic Research Institute for ASEAN and East Asia.</p></div></div>
-        <div class="proof-item"><div class="proof-trophy">&#128640;</div><div><h4>MDX Nature-Positive Accelerator Training Programme 2026</h4><p>Selected for the Middlesex University Dubai accelerator programme supporting circular economy ventures.</p></div></div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- MARKETS -->
-<section id="markets">
-  <div class="section-inner">
-    <div class="section-eyebrow">Where We Operate</div>
-    <h2 class="section-title">Africa and Southeast Asia.<br><em>Where EPR is being built.</em></h2>
-    <div class="markets-grid">
-      <div class="market-card"><div class="market-flag"><span class="fi fi-vn"></span></div><h4>Vietnam</h4><p>Proof-of-concept market. Field operations active. EPR framework actively developing.</p><span class="market-status status-active">Active</span></div>
-      <div class="market-card"><div class="market-flag"><span class="fi fi-ke"></span></div><h4>Kenya</h4><p>HQ market. Active pipeline with FMCG partners. KEPRO relationship as data partner.</p><span class="market-status status-active">Active</span></div>
-      <div class="market-card"><div class="market-flag"><span class="fi fi-tz"></span></div><h4>Tanzania</h4><p>EAC regulatory alignment and shared bottlers make this the natural next step from Kenya.</p><span class="market-status status-pipeline">Pipeline</span></div>
-      <div class="market-card"><div class="market-flag"><span class="fi fi-my"></span></div><h4>Malaysia &amp; Thailand</h4><p>EPR regulatory signals actively monitored as market entry triggers.</p><span class="market-status status-pipeline">Pipeline</span></div>
+    <div class="section-eyebrow">Why they trust us</div>
+    <h2 class="section-title">Recognized across<br><em>beauty, beverages, and dairy.</em></h2>
+    <div class="proof-list" style="margin-top:40px;max-width:680px;">
+      <div class="proof-item"><div class="proof-trophy">&#129351;</div><div><h4>L&rsquo;Or&eacute;al Big Bang 2025, SAPMENA Top Innovator</h4><p>Named among 9 Top Innovators across South Asia Pacific, Middle East and North Africa.</p></div></div>
+      <div class="proof-item"><div class="proof-trophy">&#127942;</div><div><h4>ERIA HITS4KIDS, Startup Pitching Finalist</h4><p>Selected among finalists from ASEAN Member States and India by the Economic Research Institute for ASEAN and East Asia.</p></div></div>
+      <div class="proof-item"><div class="proof-trophy">&#128640;</div><div><h4>MDX Nature-Positive Accelerator Training Programme 2026</h4><p>Selected for the Middlesex University Dubai accelerator programme supporting circular economy ventures.</p></div></div>
     </div>
   </div>
 </section>
@@ -904,7 +706,7 @@ footer { background: var(--ink); border-top: 1px solid rgba(255,255,255,0.06); p
           <li>Unlimited retail points in territory</li>
           <li>Full distributor network activation</li>
           <li>Collection-point recovery activation</li>
-          <li>Monthly EPR compliance report</li>
+          <li>Monthly compliance report</li>
           <li>Scope 3 data export</li>
           <li>RCS and GTI tracking</li>
         </ul>
@@ -944,7 +746,6 @@ footer { background: var(--ink); border-top: 1px solid rgba(255,255,255,0.06); p
     <div class="section-eyebrow">Work With Us</div>
     <h2 class="section-title">Your field teams are already there.<br><em>The data just isn&rsquo;t captured yet.</em></h2>
     <p class="section-sub">90-day pilot. One territory. The first verified commercial and collection dataset your brand has ever had from the retail level.</p>
-
     <div class="next-steps" style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:20px;margin:40px auto 32px;max-width:860px;text-align:left;">
       <div style="background:white;border:1px solid var(--border);border-radius:14px;padding:24px 22px;">
         <div style="font-size:0.68rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--green);margin-bottom:10px;">Step 01</div>
@@ -959,10 +760,9 @@ footer { background: var(--ink); border-top: 1px solid rgba(255,255,255,0.06); p
       <div style="background:white;border:1px solid var(--border);border-radius:14px;padding:24px 22px;">
         <div style="font-size:0.68rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--green);margin-bottom:10px;">Step 03</div>
         <div style="font-size:0.98rem;font-weight:900;color:var(--ink);margin-bottom:6px;letter-spacing:-0.01em;">Field activation</div>
-        <div style="font-size:0.83rem;color:var(--ink-light);line-height:1.55;">App deployed on existing reps. Live dashboard from day one. 90 days to verified commercial and compliance outputs.</div>
+        <div style="font-size:0.83rem;color:var(--ink-light);line-height:1.55;">App deployed on existing reps. Live dashboard from day one. 90 days to verified commercial and collection outputs.</div>
       </div>
     </div>
-
     <div class="cta-buttons">
       <a href="/contact" class="btn-primary btn-large">Request a Pilot</a>
       <a href="https://www.linkedin.com/company/playforearth" target="_blank" class="btn-outline">Connect on LinkedIn</a>
@@ -988,17 +788,16 @@ footer { background: var(--ink); border-top: 1px solid rgba(255,255,255,0.06); p
         <ul>
           <li><a href="#how">How It Works</a></li>
           <li><a href="#dashboard">Live Dashboard</a></li>
-          <li><a href="#scores">Scoring Framework</a></li>
           <li><a href="#pricing">Pricing</a></li>
-          <li><a href="/esg-impact-snapshot">ESG Snapshot</a></li>
           <li><a href="/insight-series">Insight Series</a></li>
+          <li><a href="/faq">FAQ</a></li>
         </ul>
       </div>
       <div class="footer-col">
         <h5>Markets</h5>
         <ul>
-          <li><a href="#markets">Vietnam</a></li>
           <li><a href="#markets">Kenya</a></li>
+          <li><a href="#markets">Vietnam</a></li>
           <li><a href="#markets">Tanzania</a></li>
           <li><a href="#markets">Malaysia</a></li>
         </ul>
@@ -1028,17 +827,6 @@ footer { background: var(--ink); border-top: 1px solid rgba(255,255,255,0.06); p
 window.addEventListener('scroll', () => {
   document.getElementById('mainNav').style.background =
     window.scrollY > 60 ? 'rgba(240,250,242,0.98)' : 'rgba(240,250,242,0.94)';
-});
-document.querySelectorAll('video').forEach(v => {
-  v.play().catch(() => {
-    const wrap = document.querySelector('.hero-video');
-    const overlay = document.createElement('div');
-    overlay.className = 'hero-video-placeholder';
-    overlay.innerHTML = '<div class="play-btn">&#9654;</div><span>Platform Demo</span>';
-    wrap.style.position = 'relative';
-    wrap.appendChild(overlay);
-    overlay.addEventListener('click', () => { v.play(); overlay.remove(); }, { once: true });
-  });
 });
 const hamburger = document.getElementById('hamburger');
 const mobileMenu = document.getElementById('mobileMenu');
