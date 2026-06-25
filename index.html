@@ -172,9 +172,10 @@ section { padding: 96px var(--gutter); }
 .value-risk-commercial, .value-risk-compliance { background: #fef2f2; color: #991b1b; border: 1px solid #fecaca; }
 
 .value-solution-wrap { background: white; border: 1px solid var(--border-dark); border-radius: 18px; padding: 36px; margin-top: 16px; }
-.value-solution-top { display: grid; grid-template-columns: 1fr auto 1fr; gap: 24px; align-items: center; margin-bottom: 24px; padding-bottom: 24px; border-bottom: 1px solid var(--border); }
-.value-solution-left, .value-solution-right { display: flex; flex-direction: column; gap: 20px; }
-.value-solution-arrow-big { font-size: 2rem; color: var(--green); font-weight: 900; opacity: 0.4; }
+.value-solution-top { display: grid; grid-template-columns: 1fr 48px 1fr; gap: 0; align-items: center; margin-bottom: 24px; padding-bottom: 24px; border-bottom: 1px solid var(--border); }
+.value-solution-left { display: flex; flex-direction: column; padding-right: 24px; align-self: stretch; justify-content: center; }
+.value-solution-right { display: flex; flex-direction: column; padding-left: 24px; align-self: stretch; justify-content: center; }
+.value-solution-arrow-big { font-size: 1.8rem; color: var(--green); font-weight: 900; opacity: 0.5; text-align: center; align-self: center; }
 .value-steps-row { display: flex; align-items: center; gap: 8px; }
 .value-step-block { display: flex; flex-direction: column; align-items: center; gap: 8px; }
 .value-step-num { width: 36px; height: 36px; border-radius: 50%; background: var(--green); color: white; font-size: 0.82rem; font-weight: 900; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
@@ -600,8 +601,9 @@ footer { background: var(--ink); border-top: 1px solid rgba(255,255,255,0.06); p
 
     <div class="value-solution-wrap">
       <div class="value-solution-top">
+
         <div class="value-solution-left">
-          <div class="section-eyebrow" style="background:rgba(34,197,94,0.15);color:var(--green-bright);border-color:rgba(34,197,94,0.2);">What the rep does</div>
+          <div class="section-eyebrow" style="background:rgba(34,197,94,0.15);color:var(--green);border-color:rgba(34,197,94,0.2);margin-bottom:24px;">What the rep does</div>
           <div class="value-steps-row">
             <div class="value-step-block">
               <div class="value-step-num">1</div>
@@ -621,36 +623,37 @@ footer { background: var(--ink); border-top: 1px solid rgba(255,255,255,0.06); p
               <div class="value-step-detail">Drop-off basket in place and active?</div>
             </div>
           </div>
-          <div class="value-step-tag">Geo + time verified &middot; &lt;30 sec per outlet</div>
+          <div class="value-step-tag" style="margin-top:20px;">Geo + time verified &middot; &lt;30 sec per outlet</div>
         </div>
-        <div class="value-solution-arrow-big">&rarr;</div>
+
+        <div class="value-solution-arrow-big">&#8594;</div>
+
         <div class="value-solution-right">
-          <div class="section-eyebrow" style="background:rgba(34,197,94,0.15);color:var(--green-bright);border-color:rgba(34,197,94,0.2);">What you get</div>
-          <div class="value-outputs-row">
-            <div class="value-output value-output-commercial">
-              <div class="value-output-header">
-                <span class="value-output-icon">&#128200;</span>
-                <span class="value-output-label">Commercial visibility</span>
-              </div>
-              <ul class="value-output-list">
-                <li>Verify outlet coverage across your territory</li>
-                <li>Verify if priority SKUs are available on shelf</li>
-                <li>Identify coverage gaps before sell-out drops</li>
-              </ul>
+          <div class="section-eyebrow" style="background:rgba(34,197,94,0.15);color:var(--green);border-color:rgba(34,197,94,0.2);margin-bottom:16px;">What you get</div>
+          <div class="value-output value-output-commercial">
+            <div class="value-output-header">
+              <span class="value-output-icon">&#128200;</span>
+              <span class="value-output-label">Commercial visibility</span>
             </div>
-            <div class="value-output value-output-compliance">
-              <div class="value-output-header">
-                <span class="value-output-icon">&#127807;</span>
-                <span class="value-output-label">Collection visibility</span>
-              </div>
-              <ul class="value-output-list">
-                <li>Activate a drop-off point at every retailer</li>
-                <li>Verify collection basket presence and activity</li>
-                <li>Generate reporting evidence from the same route</li>
-              </ul>
+            <ul class="value-output-list">
+              <li>Verify outlet coverage across your territory</li>
+              <li>Verify if priority SKUs are available on shelf</li>
+              <li>Identify coverage gaps before sell-out drops</li>
+            </ul>
+          </div>
+          <div class="value-output value-output-compliance" style="margin-top:12px;">
+            <div class="value-output-header">
+              <span class="value-output-icon">&#127807;</span>
+              <span class="value-output-label">Collection visibility</span>
             </div>
+            <ul class="value-output-list">
+              <li>Activate a drop-off point at every retailer</li>
+              <li>Verify collection basket presence and activity</li>
+              <li>Generate reporting evidence from the same route</li>
+            </ul>
           </div>
         </div>
+
       </div>
       <p class="value-solution-close">We don't create new behavior. We structure and verify what already happens.</p>
     </div>
@@ -658,83 +661,6 @@ footer { background: var(--ink); border-top: 1px solid rgba(255,255,255,0.06); p
 </section>
 
 
-<!-- SCORES -->
-<section id="scores">
-  <div class="section-inner">
-    <div class="section-eyebrow">The Measurement Standard</div>
-    <h2 class="section-title">Every visit builds a score.<br><em>Competitors cannot recreate it.</em></h2>
-    <p class="section-sub">Each outlet accumulates two scores from verified visit data. One commercial, one sustainability. Together they form the only verified retailer intelligence dataset of its kind.</p>
-    <div class="scores-grid">
-      <div class="score-card score-card-commercial">
-        <div class="score-card-header">
-          <span class="score-card-icon">&#128200;</span>
-          <div>
-            <div class="score-card-title">Retailer Commercial Score (RCS)</div>
-            <div class="score-card-sub">Commercial signals &middot; per outlet &middot; updated every visit</div>
-          </div>
-        </div>
-        <div class="score-pillars">
-          <div class="score-pillar">
-            <div class="score-pillar-info">
-              <div class="score-pillar-name">Product Availability</div>
-              <div class="score-pillar-desc">Are priority products available at the outlet?</div>
-            </div>
-            <div class="score-pillar-weight">40%</div>
-          </div>
-          <div class="score-pillar">
-            <div class="score-pillar-info">
-              <div class="score-pillar-name">Shelf Execution</div>
-              <div class="score-pillar-desc">Are products visible and well merchandised?</div>
-            </div>
-            <div class="score-pillar-weight">30%</div>
-          </div>
-          <div class="score-pillar">
-            <div class="score-pillar-info">
-              <div class="score-pillar-name">Assortment Coverage</div>
-              <div class="score-pillar-desc">Is the recommended product range stocked?</div>
-            </div>
-            <div class="score-pillar-weight">30%</div>
-          </div>
-        </div>
-        <div class="score-card-footer">Competitors can copy a workflow. They cannot recreate verified retailer history.</div>
-      </div>
-      <div class="score-card score-card-sustainability">
-        <div class="score-card-header">
-          <span class="score-card-icon">&#127807;</span>
-          <div>
-            <div class="score-card-title">Green Transformation Index (GTI)</div>
-            <div class="score-card-sub">Verified sustainability indicators &middot; per outlet</div>
-          </div>
-        </div>
-        <div class="score-pillars">
-          <div class="score-pillar">
-            <div class="score-pillar-info">
-              <div class="score-pillar-name">Collection Point Presence</div>
-              <div class="score-pillar-desc">Is a drop-off basket in place at this outlet?</div>
-            </div>
-            <div class="score-pillar-weight">30%</div>
-          </div>
-          <div class="score-pillar">
-            <div class="score-pillar-info">
-              <div class="score-pillar-name">Collection Activity</div>
-              <div class="score-pillar-desc">Is it active and maintained across visits?</div>
-            </div>
-            <div class="score-pillar-weight">40%</div>
-          </div>
-          <div class="score-pillar">
-            <div class="score-pillar-info">
-              <div class="score-pillar-name">Sustainability Adoption</div>
-              <div class="score-pillar-desc">Are sustainable products or programs visible?</div>
-            </div>
-            <div class="score-pillar-weight">30%</div>
-          </div>
-        </div>
-        <div class="score-card-footer">Independently verifiable &middot; Audit-ready &middot; Exportable for reporting</div>
-      </div>
-    </div>
-    <div class="scores-note">Both scores built from the same verified visit. <strong>No separate collection run. No extra headcount. No new infrastructure.</strong> The dataset grows with every rep visit.</div>
-  </div>
-</section>
 
 <!-- HOW IT WORKS -->
 <section id="how">
